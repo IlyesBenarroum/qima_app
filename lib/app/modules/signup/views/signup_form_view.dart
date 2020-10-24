@@ -1,0 +1,206 @@
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../../app/models/user.dart';
+import '../../../../app/modules/home/home_view.dart';
+import '../../../../app/modules/signup/controllers/signup_form_controller.dart';
+import '../../../../app/modules/signup/widgets/custom_form_feild.dart';
+import 'package:validators/validators.dart' as validator;
+
+Pattern namePattern =
+    r"(^[\u0621-\u064A-Za-z]{2,16})([ ]{0,1})([\u0621-\u064A-Za-z]{2,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{3,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{2,16})";
+RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
+
+Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
+RegExp phoneRegex = RegExp(phonePattern);
+
+User user = User();
+double screenHeight = Get.height;
+double screenWidth = Get.width;
+
+class SignupFormView extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  final SignupformController controller = Get.put(SignupformController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Container(
+        height: screenHeight * .72,
+        width: screenWidth * 0.8,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              //full name
+              Obx(
+                () => MyTextFormField(
+                  hintText: "Full_Name".tr + " * ",
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return "Please_enter_your_full_name".tr;
+                    } else if (!nameRegex.hasMatch(value)) {
+                      return "Please_enter_a_valid_full_name".tr;
+                    }
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    user.fullName = value;
+                  },
+                  tapped: controller.nameTapped.value,
+                  onTap: () {
+                    controller.nameTapped.value = true;
+                  },
+                  onFieldSubmitted: (value) {
+                    if (value.length == 0) controller.nameTapped.value = false;
+                  },
+                ),
+              ),
+
+              //email
+              Obx(
+                () => MyTextFormField(
+                  hintText: "Email".tr + " * ",
+                  isEmail: true,
+                  validator: (String value) {
+                    if (!validator.isEmail(value)) {
+                      return "Please_enter_a_valid_email".tr;
+                    }
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    user.email = value;
+                  },
+                  tapped: controller.emailTapped.value,
+                  onTap: () {
+                    controller.emailTapped.value = true;
+                  },
+                  onFieldSubmitted: (value) {
+                    if (value.length == 0) controller.emailTapped.value = false;
+                  },
+                ),
+              ),
+              //phone number
+              Obx(
+                () => MyTextFormField(
+                  hintText: "Phone_number".tr + " * ",
+                  validator: (String value) {
+                    if (!phoneRegex.hasMatch(value)) {
+                      return "Please_enter_a_valid_phone_number".tr;
+                    }
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    user.phoneNumber = value;
+                  },
+                  tapped: controller.phoneTapped.value,
+                  onTap: () {
+                    controller.phoneTapped.value = true;
+                  },
+                  onFieldSubmitted: (value) {
+                    if (value.length == 0) controller.phoneTapped.value = false;
+                  },
+                ),
+              ),
+              //password
+              Obx(
+                () => MyTextFormField(
+                  hintText: "Password".tr + " * ",
+                  isPassword: true,
+                  validator: (String value) {
+                    if (value.length < 7) {
+                      return "Password_should_be_minimum_7_characters".tr;
+                    }
+                    _formKey.currentState.save();
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    user.password = value;
+                  },
+                  tapped: controller.passwordTapped.value,
+                  onTap: () {
+                    controller.passwordTapped.value = true;
+                  },
+                  onFieldSubmitted: (value) {
+                    if (value.length == 0)
+                      controller.passwordTapped.value = false;
+                  },
+                ),
+              ),
+              Container(
+                height: screenHeight * 0.05,
+                width: screenWidth * 0.8,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Obx(
+                      () => Checkbox(
+                        value: controller.accept.value,
+                        onChanged: (value) {
+                          controller.accept.value = !controller.accept.value;
+                        },
+                      ),
+                    ),
+                    Container(
+                      height: screenHeight * 0.04,
+                      width: screenWidth * 0.5,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: RichText(
+                          text: TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () async {},
+                            text: "I_agree_to_all_the_terms_and_conditions".tr,
+                            style: TextStyle(
+                              color: Get.theme.primaryColor,
+                              fontWeight: FontWeight.w100,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: screenHeight * 0.08,
+                width: screenWidth * 0.8,
+                child: RaisedButton(
+                  color: Get.theme.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  onPressed: () {
+                    if (user.fullName.isNullOrBlank)
+                      controller.nameTapped.value = false;
+                    if (user.email.isNullOrBlank)
+                      controller.emailTapped.value = false;
+                    if (user.phoneNumber.isNullOrBlank)
+                      controller.phoneTapped.value = false;
+                    if (user.password.isNullOrBlank)
+                      controller.passwordTapped.value = false;
+                    if (_formKey.currentState.validate() &&
+                        controller.accept.value) {
+                      _formKey.currentState.save();
+                      Get.off(
+                        HomeView(),
+                      );
+                    }
+                  },
+                  child: Text(
+                    "Create_an_account".tr,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

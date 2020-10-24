@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="162.578" height="88" viewBox="0 0 162.578 88">
+  <g id="Groupe_1789" data-name="Groupe 1789" transform="translate(3482 1996)">
+    <g id="Groupe_1761" data-name="Groupe 1761" transform="translate(-3649.071 -2033.873)">
+      <g id="Groupe_6" data-name="Groupe 6" transform="translate(263.094 52.873)">
+        <path id="Tracé_12" data-name="Tracé 12" d="M382.953,55.846a33.286,33.286,0,0,0-30.387,46.864l9.676-5.853a22.146,22.146,0,1,1,5.194,8l-8.707,7.1a33.28,33.28,0,1,0,24.225-56.107Z" transform="translate(-349.67 -55.846)" fill="#1d82ba"/>
+        <line id="Ligne_1" data-name="Ligne 1" x1="9.676" y2="5.853" transform="translate(2.895 41.011)" fill="#1d82ba"/>
+        <line id="Ligne_2" data-name="Ligne 2" x1="8.707" y2="7.1" transform="translate(9.057 49.007)" fill="#1d82ba"/>
+        <path id="Tracé_13" data-name="Tracé 13" d="M393.541,108.3c-5.822,3.833-7.666,1.381-8.336.989s.721-4.71-.453-5.152-3.143,1.309-2.947.711-.031-1.215-2.628-1.638c-.412,3.462-1.277,2.493-2.524,2.5s-5.214,2.885-5.214,2.885l-.175,2.5-2.627-.433-12.922,10.984.505-4.936L367.2,108.7l-10.984,8.006-4.854-1.031,14.405-8.954.392-2.627,2.432.6s3.947-2.9,4.348-4.08-.267-2.308,3.153-1.649c.391-2.6-.134-2.988-.752-2.988s1.638-1.35,1.577-2.6-4.606-1.257-4.771-2.009-1.937-3.256,3.483-7.625,10.335-2.731,10.5-.629a19.908,19.908,0,0,1,0,3.421l2.988-.165,2.7,4.369-.011.011,3.339,3.9-1.061,2.8a19.241,19.241,0,0,1,3.256,1.041C399.29,99.307,399.362,104.48,393.541,108.3Z" transform="translate(-350.304 -65.244)" fill="#1d82ba"/>
+      </g>
+    </g>
+    <g id="Groupe_1765" data-name="Groupe 1765" transform="translate(8.5 123.802)">
+      <g id="Groupe_1764" data-name="Groupe 1764" transform="translate(-3491 -2115)">
+        <text id="قيمة" transform="translate(87.5 38.198)" fill="#1d82ba" font-size="40" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"><tspan x="-76.816" y="0">قيمة</tspan></text>
+        <g id="Groupe_1762" data-name="Groupe 1762" transform="translate(75.066 43.889)">
+          <path id="Tracé_11" data-name="Tracé 11" d="M179.382,58.076c-2.411.96-4.861,1.8-7.232,2.568l-.039-.039.294-1.352c2.744-.921,5.605-1.881,7.722-2.7l.039.059Z" transform="translate(-172.111 -56.547)" fill="#1d82ba"/>
+        </g>
+        <g id="Groupe_1763" data-name="Groupe 1763" transform="translate(29.799 13.966)">
+          <path id="Tracé_11-2" data-name="Tracé 11" d="M179.382,58.076c-2.411.96-4.861,1.8-7.232,2.568l-.039-.039.294-1.352c2.744-.921,5.605-1.881,7.722-2.7l.039.059Z" transform="translate(-172.111 -56.547)" fill="#1d82ba"/>
+        </g>
+      </g>
+      <text id="Qima" transform="translate(-3402.5 -2039.802)" font-size="32" font-family="Montserrat-ExtraLight, Montserrat" font-weight="200"><tspan x="-87.552" y="0">Qima</tspan></text>
+    </g>
+  </g>
+</svg>

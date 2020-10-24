@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Groupe_267" data-name="Groupe 267" transform="translate(-103 -226)">
+    <rect id="Rectangle_183" data-name="Rectangle 183" width="24" height="24" rx="2" transform="translate(103 226)" fill="rgba(165,232,240,0.2)"/>
+    <g id="_7_Calendar" data-name="7 Calendar" transform="translate(-719.048 -3357.171)">
+      <path id="Tracé_129" data-name="Tracé 129" d="M840.258,3589.966h-2.333v-.647a.587.587,0,1,0-1.167,0v.647h-5.833v-.647a.586.586,0,1,0-1.167,0v.647h-2.333a.618.618,0,0,0-.583.648v11.41a.617.617,0,0,0,.583.647h12.833a.618.618,0,0,0,.583-.647v-11.41A.618.618,0,0,0,840.258,3589.966Zm-.583,11.411H828.008v-10.116h1.75v.647a.586.586,0,1,0,1.167,0v-.647h5.833v.647a.586.586,0,1,0,1.167,0v-.647h1.75Z" transform="translate(0)" fill="#1d82ba"/>
+      <circle id="Ellipse_11" data-name="Ellipse 11" cx="0.457" cy="0.457" r="0.457" transform="translate(831.639 3594.584)" fill="#1d82ba"/>
+      <circle id="Ellipse_12" data-name="Ellipse 12" cx="0.457" cy="0.457" r="0.457" transform="translate(829.894 3594.584)" fill="#1d82ba"/>
+      <circle id="Ellipse_13" data-name="Ellipse 13" cx="0.457" cy="0.457" r="0.457" transform="translate(833.384 3596.534)" fill="#1d82ba"/>
+      <circle id="Ellipse_14" data-name="Ellipse 14" cx="0.457" cy="0.457" r="0.457" transform="translate(831.639 3596.534)" fill="#1d82ba"/>
+      <circle id="Ellipse_15" data-name="Ellipse 15" cx="0.457" cy="0.457" r="0.457" transform="translate(836.873 3596.534)" fill="#1d82ba"/>
+      <circle id="Ellipse_16" data-name="Ellipse 16" cx="0.457" cy="0.457" r="0.457" transform="translate(835.128 3596.534)" fill="#1d82ba"/>
+      <circle id="Ellipse_17" data-name="Ellipse 17" cx="0.457" cy="0.457" r="0.457" transform="translate(836.873 3598.485)" fill="#1d82ba"/>
+      <circle id="Ellipse_18" data-name="Ellipse 18" cx="0.457" cy="0.457" r="0.457" transform="translate(835.128 3598.485)" fill="#1d82ba"/>
+      <circle id="Ellipse_19" data-name="Ellipse 19" cx="0.457" cy="0.457" r="0.457" transform="translate(829.894 3596.534)" fill="#1d82ba"/>
+    </g>
+  </g>
+</svg>
