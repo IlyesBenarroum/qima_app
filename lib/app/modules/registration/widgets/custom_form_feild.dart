@@ -41,6 +41,27 @@ class MyTextFormField extends GetView {
             filled: true,
             fillColor:
                 tapped ? Colors.white : Get.theme.primaryColor.withOpacity(0.1),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: Get.theme.primaryColor,
+                width: 2.0,
+              ),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: Get.theme.primaryColor,
+                width: 2.0,
+              ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: Colors.transparent,
+                width: 0.0,
+              ),
+            ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
@@ -51,7 +72,7 @@ class MyTextFormField extends GetView {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
-                color: Colors.transparent,
+                color: Get.theme.primaryColor.withOpacity(0.1),
                 width: 1.0,
               ),
             ),

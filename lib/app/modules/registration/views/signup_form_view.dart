@@ -51,6 +51,9 @@ class SignupFormView extends StatelessWidget {
                   tapped: controller.nameTapped.value,
                   onTap: () {
                     controller.nameTapped.value = true;
+                    controller.emailTapped.value = false;
+                    controller.phoneTapped.value = false;
+                    controller.passwordTapped.value = false;
                   },
                   onFieldSubmitted: (value) {
                     if (value.length == 0) controller.nameTapped.value = false;
@@ -75,6 +78,10 @@ class SignupFormView extends StatelessWidget {
                   tapped: controller.emailTapped.value,
                   onTap: () {
                     controller.emailTapped.value = true;
+
+                    controller.nameTapped.value = false;
+                    controller.phoneTapped.value = false;
+                    controller.passwordTapped.value = false;
                   },
                   onFieldSubmitted: (value) {
                     if (value.length == 0) controller.emailTapped.value = false;
@@ -97,6 +104,9 @@ class SignupFormView extends StatelessWidget {
                   tapped: controller.phoneTapped.value,
                   onTap: () {
                     controller.phoneTapped.value = true;
+                    controller.passwordTapped.value = false;
+                    controller.emailTapped.value = false;
+                    controller.nameTapped.value = false;
                   },
                   onFieldSubmitted: (value) {
                     if (value.length == 0) controller.phoneTapped.value = false;
@@ -121,6 +131,9 @@ class SignupFormView extends StatelessWidget {
                   tapped: controller.passwordTapped.value,
                   onTap: () {
                     controller.passwordTapped.value = true;
+                    controller.emailTapped.value = false;
+                    controller.nameTapped.value = false;
+                    controller.phoneTapped.value = false;
                   },
                   onFieldSubmitted: (value) {
                     if (value.length == 0)
@@ -185,14 +198,14 @@ class SignupFormView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   onPressed: () {
-                    if (user.fullName.isNullOrBlank)
-                      controller.nameTapped.value = false;
-                    if (user.email.isNullOrBlank)
-                      controller.emailTapped.value = false;
-                    if (user.phoneNumber.isNullOrBlank)
-                      controller.phoneTapped.value = false;
-                    if (user.password.isNullOrBlank)
-                      controller.passwordTapped.value = false;
+                    // if (user.fullName.isNullOrBlank)
+                    controller.nameTapped.value = false;
+                    // if (user.email.isNullOrBlank)
+                    controller.emailTapped.value = false;
+                    // if (user.phoneNumber.isNullOrBlank)
+                    controller.phoneTapped.value = false;
+                    // if (user.password.isNullOrBlank)
+                    controller.passwordTapped.value = false;
                     if (_formKey.currentState.validate() &&
                         controller.accept.value) {
                       _formKey.currentState.save();

@@ -52,6 +52,8 @@ class LoginFormView extends GetView {
                   tapped: controller.emailTapped.value,
                   onTap: () {
                     controller.emailTapped.value = true;
+
+                    controller.passwordTapped.value = false;
                   },
                   onFieldSubmitted: (value) {
                     if (value.length == 0) controller.emailTapped.value = false;
@@ -76,10 +78,14 @@ class LoginFormView extends GetView {
                   tapped: controller.passwordTapped.value,
                   onTap: () {
                     controller.passwordTapped.value = true;
+
+                    controller.emailTapped.value = false;
                   },
                   onFieldSubmitted: (value) {
-                    if (value.length == 0)
+                    if (value.length == 0) {
+                      controller.emailTapped.value = true;
                       controller.passwordTapped.value = false;
+                    }
                   },
                 ),
               ),

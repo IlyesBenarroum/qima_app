@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:qima/generated/locales.g.dart';
 import 'app/routes/app_pages.dart';
 import 'package:get_storage/get_storage.dart';
-// import 'package:flutter_uxcam/flutter_uxcam.dart';
-
 void main() async {
   await GetStorage.init();
   runApp(MyApp());

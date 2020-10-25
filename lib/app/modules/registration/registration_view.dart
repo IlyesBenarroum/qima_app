@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'registration_controller.dart';
 import 'views/login_form_view.dart';
@@ -28,6 +29,22 @@ class RegistrationView extends GetView<RegistrationController> {
                 width: screenWidth,
                 height: screenHeight * 0.68,
                 color: Get.theme.primaryColor,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.only(top: screenHeight * 0.68 * 0.25),
+                        child: SvgPicture.asset(
+                          "assets/images/logoNew.svg",
+                          color: Colors.white,
+                          height: screenHeight * 0.15,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Positioned(
