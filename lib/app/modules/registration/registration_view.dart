@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import './signup_controller.dart';
-import './views/login_form_view.dart';
+import 'registration_controller.dart';
+import 'views/login_form_view.dart';
 
 import 'views/signup_form_view.dart';
 import 'widgets/socialmedia_card.dart';
@@ -9,8 +9,8 @@ import 'widgets/socialmedia_card.dart';
 double screenHeight = Get.height;
 double screenWidth = Get.width;
 
-class SignupView extends GetView<SignupController> {
-  final SignupController controller = Get.put(SignupController());
+class RegistrationView extends GetView<RegistrationController> {
+  final RegistrationController controller = Get.put(RegistrationController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

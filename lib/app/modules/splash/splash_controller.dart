@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import '../../../app/modules/home/home_view.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../app/modules/OnBoarding/views/on_boarding_view.dart';
-import '../../../app/modules/registration/signup_view.dart';
+import '../registration/registration_view.dart';
 
 class SplashController extends GetxController {
   final box = GetStorage();
@@ -13,14 +13,14 @@ class SplashController extends GetxController {
     if (_seen) {
       Future.delayed(Duration(seconds: 4)).then(
         (value) => Get.off(
-          SignupView(),
+          RegistrationView(),
         ),
       );
     } else {
       await box.write('seen', true);
       Future.delayed(Duration(seconds: 4)).then(
         (value) => Get.off(
-          SignupView(),
+          RegistrationView(),
         ),
       );
     }

@@ -16,8 +16,8 @@ import '../../app/modules/auctions/auction_view.dart';
 import '../../app/modules/auctions/auction_binding.dart';
 import '../../app/modules/main/main_view.dart';
 import '../../app/modules/main/main_binding.dart';
-import '../../app/modules/registration/signup_view.dart';
-import '../../app/modules/registration/signup_binding.dart';
+import '../modules/registration/registration_view.dart';
+import '../modules/registration/registration_binding.dart';
 import '../../app/modules/home/home_view.dart';
 import '../../app/modules/home/home_binding.dart';
 import 'package:get/get.dart';
@@ -34,8 +34,8 @@ class AppPages {
     ),
     GetPage(
       name: Routes.SIGNUP,
-      page: () => SignupView(),
-      binding: SignupBinding(),
+      page: () => RegistrationView(),
+      binding: RegistrationBinding(),
     ),
     GetPage(
       name: Routes.MAIN,

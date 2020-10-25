@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../app/modules/auctions/auction_view.dart';
 import '../../app/modules/home/home_view.dart';
-import '../../app/modules/registration/signup_view.dart';
+import '../modules/registration/registration_view.dart';
 import 'package:share/share.dart';
 
 void showSuccessDialog(BuildContext context, String success) {
@@ -834,7 +834,7 @@ Widget createAccount() {
                                 horizontal: Get.width * 0.025),
                             child: InkWell(
                               onTap: () {
-                                Get.offAll(SignupView());
+                                Get.offAll(RegistrationView());
                               },
                               child: AnimatedContainer(
                                 duration: Duration(milliseconds: 0),
