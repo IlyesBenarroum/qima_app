@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import '../../../app/modules/home/home_view.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../app/modules/OnBoarding/views/on_boarding_view.dart';
-import '../../../app/modules/signup/signup_view.dart';
+import '../../../app/modules/registration/signup_view.dart';
 
 class SplashController extends GetxController {
   final box = GetStorage();

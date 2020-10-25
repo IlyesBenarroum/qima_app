@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../app/models/user.dart';
 import '../../../../app/modules/home/home_view.dart';
-import '../../../../app/modules/signup/controllers/signup_form_controller.dart';
-import '../../../../app/modules/signup/widgets/custom_form_feild.dart';
+import '../../../../app/modules/registration/controllers/signup_form_controller.dart';
+import '../../../../app/modules/registration/widgets/custom_form_feild.dart';
 import 'package:validators/validators.dart' as validator;
 
 Pattern namePattern =
@@ -128,40 +128,52 @@ class SignupFormView extends StatelessWidget {
                   },
                 ),
               ),
-              Container(
-                height: screenHeight * 0.05,
-                width: screenWidth * 0.8,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Obx(
-                      () => Checkbox(
-                        value: controller.accept.value,
-                        onChanged: (value) {
-                          controller.accept.value = !controller.accept.value;
-                        },
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+                child: Container(
+                  height: screenHeight * 0.05,
+                  width: screenWidth * 0.8,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: screenWidth * 0.05,
+                        height: screenWidth * 0.05,
+                        child: Obx(
+                          () => Checkbox(
+                            value: controller.accept.value,
+                            onChanged: (value) {
+                              controller.accept.value =
+                                  !controller.accept.value;
+                            },
+                          ),
+                        ),
                       ),
-                    ),
-                    Container(
-                      height: screenHeight * 0.04,
-                      width: screenWidth * 0.5,
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: RichText(
-                          text: TextSpan(
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () async {},
-                            text: "I_agree_to_all_the_terms_and_conditions".tr,
-                            style: TextStyle(
-                              color: Get.theme.primaryColor,
-                              fontWeight: FontWeight.w100,
-                              decoration: TextDecoration.underline,
+                      SizedBox(
+                        width: screenWidth * 0.0125,
+                      ),
+                      Container(
+                        height: screenHeight * 0.04,
+                        width: screenWidth * 0.6,
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: RichText(
+                            text: TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () async {},
+                              text:
+                                  "I_agree_to_all_the_terms_and_conditions".tr,
+                              style: TextStyle(
+                                color: Get.theme.primaryColor,
+                                fontWeight: FontWeight.w400,
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Container(

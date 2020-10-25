@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import '../../../../app/modules/home/home_view.dart';
-import '../../../../app/modules/signup/signup_view.dart';
+import '../../../../app/modules/registration/signup_view.dart';
 
 class OnBoardingController extends GetxController {
   @override
