@@ -27,7 +27,7 @@ class SignupFormView extends StatelessWidget {
     return Form(
       key: _formKey,
       child: Container(
-        height: screenHeight * .72,
+        height: screenHeight * .73,
         width: screenWidth * 0.8,
         child: SingleChildScrollView(
           child: Column(

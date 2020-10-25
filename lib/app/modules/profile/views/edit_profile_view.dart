@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/modules/home/home_view.dart';
 import '../../../models/user.dart';
 import '../../../widgets/custom_form_feild.dart';
 import '../controllers/edit_profile_controllers.dart';
@@ -23,117 +24,117 @@ class EditProfileView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: Get.height,
-            width: Get.width,
-            color: Colors.transparent,
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              height: Get.height,
               width: Get.width,
-              height: Get.height * .35,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(0, 2),
-                  )
-                ],
-                color: Colors.blueGrey,
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(top: Get.height * 0.05),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: Get.width * 0.3,
-                      height: Get.width * 0.3,
-                      decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: new DecorationImage(
-                          fit: BoxFit.fill,
-                          image: new NetworkImage(
-                            "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+              color: Colors.transparent,
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                width: Get.width,
+                height: Get.height * .35,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0, 2),
+                    )
+                  ],
+                  color: Colors.blueGrey,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(top: Get.height * 0.05),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: Get.width * 0.3,
+                        height: Get.width * 0.3,
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: new DecorationImage(
+                            fit: BoxFit.fill,
+                            image: new NetworkImage(
+                              "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Text(
-                      'Abu_Bakr_Muhammad'.tr,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                      Text(
+                        'Abu_Bakr_Muhammad'.tr,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            // Positioned(
+            //   top: Get.height * 0.31,
+            //   child: Padding(
+            //     padding: const EdgeInsets.symmetric(
+            //       horizontal: 20,
+            //     ),
+            //     child: Text(
+            //       Get.locale.languageCode == "en"
+            //           ? "+249912300000"
+            //           : "249912300000+",
+            //       style: TextStyle(
+            //         color: Colors.white,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            Positioned(
+              top: Get.height * 0.32,
+              left: Get.locale.languageCode == "en"
+                  ? Get.width * 0.8
+                  : Get.width * 0.05,
+              right: Get.locale.languageCode == "en"
+                  ? Get.width * 0.05
+                  : Get.width * 0.8,
+              child: Container(
+                width: Get.width * 0.12,
+                height: Get.width * 0.12,
+                child: IconButton(
+                  onPressed: () {
+                    Get.back();
+                    // controller.edit.value = !controller.edit.value;
+                  },
+                  icon: Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+                decoration: new BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      spreadRadius: 1,
+                      offset: Offset(0, 2),
+                    )
                   ],
+                  color: Get.theme.primaryColor,
+                  shape: BoxShape.circle,
                 ),
               ),
             ),
-          ),
-          // Positioned(
-          //   top: Get.height * 0.31,
-          //   child: Padding(
-          //     padding: const EdgeInsets.symmetric(
-          //       horizontal: 20,
-          //     ),
-          //     child: Text(
-          //       Get.locale.languageCode == "en"
-          //           ? "+249912300000"
-          //           : "249912300000+",
-          //       style: TextStyle(
-          //         color: Colors.white,
-          //         fontWeight: FontWeight.bold,
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          Positioned(
-            top: Get.height * 0.32,
-            left: Get.locale.languageCode == "en"
-                ? Get.width * 0.8
-                : Get.width * 0.05,
-            right: Get.locale.languageCode == "en"
-                ? Get.width * 0.05
-                : Get.width * 0.8,
-            child: Container(
-              width: Get.width * 0.12,
-              height: Get.width * 0.12,
-              child: IconButton(
-                onPressed: () {
-                  Get.back();
-                  // controller.edit.value = !controller.edit.value;
-                },
-                icon: Icon(
-                  Icons.camera_alt,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-              decoration: new BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    spreadRadius: 1,
-                    offset: Offset(0, 2),
-                  )
-                ],
-                color: Get.theme.primaryColor,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-          Positioned(
-            top: screenHeight * 0.39,
-            left: screenWidth * 0.05,
-            right: screenHeight * 0.05,
-            child: Form(
-              key: _formKey,
-              child: SingleChildScrollView(
+            Positioned(
+              top: screenHeight * 0.39,
+              left: screenWidth * 0.05,
+              right: screenHeight * 0.05,
+              child: Form(
+                key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -144,8 +145,8 @@ class EditProfileView extends GetView {
                           hintText: "Full_Name".tr,
                           validator: (String value) {
                             if (value.isEmpty) {
-                              return null;
-                              // return "Please_enter_your_full_name".tr;
+                              // return null;
+                              return "Please_enter_your_full_name".tr;
                             } else if (!nameRegex.hasMatch(value)) {
                               return "Please_enter_a_valid_full_name".tr;
                             }
@@ -241,7 +242,7 @@ class EditProfileView extends GetView {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
                             Get.off(
-                              EditProfileView(),
+                              HomeView(),
                             );
                           }
                         },
@@ -257,8 +258,8 @@ class EditProfileView extends GetView {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

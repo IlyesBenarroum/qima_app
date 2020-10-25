@@ -97,5 +97,6 @@
     "Please_enter_a_valid_email":"Please enter a valid email",
     "Please_enter_a_valid_phone_number":"Please enter a valid phone number",
     "I_agree_to_all_the_terms_and_conditions":"I agree to all the terms and conditions",
-    "Password_should_be_minimum_7_characters":"Password should be minimum 7 characters"
+    "Password_should_be_minimum_7_characters":"Password should be minimum 7 characters",
+    "Save":"Save"
   }

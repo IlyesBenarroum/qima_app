@@ -49,7 +49,7 @@ class RegistrationView extends GetView<RegistrationController> {
             ),
             Positioned(
               // alignment: Alignment.bottomCenter,
-              bottom: screenHeight * 0.1,
+              bottom: screenHeight * 0.09,
               left: screenWidth * 0.05,
               right: screenWidth * 0.05,
               child: Padding(
@@ -62,7 +62,7 @@ class RegistrationView extends GetView<RegistrationController> {
                   child: Obx(
                     () => Container(
                       height: controller.signup.value
-                          ? screenHeight * 0.82
+                          ? screenHeight * 0.84
                           : screenHeight * 0.51,
                       width: screenWidth * 0.9,
                       child: Column(
@@ -79,7 +79,7 @@ class RegistrationView extends GetView<RegistrationController> {
                                     controller.signup.value = true;
                                   },
                                   child: Container(
-                                    // height: screenHeight * 0.82,
+                                    // height: screenHeight * 0.5,
                                     width: screenWidth * 0.4,
                                     color: Colors.white,
                                     child: Stack(

@@ -110,6 +110,7 @@ abstract class LocaleKeys {
   static const Please_enter_a_valid_phone_number = 'Please_enter_a_valid_phone_number';
   static const I_agree_to_all_the_terms_and_conditions = 'I_agree_to_all_the_terms_and_conditions';
   static const Password_should_be_minimum_7_characters = 'Password_should_be_minimum_7_characters';
+  static const Save = 'Save';
 }
 
 abstract class Locales {
@@ -215,6 +216,7 @@ abstract class Locales {
    'Please_enter_a_valid_phone_number': 'يرجى إدخال رقم هاتف صالح',
    'I_agree_to_all_the_terms_and_conditions': 'أوافق على جميع الشروط والأحكام الواردة',
    'Password_should_be_minimum_7_characters': 'يجب ألا تقل كلمة المرور عن 7 أحرف',
+   'Save': 'حفظ',
   };
   static const en = {
    'Welcome_to_Qima_App': 'Welcome to Qima App',
@@ -316,6 +318,7 @@ abstract class Locales {
    'Please_enter_a_valid_phone_number': 'Please enter a valid phone number',
    'I_agree_to_all_the_terms_and_conditions': 'I agree to all the terms and conditions',
    'Password_should_be_minimum_7_characters': 'Password should be minimum 7 characters',
+   'Save': 'Save',
   };
 
 }

@@ -98,5 +98,6 @@
     "Please_enter_a_valid_email":"يرجى إدخال البريد الإلكتروني الصحيح",
     "Please_enter_a_valid_phone_number":"يرجى إدخال رقم هاتف صالح",
     "I_agree_to_all_the_terms_and_conditions":"أوافق على جميع الشروط والأحكام الواردة",
-    "Password_should_be_minimum_7_characters":"يجب ألا تقل كلمة المرور عن 7 أحرف"
+    "Password_should_be_minimum_7_characters":"يجب ألا تقل كلمة المرور عن 7 أحرف",
+    "Save":"حفظ"
   }
