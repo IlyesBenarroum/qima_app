@@ -1,10 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../app/models/user.dart';
 import '../../../../app/modules/home/home_view.dart';
 import '../../../../app/modules/registration/controllers/login_form_controller.dart';
-import '../../../../app/modules/registration/widgets/custom_form_feild.dart';
+import '../../../widgets/custom_form_feild.dart';
 import 'package:validators/validators.dart' as validator;
 
 double screenHeight = Get.height;
@@ -89,13 +88,8 @@ class LoginFormView extends GetView {
                   },
                 ),
               ),
-              Container(
-                height: screenHeight * 0.05,
-                width: screenWidth * 0.8,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [],
-                ),
+              SizedBox(
+                height: screenHeight * 0.025,
               ),
               Container(
                 height: screenHeight * 0.08,
@@ -106,10 +100,10 @@ class LoginFormView extends GetView {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   onPressed: () {
-                    if (user.email.isNullOrBlank)
-                      controller.emailTapped.value = false;
-                    if (user.password.isNullOrBlank)
-                      controller.passwordTapped.value = false;
+                    // if (user.email.isNullOrBlank)
+                    controller.emailTapped.value = false;
+                    // if (user.password.isNullOrBlank)
+                    controller.passwordTapped.value = false;
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       Get.off(

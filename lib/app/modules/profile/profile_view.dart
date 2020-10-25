@@ -8,11 +8,11 @@ import '../../.././app/widgets/notfoundwidget.dart';
 
 import 'views/pastauctions.dart';
 
-// var edit = false.obs;
-
-ProfileController controller = Get.put(ProfileController());
+double screenHeight = Get.height;
+double screenWidth = Get.width;
 
 class ProfileView extends GetView<ProfileController> {
+  final ProfileController controller = Get.put(ProfileController());
   final List pastAuctionList = [1];
   @override
   Widget build(BuildContext context) {
@@ -99,8 +99,8 @@ class ProfileView extends GetView<ProfileController> {
               height: Get.width * 0.12,
               child: IconButton(
                 onPressed: () {
-                  //
-                  controller.edit.value = !controller.edit.value;
+                  Get.to(EditProfileView());
+                  // controller.edit.value = !controller.edit.value;
                 },
                 icon: Icon(
                   Icons.edit,
@@ -150,12 +150,8 @@ class ProfileView extends GetView<ProfileController> {
                     child: Container(
                       height: Get.height * 0.6,
                       width: Get.width,
-                      child: Obx(
-                        () => controller.edit.value
-                            ? EditProfileView()
-                            : PastauctionsView(
-                                pastAuctionList: pastAuctionList,
-                              ),
+                      child: PastauctionsView(
+                        pastAuctionList: pastAuctionList,
                       ),
                     ),
                   ),

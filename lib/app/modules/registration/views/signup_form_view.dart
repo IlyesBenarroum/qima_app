@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../../../app/models/user.dart';
 import '../../../../app/modules/home/home_view.dart';
 import '../../../../app/modules/registration/controllers/signup_form_controller.dart';
-import '../../../../app/modules/registration/widgets/custom_form_feild.dart';
+import '../../../widgets/custom_form_feild.dart';
 import 'package:validators/validators.dart' as validator;
 
 Pattern namePattern =

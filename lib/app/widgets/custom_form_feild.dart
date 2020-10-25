@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../app/modules/auction_live/auction_live_view.dart';
-import '../controllers/signup_form_controller.dart';
+import '../modules/auction_live/auction_live_view.dart';
+import '../modules/registration/controllers/signup_form_controller.dart';
 
 class MyTextFormField extends GetView {
   final String hintText;
