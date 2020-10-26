@@ -153,7 +153,7 @@ class EditProfileView extends GetView {
                             return null;
                           },
                           onSaved: (String value) {
-                            user.fullName = value;
+                            user.name = value;
                           },
                           tapped: controller.nameTapped.value,
                           onTap: () {
@@ -209,7 +209,7 @@ class EditProfileView extends GetView {
                             return null;
                           },
                           onSaved: (String value) {
-                            user.phoneNumber = value;
+                            user.phone = value;
                           },
                           tapped: controller.phoneTapped.value,
                           onTap: () {

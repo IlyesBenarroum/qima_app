@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/tools/popUps.dart';
 import '../../../../app/models/user.dart';
 import '../../../../app/modules/home/home_view.dart';
 import '../../../../app/modules/registration/controllers/login_form_controller.dart';
@@ -8,7 +9,7 @@ import 'package:validators/validators.dart' as validator;
 
 double screenHeight = Get.height;
 double screenWidth = Get.width;
-
+String password = "";
 Pattern namePattern =
     r"(^[\u0621-\u064A-Za-z]{2,16})([ ]{0,1})([\u0621-\u064A-Za-z]{2,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{3,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{2,16})";
 RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
@@ -21,7 +22,19 @@ User user = User();
 class LoginFormView extends GetView {
   final _formKey = GlobalKey<FormState>();
   final LoginFormController controller = Get.put(LoginFormController());
-
+  final String countryId;
+  final String providerId;
+  final String phone;
+  final String newOrNot;
+  final String paymentMethod;
+  final String credit;
+  LoginFormView(
+      {this.countryId,
+      this.providerId,
+      this.phone,
+      this.newOrNot,
+      this.paymentMethod,
+      this.credit});
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -65,14 +78,14 @@ class LoginFormView extends GetView {
                   hintText: "Password".tr + " * ",
                   isPassword: true,
                   validator: (String value) {
-                    if (value.length < 7) {
+                    if (value.length <= 4) {
                       return "Password_should_be_minimum_7_characters".tr;
                     }
                     _formKey.currentState.save();
                     return null;
                   },
                   onSaved: (String value) {
-                    user.password = value;
+                    password = value;
                   },
                   tapped: controller.passwordTapped.value,
                   onTap: () {
@@ -99,20 +112,46 @@ class LoginFormView extends GetView {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     // if (user.email.isNullOrBlank)
                     controller.emailTapped.value = false;
                     // if (user.password.isNullOrBlank)
                     controller.passwordTapped.value = false;
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
-                      Get.off(
-                        HomeView(),
-                      );
+                      {
+                        String msg;
+                        // print(msg);
+                        msg = await controller.loginPost(
+                            user.email, password, "0", "");
+                        // print(msg);
+                        if (msg == "success") {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => HomeView(
+                                // countryId: countryId,
+                                // providerId:providerId,
+                                // newOrNot: newOrNot,
+                                // paymentMethod:paymentMethod,
+                                // credit:credit,
+                                // phone: phone,
+                                ),
+                          ));
+                        } else {
+                          showErrorDialog(context, msg);
+                        }
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //   builder: (context) => HomePage(),
+                        // ));
+                      }
+                      ;
+
+                      // Get.off(
+                      //   HomeView(),
+                      // );
                     }
                   },
                   child: Text(
-                    "Create_an_account".tr,
+                    "Login".tr,
                     style: TextStyle(
                       color: Colors.white,
                     ),

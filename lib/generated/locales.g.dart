@@ -111,6 +111,14 @@ abstract class LocaleKeys {
   static const I_agree_to_all_the_terms_and_conditions = 'I_agree_to_all_the_terms_and_conditions';
   static const Password_should_be_minimum_7_characters = 'Password_should_be_minimum_7_characters';
   static const Save = 'Save';
+  static const Enter_the_code_that_was_sent_to_the_number = 'Enter_the_code_that_was_sent_to_the_number';
+  static const Resend = 'Resend';
+  static const Did_not_receive_the_code = 'Did_not_receive_the_code';
+  static const Enter_the_verification_code = 'Enter_the_verification_code';
+  static const Done = 'Done';
+  static const Your_account_has_been_successfully_registered = 'Your_account_has_been_successfully_registered';
+  static const To_complete_the_process_please_check_the_code = 'To_complete_the_process_please_check_the_code';
+  static const that_was_sent_to_your_phone = 'that_was_sent_to_your_phone';
 }
 
 abstract class Locales {
@@ -217,6 +225,14 @@ abstract class Locales {
    'I_agree_to_all_the_terms_and_conditions': 'أوافق على جميع الشروط والأحكام الواردة',
    'Password_should_be_minimum_7_characters': 'يجب ألا تقل كلمة المرور عن 7 أحرف',
    'Save': 'حفظ',
+   'Enter_the_code_that_was_sent_to_the_number': 'أدخل الرمز الذي تم ارسالة الي الرقم',
+   'Resend': 'إعادة إرسال',
+   'Did_not_receive_the_code': 'لم يصلك الرمز ؟',
+   'Enter_the_verification_code': 'قم بإدخال رمز التحقق',
+   'Done': 'حسنا',
+   'Your_account_has_been_successfully_registered': '.تم تسجيل حسابك بنجاح',
+   'To_complete_the_process_please_check_the_code': 'لإكمال العملية, يرجى التحقق من الرمز',
+   'that_was_sent_to_your_phone': 'الذي تم ارسالة إلى هاتفك',
   };
   static const en = {
    'Welcome_to_Qima_App': 'Welcome to Qima App',
@@ -319,6 +335,14 @@ abstract class Locales {
    'I_agree_to_all_the_terms_and_conditions': 'I agree to all the terms and conditions',
    'Password_should_be_minimum_7_characters': 'Password should be minimum 7 characters',
    'Save': 'Save',
+   'Enter_the_code_that_was_sent_to_the_number': 'Enter the code that was sent to the number',
+   'Resend': 'Resend',
+   'Did_not_receive_the_code': 'Did not receive the code?',
+   'Enter_the_verification_code': 'Enter the verification code',
+   'Done': 'Okay',
+   'Your_account_has_been_successfully_registered': 'Your account has been successfully registered.',
+   'To_complete_the_process_please_check_the_code': 'To complete the process, please check the code',
+   'that_was_sent_to_your_phone': 'that was sent to your phone',
   };
 
 }

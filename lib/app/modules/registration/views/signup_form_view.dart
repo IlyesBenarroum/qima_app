@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../tools/popUps.dart';
 import '../../../../app/models/user.dart';
 import '../../../../app/modules/home/home_view.dart';
 import '../../../../app/modules/registration/controllers/signup_form_controller.dart';
@@ -13,7 +14,7 @@ RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
 
 Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
 RegExp phoneRegex = RegExp(phonePattern);
-
+String password = "";
 User user = User();
 double screenHeight = Get.height;
 double screenWidth = Get.width;
@@ -46,7 +47,7 @@ class SignupFormView extends StatelessWidget {
                     return null;
                   },
                   onSaved: (String value) {
-                    user.fullName = value;
+                    user.name = value;
                   },
                   tapped: controller.nameTapped.value,
                   onTap: () {
@@ -99,7 +100,7 @@ class SignupFormView extends StatelessWidget {
                     return null;
                   },
                   onSaved: (String value) {
-                    user.phoneNumber = value;
+                    user.phone = value;
                   },
                   tapped: controller.phoneTapped.value,
                   onTap: () {
@@ -126,7 +127,7 @@ class SignupFormView extends StatelessWidget {
                     return null;
                   },
                   onSaved: (String value) {
-                    user.password = value;
+                    password = value;
                   },
                   tapped: controller.passwordTapped.value,
                   onTap: () {
@@ -206,13 +207,14 @@ class SignupFormView extends StatelessWidget {
                     controller.phoneTapped.value = false;
                     // if (user.password.isNullOrBlank)
                     controller.passwordTapped.value = false;
-                    if (_formKey.currentState.validate() &&
-                        controller.accept.value) {
-                      _formKey.currentState.save();
-                      Get.off(
-                        HomeView(),
-                      );
-                    }
+                    // if (_formKey.currentState.validate() &&
+                    //     controller.accept.value) {
+                    //   _formKey.currentState.save();
+                    //   // HomeView(),
+                    // Get.off(
+                    postPopup();
+                    // );
+                    // }
                   },
                   child: Text(
                     "Create_an_account".tr,

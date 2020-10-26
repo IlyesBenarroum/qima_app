@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/modules/registration/views/number_confirmation.dart';
 import '../../app/modules/auctions/auction_view.dart';
 import '../../app/modules/home/home_view.dart';
 import '../modules/registration/registration_view.dart';
@@ -655,119 +656,122 @@ void losingAuction(BuildContext context) {
       });
 }
 
-void postPopup(BuildContext context) {
-  showDialog(
-      context: context,
-      builder: (context) {
-        return GestureDetector(
-          onTap: () => Get.back(), //Navigator.pop(context),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(.92),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0.00, 10.00),
-                  color: Color(0xff8a959e).withOpacity(0.20),
-                  blurRadius: 20,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(14.00),
+void postPopup() {
+  Get.dialog(
+    GestureDetector(
+      onTap: () => Get.back(), //Navigator.pop(context),
+      child: Container(
+        width: screenWidth,
+        height: screenHeight,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          // color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0.00, 10.00),
+              color: Color(0xff8a959e).withOpacity(0.20),
+              blurRadius: 20,
             ),
-            child: GestureDetector(
-              onTap: () => print(''),
-              child: Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(6.0),
-                  child: Container(
-                    color: Colors.white,
-                    width: MediaQuery.of(context).size.width * .9,
-                    height: MediaQuery.of(context).size.height * .48,
-                    child: Material(
-                      textStyle: TextStyle(color: Colors.black),
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: 15,
-                                  top:
-                                      MediaQuery.of(context).size.height * .03),
-                              child: SvgPicture.asset('assets/postsignup.svg'),
-                            ),
-                            Padding(
-                                padding: EdgeInsets.only(top: 10.0),
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.6,
-                                  height:
-                                      MediaQuery.of(context).size.height * .1,
-                                  child: FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Text(
-                                      "تم تسجيل حسابك بنجاح. لإكمال العملية \n  يرجى التحقق ادخال الرمز الذي تم ارسالة إلى \nهاتفك",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Color(0xff464646),
-                                      ),
-                                    ),
-                                  ),
-                                )),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: 0.0, right: 15, left: 15),
-                              child: InkWell(
-                                onTap: () {
-                                  Get.back();
-                                  //  Get.to(SignupView());
-                                  // Navigator.pop(context);
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //   builder: (context) => PostSignUp(),
-                                  // ));
-                                },
-                                child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 0),
-                                  height: 50.00,
-                                  width: MediaQuery.of(context).size.width * .8,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xff3686bd),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(0.00, 2.00),
-                                        color: Colors.white,
-                                        blurRadius: 4,
-                                      ),
-                                    ],
-                                    borderRadius: BorderRadius.circular(10.00),
-                                  ),
-                                  child: Center(
-                                    child: new Text(
-                                      " حسنا ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Color(0xffffffff),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+          ],
+          borderRadius: BorderRadius.circular(14.00),
+        ),
+        child: Center(
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            elevation: 7,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              width: screenWidth * .9,
+              height: screenHeight * .48,
+              child: Padding(
+                padding: EdgeInsets.all(5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: 0, top: screenHeight * .03),
+                      child: SvgPicture.asset('assets/images/postsignup.svg'),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(top: 10.0),
+                        child: Container(
+                          width: screenWidth * 0.6,
+                          height: screenHeight * .1,
+                          child: FittedBox(
+                            fit: BoxFit.fill,
+                            child: Text(
+                              "Your_account_has_been_successfully_registered"
+                                      .tr +
+                                  " \n" +
+                                  "To_complete_the_process_please_check_the_code"
+                                      .tr +
+                                  "\n" +
+                                  "that_was_sent_to_your_phone".tr,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0xff464646),
                               ),
                             ),
-                          ],
+                          ),
+                        )),
+                    Padding(
+                      padding: EdgeInsets.only(top: 0.0, right: 15, left: 15),
+                      child: InkWell(
+                        onTap: () {
+                          // Get.back();
+                          // Get.to(HomeView());
+                          Get.offAll(
+                            NumberConfirmation(),
+                          );
+                          //  Get.to(SignupView());
+                          // Navigator.pop(context);
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: (context) => PostSignUp(),
+                          // ));
+                        },
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: 0),
+                          height: 50.00,
+                          width: screenWidth * .8,
+                          decoration: BoxDecoration(
+                            color: Color(0xff3686bd),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(0.00, 2.00),
+                                color: Colors.white,
+                                blurRadius: 4,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(10.00),
+                          ),
+                          child: Center(
+                            child: new Text(
+                              "Done".tr,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xffffffff),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
           ),
-        );
-      });
+        ),
+      ),
+    ),
+  );
 }
 
 Widget createAccount() {

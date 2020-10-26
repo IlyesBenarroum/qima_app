@@ -99,5 +99,15 @@
     "Please_enter_a_valid_phone_number":"يرجى إدخال رقم هاتف صالح",
     "I_agree_to_all_the_terms_and_conditions":"أوافق على جميع الشروط والأحكام الواردة",
     "Password_should_be_minimum_7_characters":"يجب ألا تقل كلمة المرور عن 7 أحرف",
-    "Save":"حفظ"
+    "Save":"حفظ",
+    "Enter_the_code_that_was_sent_to_the_number":"أدخل الرمز الذي تم ارسالة الي الرقم",
+    "Resend":"إعادة إرسال",
+    "Did_not_receive_the_code":"لم يصلك الرمز ؟",
+    "Enter_the_verification_code":"قم بإدخال رمز التحقق",
+    "Done":"حسنا",
+    "Your_account_has_been_successfully_registered":".تم تسجيل حسابك بنجاح",
+    "To_complete_the_process_please_check_the_code":"لإكمال العملية, يرجى التحقق من الرمز",
+    "that_was_sent_to_your_phone":"الذي تم ارسالة إلى هاتفك"
+  
+    
   }
