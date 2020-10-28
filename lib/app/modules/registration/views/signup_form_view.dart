@@ -207,14 +207,14 @@ class SignupFormView extends StatelessWidget {
                     controller.phoneTapped.value = false;
                     // if (user.password.isNullOrBlank)
                     controller.passwordTapped.value = false;
-                    // if (_formKey.currentState.validate() &&
-                    //     controller.accept.value) {
-                    //   _formKey.currentState.save();
-                    //   // HomeView(),
+                    if (_formKey.currentState.validate() &&
+                        controller.accept.value) {
+                      _formKey.currentState.save();
+                      // HomeView(),
                     // Get.off(
                     postPopup();
                     // );
-                    // }
+                    }
                   },
                   child: Text(
                     "Create_an_account".tr,
