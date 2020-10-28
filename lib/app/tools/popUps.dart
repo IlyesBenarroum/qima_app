@@ -98,86 +98,97 @@ void showSuccessDialog(BuildContext context, String success) {
 }
 
 void showErrorDialog(BuildContext context, String error) {
-  showDialog(
-      context: context,
-      builder: (context) {
-        return GestureDetector(
-          onTap: () => Navigator.pop(context),
+  Get.dialog(
+    GestureDetector(
+      onTap: ()=>Get.back(),
           child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(color: Color(0xff5acfc3).withOpacity(.6)),
-            child: GestureDetector(
-              onTap: () => print(''),
-              child: Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    color: Colors.white,
-                    width: MediaQuery.of(context).size.width * .9,
-                    child: Material(
-                      textStyle: TextStyle(color: Colors.black),
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: InkWell(
-                                  onTap: () => Navigator.pop(context),
-                                  child: Icon(
-                                    Icons.clear,
-                                    color: Colors.grey,
-                                  )),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    RichText(
-                                        textAlign: TextAlign.center,
-                                        text: TextSpan(children: [
-                                          TextSpan(
-                                              text: "Oops!\n",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontFamily: 'Gotham',
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold)),
-                                          WidgetSpan(
-                                              child: Container(
-                                            height: 10.0,
-                                          )),
-                                          TextSpan(
-                                              text: error + "\n\n",
-                                              style: TextStyle(
-                                                  fontFamily: "Gotham",
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w300,
-                                                  fontSize: 12)),
-                                        ])),
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      });
+        width: screenWidth,
+        height: screenHeight,
+        decoration: BoxDecoration(),
+        child: null,
+      ),
+    ),
+  );
+  // showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return GestureDetector(
+  //         onTap: () => Navigator.pop(context),
+  //         child: Container(
+  //           width: MediaQuery.of(context).size.width,
+  //           height: MediaQuery.of(context).size.height,
+  //           decoration: BoxDecoration(color: Color(0xff5acfc3).withOpacity(.6)),
+  //           child: GestureDetector(
+  //             onTap: () => print(''),
+  //             child: Center(
+  //               child: ClipRRect(
+  //                 borderRadius: BorderRadius.circular(10.0),
+  //                 child: Container(
+  //                   color: Colors.white,
+  //                   width: MediaQuery.of(context).size.width * .9,
+  //                   child: Material(
+  //                     textStyle: TextStyle(color: Colors.black),
+  //                     color: Colors.white,
+  //                     child: Padding(
+  //                       padding: EdgeInsets.all(5.0),
+  //                       child: Column(
+  //                         crossAxisAlignment: CrossAxisAlignment.start,
+  //                         mainAxisSize: MainAxisSize.min,
+  //                         children: <Widget>[
+  //                           Align(
+  //                             alignment: Alignment.centerRight,
+  //                             child: InkWell(
+  //                                 onTap: () => Navigator.pop(context),
+  //                                 child: Icon(
+  //                                   Icons.clear,
+  //                                   color: Colors.grey,
+  //                                 )),
+  //                           ),
+  //                           Padding(
+  //                             padding:
+  //                                 const EdgeInsets.symmetric(horizontal: 10.0),
+  //                             child: SizedBox(
+  //                               width: MediaQuery.of(context).size.width,
+  //                               child: Column(
+  //                                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                                 children: <Widget>[
+  //                                   RichText(
+  //                                       textAlign: TextAlign.center,
+  //                                       text: TextSpan(children: [
+  //                                         TextSpan(
+  //                                             text: "Oops!\n",
+  //                                             style: TextStyle(
+  //                                                 color: Colors.black,
+  //                                                 fontFamily: 'Gotham',
+  //                                                 fontSize: 16,
+  //                                                 fontWeight: FontWeight.bold)),
+  //                                         WidgetSpan(
+  //                                             child: Container(
+  //                                           height: 10.0,
+  //                                         )),
+  //                                         TextSpan(
+  //                                             text: error + "\n\n",
+  //                                             style: TextStyle(
+  //                                                 fontFamily: "Gotham",
+  //                                                 color: Colors.black,
+  //                                                 fontWeight: FontWeight.w300,
+  //                                                 fontSize: 12)),
+  //                                       ])),
+  //                                 ],
+  //                               ),
+  //                             ),
+  //                           )
+  //                         ],
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     });
 }
 
 void addedToIntersted() {

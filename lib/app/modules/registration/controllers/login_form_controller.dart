@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import '../../../models/user.dart';
@@ -49,13 +50,20 @@ class LoginFormController extends GetxController {
 
   var emailTapped = false.obs;
   var passwordTapped = false.obs;
-
+  TextEditingController emailTextEditFeild;
+  TextEditingController passwordTextEditFeild;
   @override
-  void onInit() {}
+  void onInit() {
+    emailTextEditFeild = TextEditingController();
+    passwordTextEditFeild = TextEditingController();
+  }
 
   @override
   void onReady() {}
 
   @override
-  void onClose() {}
+  void onClose() {
+    emailTextEditFeild.dispose();
+    passwordTextEditFeild.dispose();
+  }
 }

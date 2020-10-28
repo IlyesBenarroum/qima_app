@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/tools/popUps.dart';
@@ -50,6 +52,7 @@ class LoginFormView extends GetView {
               //email
               Obx(
                 () => MyTextFormField(
+                  // inputController: controller.emailTextEditFeild,
                   hintText: "Email".tr + " * ",
                   isEmail: true,
                   validator: (String value) {
@@ -137,13 +140,17 @@ class LoginFormView extends GetView {
                                 ),
                           ));
                         } else {
-                          showErrorDialog(context, msg);
+                          Get.snackbar(
+                            "Error".tr,
+                            "Please_Check_Your_Email_or_Password".tr,
+                          );
+                          // controller.emailTextEditFeild.text = "Error";
+                          // showErrorDialog(context, msg);
                         }
                         // Navigator.of(context).push(MaterialPageRoute(
                         //   builder: (context) => HomePage(),
                         // ));
                       }
-                      ;
 
                       // Get.off(
                       //   HomeView(),

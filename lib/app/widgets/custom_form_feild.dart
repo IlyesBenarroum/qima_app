@@ -12,6 +12,7 @@ class MyTextFormField extends GetView {
   final bool tapped;
   final Function onTap;
   final Function onFieldSubmitted;
+  // final TextEditingController inputController;
 
   MyTextFormField({
     this.hintText,
@@ -22,6 +23,7 @@ class MyTextFormField extends GetView {
     this.tapped,
     this.onTap,
     this.onFieldSubmitted,
+    // this.inputController,
   });
   final SignupformController controller = Get.put(SignupformController());
   @override
@@ -33,6 +35,7 @@ class MyTextFormField extends GetView {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: TextFormField(
+          // controller: inputController,
           onFieldSubmitted: onFieldSubmitted,
           decoration: InputDecoration(
             hintText: hintText,

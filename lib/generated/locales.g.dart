@@ -119,6 +119,8 @@ abstract class LocaleKeys {
   static const Your_account_has_been_successfully_registered = 'Your_account_has_been_successfully_registered';
   static const To_complete_the_process_please_check_the_code = 'To_complete_the_process_please_check_the_code';
   static const that_was_sent_to_your_phone = 'that_was_sent_to_your_phone';
+  static const Error = 'Error';
+  static const Please_Check_Your_Email_or_Password = 'Please_Check_Your_Email_or_Password';
 }
 
 abstract class Locales {
@@ -233,6 +235,8 @@ abstract class Locales {
    'Your_account_has_been_successfully_registered': '.تم تسجيل حسابك بنجاح',
    'To_complete_the_process_please_check_the_code': 'لإكمال العملية, يرجى التحقق من الرمز',
    'that_was_sent_to_your_phone': 'الذي تم ارسالة إلى هاتفك',
+   'Error': 'خطأ',
+   'Please_Check_Your_Email_or_Password': 'يرجى التحقق من بريدك الإلكتروني أو كلمة المرور',
   };
   static const en = {
    'Welcome_to_Qima_App': 'Welcome to Qima App',
@@ -343,6 +347,8 @@ abstract class Locales {
    'Your_account_has_been_successfully_registered': 'Your account has been successfully registered.',
    'To_complete_the_process_please_check_the_code': 'To complete the process, please check the code',
    'that_was_sent_to_your_phone': 'that was sent to your phone',
+   'Error': 'Error',
+   'Please_Check_Your_Email_or_Password': 'Please Check Your Email or Password',
   };
 
 }

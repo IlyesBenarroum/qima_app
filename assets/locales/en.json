@@ -106,6 +106,7 @@
   "Done":"Okay",
   "Your_account_has_been_successfully_registered":"Your account has been successfully registered.",
   "To_complete_the_process_please_check_the_code":"To complete the process, please check the code",
-  "that_was_sent_to_your_phone":"that was sent to your phone"
-  
+  "that_was_sent_to_your_phone":"that was sent to your phone",
+  "Error":"Error",
+  "Please_Check_Your_Email_or_Password":"Please Check Your Email or Password"
   }

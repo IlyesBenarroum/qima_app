@@ -107,7 +107,9 @@
     "Done":"حسنا",
     "Your_account_has_been_successfully_registered":".تم تسجيل حسابك بنجاح",
     "To_complete_the_process_please_check_the_code":"لإكمال العملية, يرجى التحقق من الرمز",
-    "that_was_sent_to_your_phone":"الذي تم ارسالة إلى هاتفك"
+    "that_was_sent_to_your_phone":"الذي تم ارسالة إلى هاتفك",
+    "Error":"خطأ",
+    "Please_Check_Your_Email_or_Password":"يرجى التحقق من بريدك الإلكتروني أو كلمة المرور"
   
     
   }
