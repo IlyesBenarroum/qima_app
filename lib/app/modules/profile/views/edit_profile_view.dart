@@ -1,14 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/modules/home/home_view.dart';
-import 'package:qima/app/modules/profile/views/take_picture.dart';
 import '../../../../gloabals.dart';
 import '../../../models/user.dart';
 import '../../../widgets/custom_form_feild.dart';
 import '../controllers/edit_profile_controllers.dart';
 import 'package:validators/validators.dart' as validator;
+import 'package:image_picker/image_picker.dart';
 
 // import 'add_picture.dart';
 
@@ -125,12 +124,30 @@ class EditProfileView extends GetView {
                 height: Get.width * 0.12,
                 child: IconButton(
                   onPressed: () {
-                    Get.to(
-                      TakePictureScreen(
-                        camera: Globals.firstCamera,
+                    Get.bottomSheet(SafeArea(
+                      child: Container(
+                        color: Colors.white,
+                        child: new Wrap(
+                          children: <Widget>[
+                            new ListTile(
+                                leading: new Icon(Icons.photo_library),
+                                title: new Text("Gallery".tr),
+                                onTap: () {
+                                  _imgFromGallery();
+                                  Navigator.of(context).pop();
+                                }),
+                            new ListTile(
+                              leading: new Icon(Icons.photo_camera),
+                              title: new Text("Camera"),
+                              onTap: () {
+                                _imgFromCamera();
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ); // Get.back();
-                    // controller.edit.value = !controller.edit.value;
+                    ));
                   },
                   icon: Icon(
                     Icons.camera_alt,
@@ -263,7 +280,7 @@ class EditProfileView extends GetView {
                           controller.phoneTapped.value = false;
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
-                            
+
                             Get.off(
                               HomeView(),
                             );
@@ -287,6 +304,23 @@ class EditProfileView extends GetView {
     );
   }
 
-  //  Get.to(
-  //     TakePictureScreen(),);
+  _imgFromGallery() async {
+    var picker = ImagePicker();
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
+
+    Globals.imagePath.value = pickedFile.path;
+  }
+
+  _imgFromCamera() async {
+    var picker = ImagePicker();
+    final pickedFile = await picker.getImage(
+      source: ImageSource.camera,
+      imageQuality: 50,
+    );
+    Globals.imagePath.value = pickedFile.path;
+    // setState(() {
+    // _image = image;
+    // });
+  }
 }
