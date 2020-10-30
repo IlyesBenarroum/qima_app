@@ -34,6 +34,9 @@ dependencies:
   get: ^3.12.1
   http: ^0.12.2
   shared_preferences: ^0.5.12
+  camera:
+  path_provider:
+  path:
 
 
 dev_dependencies:

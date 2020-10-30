@@ -6,7 +6,7 @@ import '../../.././app/modules/auction_live/auction_live_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../.././app/modules/auction_live/widgets/auction_room_card_view.dart';
 import '../../.././app/widgets/customappbar.dart';
-import '../../.././constants.dart';
+import '../../tools/constants.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:share/share.dart';
 

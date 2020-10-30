@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../.././app/modules/auction_live/auction_live_view.dart';
@@ -6,6 +8,7 @@ import '../../.././app/modules/profile/profile_controller.dart';
 import '../../.././app/modules/profile/views/edit_profile_view.dart';
 import '../../.././app/widgets/notfoundwidget.dart';
 
+import '../../../gloabals.dart';
 import 'views/pastauctions.dart';
 
 double screenHeight = Get.height;
@@ -44,18 +47,30 @@ class ProfileView extends GetView<ProfileController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      width: Get.width * 0.3,
-                      height: Get.width * 0.3,
-                      decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: new DecorationImage(
-                          fit: BoxFit.fill,
-                          image: new NetworkImage(
-                            "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
-                          ),
-                        ),
-                      ),
+                    Obx(
+                      () => Globals.imagePath.value == ""
+                          ? Container(
+                              width: Get.width * 0.3,
+                              height: Get.width * 0.3,
+                              decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: new DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: new NetworkImage(
+                                    "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+                                  ),
+                                ),
+                              ),
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image.file(
+                                File(Globals.imagePath.value),
+                                fit: BoxFit.fill,
+                                width: Get.width * 0.3,
+                                height: Get.width * 0.3,
+                              ),
+                            ),
                     ),
                     Text(
                       'Abu_Bakr_Muhammad'.tr,
@@ -99,7 +114,9 @@ class ProfileView extends GetView<ProfileController> {
               height: Get.width * 0.12,
               child: IconButton(
                 onPressed: () {
-                  Get.to(EditProfileView());
+                  Get.to(
+                    EditProfileView(),
+                  );
                   // controller.edit.value = !controller.edit.value;
                 },
                 icon: Icon(

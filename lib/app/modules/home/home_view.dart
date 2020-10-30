@@ -5,7 +5,7 @@ import '../../../app/modules/main/main_view.dart';
 import '../../../app/modules/notification/notification_view.dart';
 import '../../../app/modules/profile/profile_view.dart';
 
-import '../../../constants.dart';
+import '../../tools/constants.dart';
 import 'home_controller.dart';
 
 class HomeView extends GetView<HomeController> {

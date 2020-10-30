@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/modules/home/home_view.dart';
+import 'package:qima/app/modules/profile/views/take_picture.dart';
+import '../../../../gloabals.dart';
 import '../../../models/user.dart';
 import '../../../widgets/custom_form_feild.dart';
 import '../controllers/edit_profile_controllers.dart';
 import 'package:validators/validators.dart' as validator;
+
+// import 'add_picture.dart';
 
 double screenHeight = Get.height;
 double screenWidth = Get.width;
@@ -23,6 +29,7 @@ final EditProfileController controller = Get.put(EditProfileController());
 class EditProfileView extends GetView {
   @override
   Widget build(BuildContext context) {
+    print(Globals.imagePath);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -52,18 +59,29 @@ class EditProfileView extends GetView {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        width: Get.width * 0.3,
-                        height: Get.width * 0.3,
-                        decoration: new BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: new DecorationImage(
-                            fit: BoxFit.fill,
-                            image: new NetworkImage(
-                              "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
-                            ),
-                          ),
-                        ),
+                      Obx(
+                        () => Globals.imagePath.value == ""
+                            ? Container(
+                                width: Get.width * 0.3,
+                                height: Get.width * 0.3,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: new DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: new NetworkImage(
+                                        "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+                                      )),
+                                ),
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image.file(
+                                  File(Globals.imagePath.value),
+                                  fit: BoxFit.fill,
+                                  width: Get.width * 0.3,
+                                  height: Get.width * 0.3,
+                                ),
+                              ),
                       ),
                       Text(
                         'Abu_Bakr_Muhammad'.tr,
@@ -107,7 +125,11 @@ class EditProfileView extends GetView {
                 height: Get.width * 0.12,
                 child: IconButton(
                   onPressed: () {
-                    Get.back();
+                    Get.to(
+                      TakePictureScreen(
+                        camera: Globals.firstCamera,
+                      ),
+                    ); // Get.back();
                     // controller.edit.value = !controller.edit.value;
                   },
                   icon: Icon(
@@ -241,6 +263,7 @@ class EditProfileView extends GetView {
                           controller.phoneTapped.value = false;
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
+                            
                             Get.off(
                               HomeView(),
                             );
@@ -263,4 +286,7 @@ class EditProfileView extends GetView {
       ),
     );
   }
+
+  //  Get.to(
+  //     TakePictureScreen(),);
 }

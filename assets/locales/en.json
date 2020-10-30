@@ -100,13 +100,14 @@
     "Password_should_be_minimum_7_characters":"Password should be minimum 7 characters",
     "Save":"Save",
     "Enter_the_code_that_was_sent_to_the_number":"Enter the code that was sent to the number",
-  "Resend":"Resend",
-  "Did_not_receive_the_code":"Did not receive the code?",
-  "Enter_the_verification_code":"Enter the verification code",
-  "Done":"Okay",
-  "Your_account_has_been_successfully_registered":"Your account has been successfully registered.",
-  "To_complete_the_process_please_check_the_code":"To complete the process, please check the code",
-  "that_was_sent_to_your_phone":"that was sent to your phone",
-  "Error":"Error",
-  "Please_Check_Your_Email_or_Password":"Please Check Your Email or Password"
+    "Resend":"Resend",
+    "Did_not_receive_the_code":"Did not receive the code?",
+    "Enter_the_verification_code":"Enter the verification code",
+    "Done":"Okay",
+    "Your_account_has_been_successfully_registered":"Your account has been successfully registered.",
+    "To_complete_the_process_please_check_the_code":"To complete the process, please check the code",
+    "that_was_sent_to_your_phone":"that was sent to your phone",
+    "Error":"Error",
+    "Please_Check_Your_Email_or_Password":"Please Check Your Email or Password",
+    "Take_a_picture":"Take a picture"
   }

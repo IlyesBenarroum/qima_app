@@ -121,6 +121,7 @@ abstract class LocaleKeys {
   static const that_was_sent_to_your_phone = 'that_was_sent_to_your_phone';
   static const Error = 'Error';
   static const Please_Check_Your_Email_or_Password = 'Please_Check_Your_Email_or_Password';
+  static const Take_a_picture = 'Take_a_picture';
 }
 
 abstract class Locales {
@@ -237,6 +238,7 @@ abstract class Locales {
    'that_was_sent_to_your_phone': 'الذي تم ارسالة إلى هاتفك',
    'Error': 'خطأ',
    'Please_Check_Your_Email_or_Password': 'يرجى التحقق من بريدك الإلكتروني أو كلمة المرور',
+   'Take_a_picture': 'التقط صوره',
   };
   static const en = {
    'Welcome_to_Qima_App': 'Welcome to Qima App',
@@ -349,6 +351,7 @@ abstract class Locales {
    'that_was_sent_to_your_phone': 'that was sent to your phone',
    'Error': 'Error',
    'Please_Check_Your_Email_or_Password': 'Please Check Your Email or Password',
+   'Take_a_picture': 'Take a picture',
   };
 
 }

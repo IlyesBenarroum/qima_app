@@ -1,3 +1,5 @@
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EditProfileController extends GetxController {
@@ -5,10 +7,13 @@ class EditProfileController extends GetxController {
   var nameTapped = false.obs;
   var phoneTapped = false.obs;
   @override
-  void onInit() {}
+  // ignore: must_call_super
+  void onInit() async {
+  }
 
   @override
-  void onReady() {}
+  // ignore: must_call_super
+  void onReady() async {}
 
   @override
   void onClose() {}

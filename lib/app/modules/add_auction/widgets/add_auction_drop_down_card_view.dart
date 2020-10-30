@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../constants.dart';
+import '../../../tools/constants.dart';
 
 class AddAuctionDropDownCardView extends GetView {
   AddAuctionDropDownCardView({

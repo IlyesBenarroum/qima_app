@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
+import '../../tools/constants.dart';
 import 'info/auctioninfo.dart';
 import 'info/interestedauctioninfo.dart';
 import 'info/joinedauctioninfo.dart';

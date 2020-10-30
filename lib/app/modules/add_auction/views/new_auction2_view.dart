@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:qima/app/modules/add_auction/widgets/add_auction_info.dart';
 import 'package:qima/app/modules/add_auction/widgets/add_auction_timing.dart';
 
-import '../../../../constants.dart';
+import '../../../tools/constants.dart';
 import '../add_auction_controller.dart';
 import '../widgets/custom_adding_auction_app_bar.dart';
 import '../widgets/empty_circle_container.dart';
