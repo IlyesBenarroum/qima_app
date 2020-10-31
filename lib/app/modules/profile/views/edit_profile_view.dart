@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../controllers/controllers/usercontroller_controller.dart';
 import 'package:qima/app/modules/home/home_view.dart';
-import '../../../../gloabals.dart';
-import '../../../models/user.dart';
+// import '../../../../gloabals.dart';
+// import '../../../models/user_model.dart';
 import '../../../widgets/custom_form_feild.dart';
 import '../controllers/edit_profile_controllers.dart';
 import 'package:validators/validators.dart' as validator;
@@ -13,7 +14,7 @@ import 'package:image_picker/image_picker.dart';
 
 double screenHeight = Get.height;
 double screenWidth = Get.width;
-
+// User user = User();
 Pattern namePattern =
     r"(^[\u0621-\u064A-Za-z]{2,16})([ ]{0,1})([\u0621-\u064A-Za-z]{2,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{3,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{2,16})";
 RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
@@ -21,14 +22,15 @@ RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
 Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
 RegExp phoneRegex = RegExp(phonePattern);
 
-User user = User();
+// User user = User();
 final _formKey = GlobalKey<FormState>();
 final EditProfileController controller = Get.put(EditProfileController());
+final UserController userController = Get.put(UserController());
 
 class EditProfileView extends GetView {
   @override
   Widget build(BuildContext context) {
-    print(Globals.imagePath);
+    // print(Globals.imagePath);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -59,34 +61,49 @@ class EditProfileView extends GetView {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Obx(
-                        () => Globals.imagePath.value == ""
-                            ? Container(
-                                width: Get.width * 0.3,
-                                height: Get.width * 0.3,
-                                decoration: new BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: new DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: new NetworkImage(
-                                        "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
-                                      )),
-                                ),
-                              )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: Image.file(
-                                  File(Globals.imagePath.value),
+                        () => Visibility(
+                          visible:
+                              GetUtils.isNullOrBlank(userController.avatar),
+                          // visible: userController.avatar == "",
+                          child: Container(
+                            width: Get.width * 0.3,
+                            height: Get.width * 0.3,
+                            decoration: new BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: new DecorationImage(
                                   fit: BoxFit.fill,
-                                  width: Get.width * 0.3,
-                                  height: Get.width * 0.3,
-                                ),
-                              ),
+                                  image: new NetworkImage(
+                                    "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+                                  )),
+                            ),
+                          ),
+                        ),
                       ),
-                      Text(
-                        'Abu_Bakr_Muhammad'.tr,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                      Obx(
+                        () => Visibility(
+                          visible:
+                              !GetUtils.isNullOrBlank(userController.avatar),
+                          // visible: userController.avatar != "",
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.file(
+                              File(userController.user.value.avatar),
+                              fit: BoxFit.fill,
+                              width: Get.width * 0.3,
+                              height: Get.width * 0.3,
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Visibility(
+                      // //   ),
+                      Obx(
+                        () => Text(
+                          userController.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
@@ -124,30 +141,32 @@ class EditProfileView extends GetView {
                 height: Get.width * 0.12,
                 child: IconButton(
                   onPressed: () {
-                    Get.bottomSheet(SafeArea(
-                      child: Container(
-                        color: Colors.white,
-                        child: new Wrap(
-                          children: <Widget>[
-                            new ListTile(
-                                leading: new Icon(Icons.photo_library),
-                                title: new Text("Gallery".tr),
+                    Get.bottomSheet(
+                      SafeArea(
+                        child: Container(
+                          color: Colors.white,
+                          child: new Wrap(
+                            children: <Widget>[
+                              new ListTile(
+                                  leading: new Icon(Icons.photo_library),
+                                  title: new Text("Gallery".tr),
+                                  onTap: () {
+                                    _imgFromGallery();
+                                    Navigator.of(context).pop();
+                                  }),
+                              new ListTile(
+                                leading: new Icon(Icons.photo_camera),
+                                title: new Text("Camera".tr),
                                 onTap: () {
-                                  _imgFromGallery();
+                                  _imgFromCamera();
                                   Navigator.of(context).pop();
-                                }),
-                            new ListTile(
-                              leading: new Icon(Icons.photo_camera),
-                              title: new Text("Camera"),
-                              onTap: () {
-                                _imgFromCamera();
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ));
+                    );
                   },
                   icon: Icon(
                     Icons.camera_alt,
@@ -183,23 +202,22 @@ class EditProfileView extends GetView {
                         () => MyTextFormField(
                           hintText: "Full_Name".tr,
                           validator: (String value) {
-                            if (value.isEmpty) {
-                              // return null;
-                              return "Please_enter_your_full_name".tr;
-                            } else if (!nameRegex.hasMatch(value)) {
+                            if (value.length == 0) return null;
+
+                            if (!nameRegex.hasMatch(value)) {
                               return "Please_enter_a_valid_full_name".tr;
                             }
                             return null;
                           },
                           onSaved: (String value) {
-                            user.name = value;
+                            if (value.length != 0)
+                              userController.changeName(value);
                           },
                           tapped: controller.nameTapped.value,
                           onTap: () {
                             controller.nameTapped.value = true;
                             controller.emailTapped.value = false;
                             controller.phoneTapped.value = false;
-                            // controller.passwordTapped.value = false;
                           },
                           onFieldSubmitted: (value) {
                             if (value.length == 0)
@@ -215,13 +233,15 @@ class EditProfileView extends GetView {
                           hintText: "Email".tr,
                           isEmail: true,
                           validator: (String value) {
+                            if (value.length == 0) return null;
                             if (!validator.isEmail(value)) {
                               return "Please_enter_a_valid_email".tr;
                             }
                             return null;
                           },
                           onSaved: (String value) {
-                            user.email = value;
+                            if (value.length != 0)
+                              userController.changeEmail(value);
                           },
                           tapped: controller.emailTapped.value,
                           onTap: () {
@@ -242,13 +262,17 @@ class EditProfileView extends GetView {
                         () => MyTextFormField(
                           hintText: "Phone_number".tr,
                           validator: (String value) {
+                            if (value.length == 0) return null;
+
                             if (!phoneRegex.hasMatch(value)) {
                               return "Please_enter_a_valid_phone_number".tr;
                             }
                             return null;
                           },
                           onSaved: (String value) {
-                            user.phone = value;
+                            if (value.length != 0)
+                              userController.changePhone(value);
+                            // userController.refresh();
                           },
                           tapped: controller.phoneTapped.value,
                           onTap: () {
@@ -281,9 +305,7 @@ class EditProfileView extends GetView {
                           if (_formKey.currentState.validate()) {
                             _formKey.currentState.save();
 
-                            Get.off(
-                              HomeView(),
-                            );
+                            Get.back();
                           }
                         },
                         child: Text(
@@ -308,8 +330,7 @@ class EditProfileView extends GetView {
     var picker = ImagePicker();
     final pickedFile =
         await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
-
-    Globals.imagePath.value = pickedFile.path;
+    userController.changeAvatar(pickedFile.path);
   }
 
   _imgFromCamera() async {
@@ -318,9 +339,6 @@ class EditProfileView extends GetView {
       source: ImageSource.camera,
       imageQuality: 50,
     );
-    Globals.imagePath.value = pickedFile.path;
-    // setState(() {
-    // _image = image;
-    // });
+    userController.changeAvatar(pickedFile.path);
   }
 }

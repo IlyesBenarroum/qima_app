@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/tools/popUps.dart';
-import '../../../../app/models/user.dart';
+import '../../../../app/models/user_model.dart';
 import '../../../../app/modules/home/home_view.dart';
 import '../../../../app/modules/registration/controllers/login_form_controller.dart';
 import '../../../widgets/custom_form_feild.dart';

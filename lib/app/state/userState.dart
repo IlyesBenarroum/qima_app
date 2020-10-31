@@ -1,4 +1,4 @@
-import '../models/user.dart';
+import '../models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserOnline {

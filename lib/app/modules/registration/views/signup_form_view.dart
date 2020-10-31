@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../tools/popUps.dart';
-import '../../../../app/models/user.dart';
+import '../../../../app/models/user_model.dart';
 import '../../../../app/modules/home/home_view.dart';
 import '../../../../app/modules/registration/controllers/signup_form_controller.dart';
 import '../../../widgets/custom_form_feild.dart';

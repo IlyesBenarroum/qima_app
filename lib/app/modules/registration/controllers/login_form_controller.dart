@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
-import '../../../models/user.dart';
+import '../../../models/user_model.dart';
 import '../../../tools/tools.dart';
 import '../../../state/userState.dart';
 

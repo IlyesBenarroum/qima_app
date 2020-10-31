@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../.././app/modules/auction_live/auction_live_view.dart';
+import 'package:qima/app/controllers/controllers/usercontroller_controller.dart';
+// import '../../.././app/modules/auction_live/auction_live_view.dart';
 import '../../.././app/modules/detail/detail2_view.dart';
 import '../../.././app/modules/profile/profile_controller.dart';
 import '../../.././app/modules/profile/views/edit_profile_view.dart';
 import '../../.././app/widgets/notfoundwidget.dart';
 
-import '../../../gloabals.dart';
+// import '../../../gloabals.dart';
 import 'views/pastauctions.dart';
 
 double screenHeight = Get.height;
@@ -16,6 +17,8 @@ double screenWidth = Get.width;
 
 class ProfileView extends GetView<ProfileController> {
   final ProfileController controller = Get.put(ProfileController());
+  final UserController userController = Get.put(UserController());
+
   final List pastAuctionList = [1];
   @override
   Widget build(BuildContext context) {
@@ -48,35 +51,45 @@ class ProfileView extends GetView<ProfileController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Obx(
-                      () => Globals.imagePath.value == ""
-                          ? Container(
-                              width: Get.width * 0.3,
-                              height: Get.width * 0.3,
-                              decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: new DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: new NetworkImage(
-                                    "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
-                                  ),
-                                ),
-                              ),
-                            )
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: Image.file(
-                                File(Globals.imagePath.value),
-                                fit: BoxFit.fill,
-                                width: Get.width * 0.3,
-                                height: Get.width * 0.3,
+                      () => Visibility(
+                        visible: GetUtils.isNullOrBlank(userController.avatar),
+                        // visible: userController.avatar == "",
+                        child: Container(
+                          width: Get.width * 0.3,
+                          height: Get.width * 0.3,
+                          decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: new DecorationImage(
+                              fit: BoxFit.fill,
+                              image: new NetworkImage(
+                                "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
                               ),
                             ),
+                          ),
+                        ),
+                      ),
                     ),
-                    Text(
-                      'Abu_Bakr_Muhammad'.tr,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    Obx(
+                      () => Visibility(
+                        visible: !GetUtils.isNullOrBlank(userController.avatar),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.file(
+                            File(userController.user.value.avatar),
+                            fit: BoxFit.fill,
+                            width: Get.width * 0.3,
+                            height: Get.width * 0.3,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Obx(
+                      () => Text(
+                        userController.name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ],
@@ -90,13 +103,13 @@ class ProfileView extends GetView<ProfileController> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 20,
               ),
-              child: Text(
-                Get.locale.languageCode == "en"
-                    ? "+249912300000"
-                    : "249912300000+",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+              child: Obx(
+                () => Text(
+                  userController.phone,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -117,7 +130,6 @@ class ProfileView extends GetView<ProfileController> {
                   Get.to(
                     EditProfileView(),
                   );
-                  // controller.edit.value = !controller.edit.value;
                 },
                 icon: Icon(
                   Icons.edit,
