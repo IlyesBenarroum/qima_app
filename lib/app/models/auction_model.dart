@@ -9,7 +9,7 @@ class Auction {
   String arrearsValue;
   String auctionDate;
   String auctionTime;
-  String period;
+  String auctionPeriod;
   String startingPrice;
 
   Auction(
@@ -23,7 +23,7 @@ class Auction {
       this.arrearsValue,
       this.auctionDate,
       this.auctionTime,
-      this.period,
+      this.auctionPeriod,
       this.startingPrice});
 
   Auction.fromJson(Map<String, dynamic> json) {
@@ -37,7 +37,7 @@ class Auction {
     arrearsValue = json['arrears_value'];
     auctionDate = json['auction_date'];
     auctionTime = json['auction_time'];
-    period = json['period'];
+    auctionPeriod = json['auction_period'];
     startingPrice = json['starting_price'];
   }
 
@@ -53,7 +53,7 @@ class Auction {
     data['arrears_value'] = this.arrearsValue;
     data['auction_date'] = this.auctionDate;
     data['auction_time'] = this.auctionTime;
-    data['period'] = this.period;
+    data['auction_period'] = this.auctionPeriod;
     data['starting_price'] = this.startingPrice;
     return data;
   }
