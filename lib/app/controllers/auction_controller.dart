@@ -9,27 +9,25 @@ class AuctionController extends GetxController {
     userId: "",
     phoneNumber: "",
     newPhone: false,
-    postPaid: "",     
+    postPaid: "",
     arrears: true,
     arrearsValue: "",
     auctionDate: "",
     auctionTime: "",
-    period: "",
+    auctionPeriod: "",
     startingPrice: "",
   ).obs;
-  get countryId=> auction.value.countryId;
-  get providerId=> auction.value.providerId;
-  get userId=> auction.value.userId;
-  get phoneNumber=> auction.value.phoneNumber;
-  get postPaid=> auction.value.postPaid;
-  get arrears=> auction.value.arrears;
-  get arrearsValue=> auction.value.arrearsValue;
-  get auctionDate=> auction.value.auctionDate;
-  get auctionTime=> auction.value.auctionTime;
-  get countryId=> auction.value.period;
-  get countryId=> auction.value.countryId;
-  get countryId=> auction.value.countryId;
-  get countryId=> auction.value.countryId;
+  get countryId => auction.value.countryId;
+  get providerId => auction.value.providerId;
+  get userId => auction.value.userId;
+  get phoneNumber => auction.value.phoneNumber;
+  get postPaid => auction.value.postPaid;
+  get arrears => auction.value.arrears;
+  get arrearsValue => auction.value.arrearsValue;
+  get auctionDate => auction.value.auctionDate;
+  get auctionTime => auction.value.auctionTime;
+  get auctionPeriod => auction.value.auctionPeriod;
+  get startingPrice => auction.value.startingPrice;
   var auctionsList = [];
   @override
   void onInit() {}
