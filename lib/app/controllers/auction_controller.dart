@@ -1,10 +1,6 @@
 import 'package:get/get.dart';
 
 class AuctionController extends GetxController {
-  //TODO: Implement AuctionController
-  
-  final count = 0.obs;
-
   @override
   void onInit() {}
 
@@ -13,6 +9,4 @@ class AuctionController extends GetxController {
 
   @override
   void onClose() {}
-
-  void increment() => count.value++;
 }

@@ -211,7 +211,7 @@ class EditProfileView extends GetView {
                           },
                           onSaved: (String value) {
                             if (value.length != 0)
-                              userController.changeName(value);
+                              userController.setName(value);
                           },
                           tapped: controller.nameTapped.value,
                           onTap: () {
@@ -241,7 +241,7 @@ class EditProfileView extends GetView {
                           },
                           onSaved: (String value) {
                             if (value.length != 0)
-                              userController.changeEmail(value);
+                              userController.setEmail(value);
                           },
                           tapped: controller.emailTapped.value,
                           onTap: () {
@@ -271,7 +271,7 @@ class EditProfileView extends GetView {
                           },
                           onSaved: (String value) {
                             if (value.length != 0)
-                              userController.changePhone(value);
+                              userController.setPhone(value);
                             // userController.refresh();
                           },
                           tapped: controller.phoneTapped.value,
@@ -330,7 +330,7 @@ class EditProfileView extends GetView {
     var picker = ImagePicker();
     final pickedFile =
         await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
-    userController.changeAvatar(pickedFile.path);
+    userController.setAvatar(pickedFile.path);
   }
 
   _imgFromCamera() async {
@@ -339,6 +339,6 @@ class EditProfileView extends GetView {
       source: ImageSource.camera,
       imageQuality: 50,
     );
-    userController.changeAvatar(pickedFile.path);
+    userController.setAvatar(pickedFile.path);
   }
 }

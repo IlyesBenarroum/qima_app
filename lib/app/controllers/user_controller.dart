@@ -14,39 +14,38 @@ class UserController extends GetxController {
   get phone => user.value.phone;
   get password => user.value.password;
   get avatar => user.value.avatar;
-  void changeName(name) {
+  void setName(name) {
     user.value.name = name;
     user.refresh();
   }
 
-  void changeEmail(email) {
+  void setEmail(email) {
     user.value.email = email;
     user.refresh();
   }
 
-  void changePhone(phone) {
+  void setPhone(phone) {
     user.value.phone = phone;
     user.refresh();
   }
 
-  void changePassword(password) {
+  void setPassword(password) {
     user.value.password = password;
     user.refresh();
   }
 
-  void changeAvatar(avatar) {
+  void setAvatar(avatar) {
     user.value.avatar = avatar;
     user.refresh();
   }
   // update();
 
-  // @override
-  // void onInit() {}
+  @override
+  void onInit() {}
 
-  // @override
-  // void onReady() {}
+  @override
+  void onReady() {}
 
-  // @override
-  // void onClose() {}
-
+  @override
+  void onClose() {}
 }
