@@ -14,7 +14,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
   Globals.firstCamera = cameras.first;
-
   runApp(MyApp());
 }
 

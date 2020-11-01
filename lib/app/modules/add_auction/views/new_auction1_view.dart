@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/controllers/auction_controller.dart';
 import '../../../../app/modules/add_auction/widgets/add_auction_drop_down_card_view.dart';
 import '../../../../app/modules/add_auction/widgets/factureUI.dart';
 import '../../../../app/modules/add_auction/widgets/number_text_feildUi.dart';
+import '../../../../gloabals.dart';
 import '../widgets/usedUI.dart';
 import '../add_auction_controller.dart';
 import '../widgets/custom_adding_auction_app_bar.dart';
@@ -40,8 +42,10 @@ DateTime maxDate = DateTime(
 );
 
 class NewAuction1View extends GetView {
-  final _formKey = GlobalKey<FormState>();
+  // final _formKey = GlobalKey<FormState>();
+  final _formKey = Globals.formKeys[0];
   final AddAuctionController controller = Get.put(AddAuctionController());
+  final AuctionController auctionController = Get.put(AuctionController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,9 +134,11 @@ class NewAuction1View extends GetView {
                                         ],
                                       ),
                                       onChanged: (String val) {
+                                        auctionController.setCountry(val);
                                         _selectedCountry = val;
                                         _selectedImage = _.countryData[val];
                                         controller.onInit();
+                                        // print(auctionController.country);
                                       },
                                     ),
                                   ),
@@ -166,8 +172,11 @@ class NewAuction1View extends GetView {
                                             _.serviceProviderData[0]),
                                       ),
                                       onChanged: (String val) {
+                                        auctionController.setProvider(val);
                                         _selectedProvider = val;
                                         controller.onInit();
+                                        // print(auctionController
+                                        //     .auction.value.provider);
                                       },
                                     ),
                                   ),
@@ -200,7 +209,9 @@ class NewAuction1View extends GetView {
                           phone,
                           "0913000001",
                           (String val) {
+                            auctionController.setPhoneNumber(val);
                             phone = val;
+                            // print(auctionController.phoneNumber);
                           },
                         ),
                       ),
@@ -213,7 +224,7 @@ class NewAuction1View extends GetView {
                       ),
                       Obx(
                         () => Visibility(
-                          visible: !controller.isFactured.value &
+                          visible: !controller.isPostPaid.value &
                               controller.isUsed.value,
                           child: Container(
                             child: Row(
@@ -253,6 +264,10 @@ class NewAuction1View extends GetView {
                                                 : controller.isArrears.value =
                                                     false;
                                             _selectedAnwser = val;
+                                            auctionController.setArrears(true);
+                                            auctionController
+                                                .setArrearsValue("0");
+
                                             controller.onInit();
                                           },
                                         ),
@@ -273,6 +288,9 @@ class NewAuction1View extends GetView {
                                         } else {
                                           controller.arrearsVisibility.value =
                                               true;
+                                          auctionController
+                                              .setArrearsValue(value);
+
                                           return null;
                                         }
                                       },
@@ -300,6 +318,12 @@ class NewAuction1View extends GetView {
                   GestureDetector(
                     onTap: () {
                       _validateInputs();
+                      if (GetUtils.isNullOrBlank(auctionController.country))
+                        auctionController.setCountry(
+                            controller.countryData.keys.toList()[0]);
+                      if (GetUtils.isNullOrBlank(auctionController.provider))
+                        auctionController
+                            .setProvider(controller.serviceProviderData[0]);
                     },
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -344,7 +368,7 @@ class NewAuction1View extends GetView {
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-
+      // _formKey.currentState.dispose();
       Get.to(NewAuction2View());
     } else {
       autoValidate.value = false;

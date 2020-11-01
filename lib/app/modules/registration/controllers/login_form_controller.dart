@@ -21,18 +21,18 @@ class LoginFormController extends GetxController {
     print(url);
     Response response = await post(url, headers: headers);
 
-    int statusCode = response.statusCode;
+    String statusCode = response.statusCode.toString();
 
-    // print("statusCode " + statusCode.toString());
+    print("statusCode " + statusCode);
     print(response.body);
     // print("return messages" + returnMessage);
 
-    if (statusCode == 200) {
+    if (statusCode == "200") {
       returnMessage = "success";
-
       var data = jsonDecode(response.body);
       // print(data['user']);
       UserOnline.user = User.fromJson(data["user"]);
+      print(returnMessage);
       UserOnline.userIsOnline = true;
       UserOnline.token = data["access_token"];
       print("return messages1 " + returnMessage);

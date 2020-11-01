@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/controllers/auction_controller.dart';
 
 import '../add_auction_controller.dart';
 
 Widget factureUi() {
   final AddAuctionController controller = Get.put(AddAuctionController());
-
+  final AuctionController auctionController = Get.put(AuctionController());
   double screenHeight = Get.height;
   double screenWidth = Get.width;
   return Padding(
@@ -26,12 +27,15 @@ Widget factureUi() {
                 highlightColor: Colors.transparent,
                 splashColor: Get.theme.primaryColor.withOpacity(0.2),
                 onTap: () {
-                  controller.isFactured.value = true;
+                  controller.isPostPaid.value = true;
+                  auctionController.setPostPaid(true);
+                  auctionController.setArrears(false);
+                  auctionController.setArrearsValue("0");
                 },
                 child: Container(
                   height: screenHeight * .08,
                   decoration: BoxDecoration(
-                    color: controller.isFactured.value
+                    color: controller.isPostPaid.value
                         ? Get.theme.primaryColor
                         : Colors.white,
                     borderRadius: BorderRadius.circular(10.00),
@@ -41,7 +45,7 @@ Widget factureUi() {
                       "PostPaid".tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: controller.isFactured.value
+                        color: controller.isPostPaid.value
                             ? Colors.white
                             : Colors.black,
                       ),
@@ -56,12 +60,13 @@ Widget factureUi() {
                 highlightColor: Colors.transparent,
                 splashColor: Get.theme.primaryColor.withOpacity(0.2),
                 onTap: () {
-                  controller.isFactured.value = false;
+                  controller.isPostPaid.value = false;
+                  auctionController.setPostPaid(false);
                 },
                 child: Container(
                   height: screenHeight * .08,
                   decoration: BoxDecoration(
-                    color: !controller.isFactured.value
+                    color: !controller.isPostPaid.value
                         ? Get.theme.primaryColor
                         : Colors.white,
                     borderRadius: BorderRadius.circular(10.00),
@@ -71,7 +76,7 @@ Widget factureUi() {
                       "PrePaid".tr,
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                        color: !controller.isFactured.value
+                        color: !controller.isPostPaid.value
                             ? Colors.white
                             : Colors.black,
                       ),

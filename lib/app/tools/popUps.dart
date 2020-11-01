@@ -100,8 +100,8 @@ void showSuccessDialog(BuildContext context, String success) {
 void showErrorDialog(BuildContext context, String error) {
   Get.dialog(
     GestureDetector(
-      onTap: ()=>Get.back(),
-          child: Container(
+      onTap: () => Get.back(),
+      child: Container(
         width: screenWidth,
         height: screenHeight,
         decoration: BoxDecoration(),

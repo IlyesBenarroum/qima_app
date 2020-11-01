@@ -14,7 +14,7 @@ class AddAuctionInfo extends StatelessWidget {
     double screenHeight = Get.height;
     double screenWidth = Get.width;
     return Container(
-      height: screenHeight * 0.075,
+      height: screenHeight * 0.11,
       width: screenWidth * 0.9,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

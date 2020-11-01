@@ -25,12 +25,13 @@ class AddAuctionController extends GetxController {
     "No".tr,
     "Yes".tr,
   ];
+  final formKey = GlobalKey<FormState>();
   TextEditingController phoneController;
   TextEditingController arrearsController;
   TextEditingController auctionEntryPrice;
   var numberVisibility = true.obs;
   var isUsed = false.obs;
-  var isFactured = false.obs;
+  var isPostPaid = false.obs;
   var isArrears = false.obs;
   var arrearsVisibility = true.obs;
   var autoValidate = false.obs;
@@ -63,6 +64,7 @@ class AddAuctionController extends GetxController {
     phoneController.dispose();
     arrearsController.dispose();
     auctionEntryPrice.dispose();
+
     super.onClose();
   }
 }

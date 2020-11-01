@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class User {
-  String id;
+  int id;
   String name;
   String email;
   String phone;
@@ -20,7 +20,8 @@ class User {
     final dyn = data.toJson();
     return json.encode(dyn);
   }
- User userFromJson(String str) {
+
+  User userFromJson(String str) {
     final Map<String, dynamic> data = json.decode(str);
     return User.fromJson(data);
   }

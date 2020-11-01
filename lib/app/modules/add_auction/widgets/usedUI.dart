@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/controllers/auction_controller.dart';
 
 import '../add_auction_controller.dart';
 
 Widget usedUi() {
   final AddAuctionController controller = Get.put(AddAuctionController());
+  final AuctionController auctionController = Get.put(AuctionController());
 
   double screenHeight = Get.height;
   double screenWidth = Get.width;
@@ -27,6 +29,8 @@ Widget usedUi() {
                 splashColor: Get.theme.primaryColor.withOpacity(0.2),
                 onTap: () {
                   controller.isUsed.value = true;
+                  auctionController.setUsedPhone(true);
+                  auctionController.setPostPaid(false);
                 },
                 child: Obx(
                   () => Container(
@@ -38,15 +42,16 @@ Widget usedUi() {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                        child: Text(
-                      "Used".tr,
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        color: controller.isUsed.value
-                            ? Colors.white
-                            : Colors.black,
+                      child: Text(
+                        "Used".tr,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: controller.isUsed.value
+                              ? Colors.white
+                              : Colors.black,
+                        ),
                       ),
-                    )),
+                    ),
                   ),
                 ),
               ),
@@ -58,7 +63,11 @@ Widget usedUi() {
                 splashColor: Get.theme.primaryColor,
                 onTap: () {
                   controller.isUsed.value = false;
-                  controller.isFactured.value = false;
+                  controller.isPostPaid.value = false;
+                  auctionController.setUsedPhone(false);
+                  auctionController.setPostPaid(false);
+                  auctionController.setArrears(false);
+                  auctionController.setArrearsValue("0");
                 },
                 child: Obx(
                   () => Container(

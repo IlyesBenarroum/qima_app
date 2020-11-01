@@ -123,22 +123,23 @@ class LoginFormView extends GetView {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       {
-                        String msg;
-                        // print(msg);
+                        String msg = "allo";
+                        print(msg);
                         msg = await controller.loginPost(
                             user.email, password, "0", "");
-                        // print(msg);
+                        print(msg);
                         if (msg == "success") {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => HomeView(
-                                // countryId: countryId,
-                                // providerId:providerId,
-                                // newOrNot: newOrNot,
-                                // paymentMethod:paymentMethod,
-                                // credit:credit,
-                                // phone: phone,
-                                ),
-                          ));
+                          Get.to(HomeView());
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: (context) => HomeView(
+                          //       // countryId: countryId,
+                          //       // providerId:providerId,
+                          //       // newOrNot: newOrNot,
+                          //       // paymentMethod:paymentMethod,
+                          //       // credit:credit,
+                          //       // phone: phone,
+                          //       ),
+                          // ));
                         } else {
                           Get.snackbar(
                             "Error".tr,

@@ -1,10 +1,10 @@
 class Auction {
-  String countryId;
-  String providerId;
+  String country;
+  String provider;
   String userId;
   String phoneNumber;
-  bool newPhone;
-  String postPaid;
+  bool usedPhone;
+  bool postPaid;
   bool arrears;
   String arrearsValue;
   String auctionDate;
@@ -12,26 +12,27 @@ class Auction {
   String auctionPeriod;
   String startingPrice;
 
-  Auction(
-      {this.countryId,
-      this.providerId,
-      this.userId,
-      this.phoneNumber,
-      this.newPhone,
-      this.postPaid,
-      this.arrears,
-      this.arrearsValue,
-      this.auctionDate,
-      this.auctionTime,
-      this.auctionPeriod,
-      this.startingPrice});
+  Auction({
+    this.country,
+    this.provider,
+    this.userId,
+    this.phoneNumber,
+    this.usedPhone,
+    this.postPaid,
+    this.arrears,
+    this.arrearsValue,
+    this.auctionDate,
+    this.auctionTime,
+    this.auctionPeriod,
+    this.startingPrice,
+  });
 
   Auction.fromJson(Map<String, dynamic> json) {
-    countryId = json['country_id'];
-    providerId = json['provider_id'];
+    country = json['country'];
+    provider = json['provider'];
     userId = json['user_id'];
     phoneNumber = json['phone_number'];
-    newPhone = json['new_phone'];
+    usedPhone = json['used_phone'];
     postPaid = json['post_paid'];
     arrears = json['arrears'];
     arrearsValue = json['arrears_value'];
@@ -43,11 +44,11 @@ class Auction {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['country_id'] = this.countryId;
-    data['provider_id'] = this.providerId;
+    data['country'] = this.country;
+    data['provider'] = this.provider;
     data['user_id'] = this.userId;
     data['phone_number'] = this.phoneNumber;
-    data['new_phone'] = this.newPhone;
+    data['used_phone'] = this.usedPhone;
     data['post_paid'] = this.postPaid;
     data['arrears'] = this.arrears;
     data['arrears_value'] = this.arrearsValue;
