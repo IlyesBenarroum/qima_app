@@ -120,9 +120,11 @@ class NewAuction1View extends GetView {
                                             width: screenWidth * 0.16,
                                             child: FittedBox(
                                               fit: BoxFit.scaleDown,
-                                              child: Text(_selectedCountry ??
-                                                  _.countryData.keys
-                                                      .toList()[0]),
+                                              child: Text(
+                                                _selectedCountry ??
+                                                    _.countryData.keys
+                                                        .toList()[0],
+                                              ),
                                             ),
                                           ),
                                         ],

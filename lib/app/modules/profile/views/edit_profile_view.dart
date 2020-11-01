@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controllers/usercontroller_controller.dart';
+import '../../../controllers/user_controller.dart';
 import 'package:qima/app/modules/home/home_view.dart';
 // import '../../../../gloabals.dart';
 // import '../../../models/user_model.dart';
