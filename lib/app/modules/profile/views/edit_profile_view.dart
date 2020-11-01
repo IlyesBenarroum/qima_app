@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controllers/controllers/usercontroller_controller.dart';
+import '../../../controllers/usercontroller_controller.dart';
 import 'package:qima/app/modules/home/home_view.dart';
 // import '../../../../gloabals.dart';
 // import '../../../models/user_model.dart';
@@ -87,7 +87,7 @@ class EditProfileView extends GetView {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: Image.file(
-                              File(userController.user.value.avatar),
+                              File(userController.avatar),
                               fit: BoxFit.fill,
                               width: Get.width * 0.3,
                               height: Get.width * 0.3,

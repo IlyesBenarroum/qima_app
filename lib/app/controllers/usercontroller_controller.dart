@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import "../../models/user_model.dart";
+import '../models/user_model.dart';
 
 class UserController extends GetxController {
   var user = User(
@@ -9,12 +9,6 @@ class UserController extends GetxController {
     password: "",
     avatar: "",
   ).obs;
-  // var name = "".obs;
-  // var email = "".obs;
-  // var phone = "".obs;
-  // var password = "".obs;
-  // var avatar = "".obs;
-  // get userProfile => user.value;
   get name => user.value.name;
   get email => user.value.email;
   get phone => user.value.phone;

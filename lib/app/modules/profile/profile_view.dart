@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qima/app/controllers/controllers/usercontroller_controller.dart';
+import 'package:qima/app/controllers/usercontroller_controller.dart';
 // import '../../.././app/modules/auction_live/auction_live_view.dart';
 import '../../.././app/modules/detail/detail2_view.dart';
 import '../../.././app/modules/profile/profile_controller.dart';
