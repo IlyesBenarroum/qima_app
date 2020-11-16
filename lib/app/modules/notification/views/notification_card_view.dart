@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -37,11 +38,14 @@ class NotificationCardView extends GetView {
                 color: Colors.grey[200],
               ),
               shape: BoxShape.circle,
-              image: DecorationImage(
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: CachedNetworkImage(
+                imageUrl: icon,
+                placeholder: (context, url) => new CircularProgressIndicator(),
+                errorWidget: (context, url, error) => new Icon(Icons.error),
                 fit: BoxFit.fill,
-                image: NetworkImage(
-                  icon,
-                ),
               ),
             ),
           ),

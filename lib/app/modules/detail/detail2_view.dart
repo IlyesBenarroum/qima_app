@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../app/modules/detail/detail_controller.dart';
@@ -61,10 +62,16 @@ class Detail2View extends GetView<DetailController> {
             Container(
               height: screenHeight * .3,
               width: screenWidth,
-              child: Image.network(
-                "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+              child: CachedNetworkImage(
+                imageUrl:
+                    "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+                placeholder: (context, url) => new CircularProgressIndicator(),
+                errorWidget: (context, url, error) => new Icon(Icons.error),
                 fit: BoxFit.fill,
-              ),
+              ), //  Image.network(
+              //   "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+              //   fit: BoxFit.fill,
+              // ),
             ),
             GestureDetector(
               onTap: () {

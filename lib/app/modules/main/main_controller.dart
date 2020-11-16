@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
+import '../../tools/tools.dart';
 
 class MainController extends GetxController {
-  final count = 0.obs;
-
   @override
   void onInit() {}
 
@@ -10,7 +9,7 @@ class MainController extends GetxController {
   void onReady() {}
 
   @override
-  void onClose() {}
-
-  increment() => count.value++;
+  void onClose() {
+    CheckInternet.listener.cancel();
+  }
 }

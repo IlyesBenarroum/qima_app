@@ -1,11 +1,14 @@
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 import 'package:qima/app/modules/registration/views/number_confirmation.dart';
 import '../../app/modules/auctions/auction_view.dart';
 import '../../app/modules/home/home_view.dart';
 import '../modules/registration/registration_view.dart';
 import 'package:share/share.dart';
+import 'tools.dart';
 
 void showSuccessDialog(BuildContext context, String success) {
   showDialog(
@@ -892,4 +895,49 @@ Widget createAccount() {
   );
   //   ),
   // );
+}
+
+checkConnection(BuildContext context) async {
+  CheckInternet.listener =
+      DataConnectionChecker().onStatusChange.listen((status) {
+    switch (status) {
+      case DataConnectionStatus.connected:
+        // _isDialogShowing = true;
+        // print(DataConnectionStatus.connected);
+        // print(CheckInternet.internetStatus);
+        // print(CheckInternet.contentmessage);
+        // Navigator.of(context).pop();
+        CheckInternet.internetStatus = "Connected";
+        CheckInternet.contentmessage = "Connected";
+        // _showDialog(CheckInternet.internetStatus, CheckInternet.contentmessage,
+        //     context);
+        break;
+      case DataConnectionStatus.disconnected:
+        CheckInternet.internetStatus = "You are disconnected to the Internet. ";
+        CheckInternet.contentmessage = "Please check your internet connection";
+        _showDialog(CheckInternet.internetStatus, CheckInternet.contentmessage,
+            context);
+        break;
+    }
+  });
+  return await DataConnectionChecker().connectionStatus;
+}
+
+void _showDialog(String title, String content, BuildContext context) {
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            title: new Text("Network Error"),
+            content: new Text(content),
+            actions: <Widget>[
+              new FlatButton(
+                  onPressed: () {
+                    if (CheckInternet.internetStatus == "Connected")
+                      Navigator.of(context).pop();
+                  },
+                  child: new Text("Refresh"))
+            ]);
+      });
 }

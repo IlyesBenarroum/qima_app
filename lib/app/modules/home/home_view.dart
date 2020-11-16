@@ -70,11 +70,7 @@ class _HomePageState extends State<HomePage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.business),
-              // SvgPicture.asset(
-              //   'assets/images/icons/auctionIcon.svg',
-              //   height: 20,
-              //   color: Colors.blueGrey,
-              // ),
+             
               label: 'Auctions'.tr,
             ),
             BottomNavigationBarItem(

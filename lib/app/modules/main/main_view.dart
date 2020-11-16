@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/tools/popUps.dart';
+import 'package:qima/app/tools/tools.dart';
 import '../../../app/modules/add_auction/add_auction_view.dart';
 import '../../../app/modules/detail/detail_view.dart';
 import '../../../app/widgets/customappbar.dart';
@@ -13,9 +16,10 @@ class MainView extends GetView<MainController> {
   Widget build(BuildContext context) {
     double screenHeight = Get.height;
     double screenWidth = Get.width;
+    // var network = SocketService.checkSocketConnection().obs;
     List auctionList = [1];
     var lang = Get.locale.languageCode;
-
+    checkConnection(context);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(screenHeight * 0.1),
@@ -78,6 +82,7 @@ class MainView extends GetView<MainController> {
                 ],
               ),
             ),
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.to(AddAuctionView());

@@ -1,4 +1,5 @@
 class Auction {
+  String id;
   String country;
   String provider;
   String userId;
@@ -13,6 +14,7 @@ class Auction {
   String startingPrice;
 
   Auction({
+    this.id,
     this.country,
     this.provider,
     this.userId,
@@ -26,8 +28,20 @@ class Auction {
     this.auctionPeriod,
     this.startingPrice,
   });
-
+  getId() => this.id;
+  getCountry() => this.country;
+  getProvider() => this.provider;
+  getUser() => this.userId;
+  getPhone() => this.phoneNumber;
+  getPostpaid() => this.postPaid;
+  getArrears() => this.arrears;
+  getArrearsValue() => this.arrearsValue;
+  getAuctionDate() => this.auctionDate;
+  getAuctionTime() => this.auctionTime;
+  getAuctionPeriod() => this.auctionPeriod;
+  getStaringPrice() => this.startingPrice;
   Auction.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     country = json['country'];
     provider = json['provider'];
     userId = json['user_id'];

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../tools/constants.dart';
 import 'info/auctioninfo.dart';
 import 'info/interestedauctioninfo.dart';
 import 'info/joinedauctioninfo.dart';
-import 'package:get/get.dart';
 
 class AuctionCard extends StatelessWidget {
   const AuctionCard({
@@ -62,10 +63,19 @@ class AuctionCard extends StatelessWidget {
                 width: screenHeight * 0.10,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    icon,
+                  child: CachedNetworkImage(
+                    imageUrl: icon,
+                    placeholder: (context, url) =>
+                        new CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => new Icon(Icons.error),
                     fit: BoxFit.fill,
                   ),
+
+                  // child:Image(image: NetworkImageWithRetry(icon),),
+                  //  Image.network(
+                  //   icon,
+                  //   fit: BoxFit.fill,
+                  // ),
                 ),
                 decoration: BoxDecoration(
                   boxShadow: [

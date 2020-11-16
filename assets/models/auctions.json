@@ -1,0 +1,17 @@
+
+{"id": "959a9a5e-b9ec-4a02-8779-287bc5f3f44a",
+    "auctionDate": "2020-11-05T00:00:00.000Z",
+     "auctionTiming":"2020-11-06T00:00:00.000Z",
+      "auctionPeriod": "2020-11-05T07:09:53.000Z",
+       "entryPrice": 5080,
+     "createdAt": "2020-11-05T07:09:53.000Z",
+      "updatedAt": "2020-11-05T07:09:53.000Z",
+       "product": {"id": "03182a6b-4a10-4801-8fae-5f54a14e227b",
+         "createdAt": "2020-11-05T07:09:53.000Z",
+          "updatedAt": "2020-11-05T07:09:53.000Z",
+          "serviceProvider": "MTN",
+           "specialNumber": 998001001, 
+           "type": "postPaid",
+            "arrears": "exit", 
+            "arrearsValue": 0}
+        }
