@@ -43,7 +43,7 @@ class Product {
   String serviceProvider;
   int specialNumber;
   String type;
-  String arrears;
+  bool arrears;
   int arrearsValue;
   Product({
     this.id,
@@ -67,9 +67,9 @@ class Product {
 
   set setType(String type) => this.type = type;
 
-  String get getArrears => arrears;
+  bool get getArrears => arrears;
 
-  set setArrears(String arrears) => this.arrears = arrears;
+  set setArrears(bool arrears) => this.arrears = arrears;
 
   int get getArrearsValue => arrearsValue;
 

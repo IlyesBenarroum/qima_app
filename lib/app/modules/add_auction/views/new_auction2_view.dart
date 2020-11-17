@@ -32,7 +32,7 @@ class NewAuction2View extends GetView {
 class NewAuction2BodyView extends StatelessWidget {
   final AddAuctionController controller = Get.put(AddAuctionController());
   final AuctionController auctionController = Get.put(AuctionController());
-  final AuctionsController auctionsController = Get.put(AuctionsController());
+  // final AuctionsController auctionsController = Get.put(AuctionsController());
   final _formKey = Globals.formKeys[1];
   @override
   Widget build(BuildContext context) {

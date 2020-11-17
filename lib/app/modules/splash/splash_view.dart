@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/controllers/auction_controller.dart';
 import '../../../app/modules/splash/splash_controller.dart';
 
 class SplashView extends GetView<SplashController> {
+  final AuctionController auctionController = Get.put(AuctionController());
+
   @override
   Widget build(BuildContext context) {
     SplashController().onInit();

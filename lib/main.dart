@@ -9,7 +9,6 @@ import 'package:get_storage/get_storage.dart';
 Future<void> main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  
   runApp(MyApp());
 }
 
@@ -39,6 +38,7 @@ class MyApp extends StatelessWidget {
           child: navigator,
         );
       },
+      
     );
   }
 }

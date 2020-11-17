@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/controllers/auction_controller.dart';
 import '../../../app/modules/detail/detail_controller.dart';
 import '../../../app/tools/popUps.dart';
 import '../../../app/widgets/customappbar.dart';
@@ -12,11 +13,15 @@ String text = 'Qima';
 String subject = 'Win Auction with friends';
 
 class DetailView extends GetView<DetailController> {
+  final int index;
+
+  DetailView({this.index});
+  final AuctionController auctionController = Get.put(AuctionController());
+
   @override
   Widget build(BuildContext context) {
     var auctionDetails = true.obs;
     var phoneDetails = true.obs;
-    var lang = Get.locale.languageCode;
 
     DetailController controller = Get.put(DetailController());
 
@@ -38,10 +43,11 @@ class DetailView extends GetView<DetailController> {
           ),
           action: IconButton(
             onPressed: () {
-             Share.share(text,
-          subject: subject,
-          // sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
-             );
+              Share.share(
+                text,
+                subject: subject,
+                // sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+              );
             },
             tooltip: "Share with Friends",
             icon: Icon(
@@ -58,14 +64,13 @@ class DetailView extends GetView<DetailController> {
             Container(
               height: screenHeight * .3,
               width: screenWidth,
-              child: 
-              CachedNetworkImage(
-                    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
-                    placeholder: (context, url) =>
-                        new CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => new Icon(Icons.error),
-                    fit: BoxFit.fill,
-                  ),
+              child: CachedNetworkImage(
+                imageUrl:
+                    "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+                placeholder: (context, url) => new CircularProgressIndicator(),
+                errorWidget: (context, url, error) => new Icon(Icons.error),
+                fit: BoxFit.fill,
+              ),
               // Image.network(
               //   "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
               //   fit: BoxFit.fill,
@@ -114,12 +119,16 @@ class DetailView extends GetView<DetailController> {
               () => Visibility(
                 visible: auctionDetails.value,
                 child: AuctionCardDetailView(
-                  date: lang == "en"
-                      ? "February".tr + " 03,2021 "
-                      : "February".tr + " 03, 2021 ",
-                  timing: "14:00",
-                  duration: " 40 " + "Minutes".tr,
-                  enteryprice: "780" + "Pound".tr,
+                  date:
+                      "${auctionController.auctionsList[index].getAuctionDate.substring(0, 10)}",
+                  timing:
+                      "${auctionController.auctionsList[index].getAuctionTiming.substring(12, 17)}",
+                  duration:
+                      "${auctionController.auctionsList[index].auctionPeriod.substring(0, 2)} " +
+                          "Minutes".tr,
+                  enteryprice:
+                      "${auctionController.auctionsList[index].getEntryPrice} " +
+                          "Pound".tr,
                   screenWidth: screenWidth,
                   screenHeight: screenHeight,
                 ),
@@ -168,12 +177,26 @@ class DetailView extends GetView<DetailController> {
               () => Visibility(
                 visible: phoneDetails.value,
                 child: PhoneCardDetailView(
-                  provider: "Zain".tr,
-                  number: "091300000",
-                  type: "Used".tr,
+                  provider:
+                      "${auctionController.auctionsList[index].getProduct.getServiceProvider}"
+                          .tr,
+                  number:
+                      "${auctionController.auctionsList[index].getProduct.getSpecialNumber}",
+                  type:
+                      "${auctionController.auctionsList[index].getProduct.getType}"
+                          .tr,
                   condition: "Prepaid".tr,
-                  arrears: "Exist".tr,
-                  arrearsvalue: "1000" + "Pound".tr,
+                  arrears: auctionController
+                              .auctionsList[index].getProduct.getArrears ==
+                          true
+                      ? "Yes".tr
+                      : "No".tr,
+                  arrearsvalue: auctionController
+                              .auctionsList[index].getProduct.getArrears ==
+                          true
+                      ? "${auctionController.auctionsList[index].getProduct.getArrearsValue} " +
+                          "Pound".tr
+                      : "0 " + "Pound".tr,
                   screenWidth: screenWidth,
                   screenHeight: screenHeight,
                 ),
