@@ -134,7 +134,7 @@ class NewAuction1View extends GetView {
                                         ],
                                       ),
                                       onChanged: (String val) {
-                                        auctionController.setCountry(val);
+                                        // auctionController.setCountry(val);
                                         _selectedCountry = val;
                                         _selectedImage = _.countryData[val];
                                         controller.onInit();
@@ -172,7 +172,7 @@ class NewAuction1View extends GetView {
                                             _.serviceProviderData[0]),
                                       ),
                                       onChanged: (String val) {
-                                        auctionController.setProvider(val);
+                                        // auctionController.setProvider(val);
                                         _selectedProvider = val;
                                         controller.onInit();
                                         // print(auctionController
@@ -209,7 +209,7 @@ class NewAuction1View extends GetView {
                           phone,
                           "0913000001",
                           (String val) {
-                            auctionController.setPhoneNumber(val);
+                            // auctionController.setPhoneNumber(val);
                             phone = val;
                             // print(auctionController.phoneNumber);
                           },
@@ -264,9 +264,9 @@ class NewAuction1View extends GetView {
                                                 : controller.isArrears.value =
                                                     false;
                                             _selectedAnwser = val;
-                                            auctionController.setArrears(true);
-                                            auctionController
-                                                .setArrearsValue("0");
+                                            // auctionController.setArrears(true);
+                                            // auctionController
+                                            //     .setArrearsValue("0");
 
                                             controller.onInit();
                                           },
@@ -288,8 +288,8 @@ class NewAuction1View extends GetView {
                                         } else {
                                           controller.arrearsVisibility.value =
                                               true;
-                                          auctionController
-                                              .setArrearsValue(value);
+                                          // auctionController
+                                          //     .setArrearsValue(value);
 
                                           return null;
                                         }
@@ -318,12 +318,12 @@ class NewAuction1View extends GetView {
                   GestureDetector(
                     onTap: () {
                       _validateInputs();
-                      if (GetUtils.isNullOrBlank(auctionController.country))
-                        auctionController.setCountry(
-                            controller.countryData.keys.toList()[0]);
-                      if (GetUtils.isNullOrBlank(auctionController.provider))
-                        auctionController
-                            .setProvider(controller.serviceProviderData[0]);
+                      // if (GetUtils.isNullOrBlank(auctionController.country))
+                      //   auctionController.setCountry(
+                      //       controller.countryData.keys.toList()[0]);
+                      // if (GetUtils.isNullOrBlank(auctionController.provider))
+                      //   auctionController
+                      //       .setProvider(controller.serviceProviderData[0]);
                     },
                     child: Card(
                       shape: RoundedRectangleBorder(

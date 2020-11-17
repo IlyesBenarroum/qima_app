@@ -125,8 +125,8 @@ class LoginFormView extends GetView {
                       {
                         String msg = "allo";
                         print(msg);
-                        msg = await controller.loginPost(
-                            user.email, password, "0", "");
+                        // msg = await controller.loginPost(
+                        //     user.email, password, "0", "");
                         print(msg);
                         if (msg == "success") {
                           Get.to(HomeView());

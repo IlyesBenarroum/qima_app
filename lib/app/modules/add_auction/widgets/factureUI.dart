@@ -28,9 +28,9 @@ Widget factureUi() {
                 splashColor: Get.theme.primaryColor.withOpacity(0.2),
                 onTap: () {
                   controller.isPostPaid.value = true;
-                  auctionController.setPostPaid(true);
-                  auctionController.setArrears(false);
-                  auctionController.setArrearsValue("0");
+                  // auctionController.setPostPaid(true);
+                  // auctionController.setArrears(false);
+                  // auctionController.setArrearsValue("0");
                 },
                 child: Container(
                   height: screenHeight * .08,
@@ -61,7 +61,7 @@ Widget factureUi() {
                 splashColor: Get.theme.primaryColor.withOpacity(0.2),
                 onTap: () {
                   controller.isPostPaid.value = false;
-                  auctionController.setPostPaid(false);
+                  // auctionController.setPostPaid(false);
                 },
                 child: Container(
                   height: screenHeight * .08,

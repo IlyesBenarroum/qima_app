@@ -1,12 +1,26 @@
 import 'dart:async';
-
-import '../models/country_model.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:flutter/foundation.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
-class Tools {
-  static String domaineName = "https://mbid.pw/api/v1/";
-  static List<Country> countriesList = List();
+ValueNotifier<GraphQLClient> client = ValueNotifier(
+  GraphQLClient(
+    cache: InMemoryCache(),
+    link: HttpLink(uri: 'http://217.79.241.72/graphql'),
+  ),
+);
+
+GraphQLClient clientToQuery() {
+  return GraphQLClient(
+    cache: OptimisticCache(dataIdFromObject: typenameDataIdFromObject),
+    link: HttpLink(uri: 'http://217.79.241.72/graphql'),
+  );
 }
+
+// class Tools {
+//   static String domaineName = "https://mbid.pw/api/v1/";
+//   static List<Country> countriesList = List();
+// }
 
 class CheckInternet {
   static StreamSubscription<DataConnectionStatus> listener;

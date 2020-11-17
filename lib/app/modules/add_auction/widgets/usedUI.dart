@@ -29,8 +29,8 @@ Widget usedUi() {
                 splashColor: Get.theme.primaryColor.withOpacity(0.2),
                 onTap: () {
                   controller.isUsed.value = true;
-                  auctionController.setUsedPhone(true);
-                  auctionController.setPostPaid(false);
+                  // auctionController.setUsedPhone(true);
+                  // auctionController.setPostPaid(false);
                 },
                 child: Obx(
                   () => Container(
@@ -64,10 +64,10 @@ Widget usedUi() {
                 onTap: () {
                   controller.isUsed.value = false;
                   controller.isPostPaid.value = false;
-                  auctionController.setUsedPhone(false);
-                  auctionController.setPostPaid(false);
-                  auctionController.setArrears(false);
-                  auctionController.setArrearsValue("0");
+                  // auctionController.setUsedPhone(false);
+                  // auctionController.setPostPaid(false);
+                  // auctionController.setArrears(false);
+                  // auctionController.setArrearsValue("0");
                 },
                 child: Obx(
                   () => Container(

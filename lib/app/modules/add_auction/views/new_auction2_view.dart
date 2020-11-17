@@ -89,11 +89,11 @@ class NewAuction2BodyView extends StatelessWidget {
                                 controller.pickedDate.value = date;
                               }, onConfirm: (date) {
                                 controller.pickedDate.value = date;
-                                auctionController.setAuctionDate(
-                                    "${date.year.toString()}/" +
-                                        "${date.month.toString()}/" +
-                                        "${date.day.toString()}");
-                                print(auctionController.auctionDate);
+                                // auctionController.setAuctionDate(
+                                // "${date.year.toString()}/" +
+                                // "${date.month.toString()}/" +
+                                // "${date.day.toString()}");
+                                // print(auctionController.auctionDate);
                               },
                                   currentTime: minDate,
                                   locale: lang == "ar"
@@ -131,7 +131,7 @@ class NewAuction2BodyView extends StatelessWidget {
                                 showSecondsColumn: false,
                                 onConfirm: (time) {
                                   controller.pickedTime.value = time;
-                                  auctionController.setAuctionTime("$time");
+                                  // auctionController.setAuctionTime("$time");
                                 },
                                 currentTime: DateTime.now(),
                                 locale: lang == "ar"
@@ -178,9 +178,9 @@ class NewAuction2BodyView extends StatelessWidget {
                                   GestureDetector(
                                     onTap: () {
                                       controller.minusAuctionPeriod(-5);
-                                      auctionController.setAuctionPeriod(
-                                          controller.auctionPeriod.value
-                                              .toString());
+                                      // auctionController.setAuctionPeriod(
+                                      // controller.auctionPeriod.value
+                                      // .toString());
                                     },
                                     child: Icon(
                                       Icons.remove,
@@ -194,10 +194,10 @@ class NewAuction2BodyView extends StatelessWidget {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      controller.addAuctionPeriod(5);
-                                      auctionController.setAuctionPeriod(
-                                          controller.auctionPeriod.value
-                                              .toString());
+                                      // controller.addAuctionPeriod(5);
+                                      // auctionController.setAuctionPeriod(
+                                      // controller.auctionPeriod.value
+                                      // .toString());
                                     },
                                     child: Icon(
                                       Icons.add,
@@ -237,8 +237,8 @@ class NewAuction2BodyView extends StatelessWidget {
                                             }
                                           },
                                           onSaved: (String val) {
-                                            auctionController
-                                                .setStartingPrice(val);
+                                            // auctionController
+                                            //     .setStartingPrice(val);
                                           },
                                           controller:
                                               controller.auctionEntryPrice,
@@ -297,18 +297,18 @@ class NewAuction2BodyView extends StatelessWidget {
                       onTap: () {
                         print("tapped");
                         if (_formKey.currentState.validate()) {
-                          if (GetUtils.isNullOrBlank(
-                              auctionController.startingPrice))
-                            auctionController.setStartingPrice("10");
-                          if (GetUtils.isNullOrBlank(
-                              auctionController.auctionTime))
-                            auctionController.setAuctionTime("${now.hour}+"":${now.minute}");
+                          // if (GetUtils.isNullOrBlank(
+                          // auctionController.startingPrice))
+                          // auctionController.setStartingPrice("10");
+                          // if (GetUtils.isNullOrBlank(
+                          // auctionController.auctionTime))
+                          // auctionController.setAuctionTime("${now.hour}+"":${now.minute}");
 
-                          _formKey.currentState.save();
-                          auctionsController
-                              .addAuction(auctionController.auction.value);
-                          print(auctionsController
-                              .auctionsList.first.auctionTime);
+                          // _formKey.currentState.save();
+                          // auctionsController
+                          // .addAuction(auctionController.auction.value);
+                          // print(auctionsController
+                          // .auctionsList.first.auctionTime);
                           Get.to(NewAuction3View());
                         }
                       },

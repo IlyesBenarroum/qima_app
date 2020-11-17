@@ -1,9 +1,7 @@
 import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/generated/locales.g.dart';
-
 import 'app/routes/app_pages.dart';
 import 'package:get_storage/get_storage.dart';
 
