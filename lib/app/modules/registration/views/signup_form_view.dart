@@ -13,6 +13,7 @@ Pattern namePattern =
 RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
 
 Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
+// Pattern phonePattern = r"^[\u0660-\u0669{10}]$";
 RegExp phoneRegex = RegExp(phonePattern);
 String password = "";
 User user = User();
@@ -112,6 +113,7 @@ class SignupFormView extends StatelessWidget {
                   onFieldSubmitted: (value) {
                     if (value.length == 0) controller.phoneTapped.value = false;
                   },
+                  isPhone: true,
                 ),
               ),
               //password
@@ -211,9 +213,9 @@ class SignupFormView extends StatelessWidget {
                         controller.accept.value) {
                       _formKey.currentState.save();
                       // HomeView(),
-                    // Get.off(
-                    postPopup();
-                    // );
+                      // Get.off(
+                      postPopup();
+                      // );
                     }
                   },
                   child: Text(

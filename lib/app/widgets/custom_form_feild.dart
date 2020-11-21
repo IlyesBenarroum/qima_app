@@ -9,6 +9,7 @@ class MyTextFormField extends GetView {
   final Function onSaved;
   final bool isPassword;
   final bool isEmail;
+  final bool isPhone;
   final bool tapped;
   final Function onTap;
   final Function onFieldSubmitted;
@@ -20,6 +21,7 @@ class MyTextFormField extends GetView {
     this.onSaved,
     this.isPassword = false,
     this.isEmail = false,
+    this.isPhone = false,
     this.tapped,
     this.onTap,
     this.onFieldSubmitted,
@@ -91,8 +93,11 @@ class MyTextFormField extends GetView {
           obscureText: isPassword ? true : false,
           validator: validator,
           onSaved: onSaved,
-          keyboardType:
-              isEmail ? TextInputType.emailAddress : TextInputType.text,
+          keyboardType: isEmail
+              ? TextInputType.emailAddress
+              : isPhone
+                  ? TextInputType.phone
+                  : TextInputType.text,
           cursorColor: Get.theme.primaryColor,
           textAlignVertical: TextAlignVertical.bottom,
           onTap: onTap,
