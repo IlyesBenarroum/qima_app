@@ -39,14 +39,15 @@ class SignupFormView extends StatelessWidget {
 // }
 //   """
 //       .replaceAll('\n', '');
+
   GraphQLClient _client = clientToQuery();
   void signin() async {
     QueryResult result = await _client.mutate(MutationOptions(
       documentNode: gql("""
       mutation {
   signupWithEmail(args:{
-    fullName:"azeaze"
-    email:"azeazeazeaze@gmail.com"
+    fullName:"lkjkj"
+    email:"ljkjkljklk@gmail.com"
     phone:"0782692788"
     password:"zaezazea"
   }){
@@ -57,7 +58,6 @@ class SignupFormView extends StatelessWidget {
       onCompleted: (data) {
         print(data.data["signupWithEmail"]["accessToken"]);
         print('completed');
-        // Get.off(HomeView());
       },
     ));
     if(!result.hasException){
@@ -266,6 +266,7 @@ class SignupFormView extends StatelessWidget {
                       print(user.name);
                       print(user.email);
                       print(user.phone);
+                      Get.off(HomeView());
                     }
                     signin();
                   },
