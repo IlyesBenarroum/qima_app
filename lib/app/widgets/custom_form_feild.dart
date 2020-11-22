@@ -12,19 +12,21 @@ class MyTextFormField extends GetView {
   final bool tapped;
   final Function onTap;
   final Function onFieldSubmitted;
+  final bool isPhone;
   // final TextEditingController inputController;
 
-  MyTextFormField({
-    this.hintText,
-    this.validator,
-    this.onSaved,
-    this.isPassword = false,
-    this.isEmail = false,
-    this.tapped,
-    this.onTap,
-    this.onFieldSubmitted,
-    // this.inputController,
-  });
+  MyTextFormField(
+      {this.hintText,
+      this.validator,
+      this.onSaved,
+      this.isPassword = false,
+      this.isEmail = false,
+      this.tapped,
+      this.onTap,
+      this.onFieldSubmitted,
+      this.isPhone = false,
+      // this.inputController,
+      });
   final SignupformController controller = Get.put(SignupformController());
   @override
   Widget build(BuildContext context) {
@@ -91,8 +93,11 @@ class MyTextFormField extends GetView {
           obscureText: isPassword ? true : false,
           validator: validator,
           onSaved: onSaved,
-          keyboardType:
-              isEmail ? TextInputType.emailAddress : TextInputType.text,
+          keyboardType: isEmail
+              ? TextInputType.emailAddress
+              : isPhone
+                  ? TextInputType.phone
+                  : TextInputType.text,
           cursorColor: Get.theme.primaryColor,
           textAlignVertical: TextAlignVertical.bottom,
           onTap: onTap,

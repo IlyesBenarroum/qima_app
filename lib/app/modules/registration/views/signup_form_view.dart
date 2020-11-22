@@ -15,7 +15,7 @@ Pattern namePattern =
     r"(^[\u0621-\u064A-Za-z]{2,16})([ ]{0,1})([\u0621-\u064A-Za-z]{2,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{3,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{2,16})";
 RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
 
-Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
+Pattern phonePattern = r"^(?:[+0]9)?[0-9]";
 RegExp phoneRegex = RegExp(phonePattern);
 String password = "";
 User user = User();
@@ -45,8 +45,8 @@ class SignupFormView extends StatelessWidget {
       documentNode: gql("""
       mutation {
   signupWithEmail(args:{
-    fullName:"ilyes"
-    email:"gh@gmail.com"
+    fullName:"azeaze"
+    email:"azeazeazeaze@gmail.com"
     phone:"0782692788"
     password:"zaezazea"
   }){
@@ -55,10 +55,18 @@ class SignupFormView extends StatelessWidget {
 }
       """),
       onCompleted: (data) {
+        print(data.data["signupWithEmail"]["accessToken"]);
         print('completed');
         // Get.off(HomeView());
       },
     ));
+    if(!result.hasException){
+      print(result);
+    }else{
+      print(result.exception);
+      // print(result);
+    }
+    // print('result'+result.data);
   }
 
   @override
@@ -150,6 +158,7 @@ class SignupFormView extends StatelessWidget {
                   onFieldSubmitted: (value) {
                     if (value.length == 0) controller.phoneTapped.value = false;
                   },
+                  isPhone : true,
                 ),
               ),
               //password
@@ -252,12 +261,13 @@ class SignupFormView extends StatelessWidget {
                       // Get.off(
                       // postPopup();
                       // );
-                      signin();
+            
                       print('accepte');
                       print(user.name);
                       print(user.email);
                       print(user.phone);
                     }
+                    signin();
                   },
                   child: Text(
                     "Create_an_account".tr,

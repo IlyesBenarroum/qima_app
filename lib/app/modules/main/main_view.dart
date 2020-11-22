@@ -21,7 +21,7 @@ class MainView extends GetView<MainController> {
     print(_controller.auctionsList.length);
     // var network = SocketService.checkSocketConnection().obs;
     // List auctionList = [1];
-    checkConnection(context);
+    // checkConnection(context);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(screenHeight * 0.1),
