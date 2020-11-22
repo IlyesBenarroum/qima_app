@@ -1,12 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:qima/app/tools/tools.dart';
 import '../../../tools/popUps.dart';
 import '../../../../app/models/user_model.dart';
 import '../../../../app/modules/home/home_view.dart';
 import '../../../../app/modules/registration/controllers/signup_form_controller.dart';
 import '../../../widgets/custom_form_feild.dart';
 import 'package:validators/validators.dart' as validator;
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 Pattern namePattern =
     r"(^[\u0621-\u064A-Za-z]{2,16})([ ]{0,1})([\u0621-\u064A-Za-z]{2,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{3,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{2,16})";
@@ -16,12 +19,47 @@ Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
 RegExp phoneRegex = RegExp(phonePattern);
 String password = "";
 User user = User();
+
 double screenHeight = Get.height;
 double screenWidth = Get.width;
 
 class SignupFormView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final SignupformController controller = Get.put(SignupformController());
+//   String signinwithemail = """
+//    mutation SignupWithEmail(\$user.name:String!,\$user.email:String!,\$password:String!,\$user.phone:String!) {
+//   signupWithEmail(args:{
+//     fullName:\$user.name
+//     email:\$user.email
+//     password:\$password
+//     phone:\$user.phone
+//   }){
+//     accessToken
+//   }
+// }
+//   """
+//       .replaceAll('\n', '');
+  GraphQLClient _client = clientToQuery();
+  void signin() async {
+    QueryResult result = await _client.mutate(MutationOptions(
+      documentNode: gql("""
+      mutation {
+  signupWithEmail(args:{
+    fullName:"ilyes"
+    email:"gh@gmail.com"
+    phone:"0782692788"
+    password:"zaezazea"
+  }){
+    accessToken
+  }
+}
+      """),
+      onCompleted: (data) {
+        print('completed');
+        // Get.off(HomeView());
+      },
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,9 +249,14 @@ class SignupFormView extends StatelessWidget {
                         controller.accept.value) {
                       _formKey.currentState.save();
                       // HomeView(),
-                    // Get.off(
-                    postPopup();
-                    // );
+                      // Get.off(
+                      // postPopup();
+                      // );
+                      signin();
+                      print('accepte');
+                      print(user.name);
+                      print(user.email);
+                      print(user.phone);
                     }
                   },
                   child: Text(

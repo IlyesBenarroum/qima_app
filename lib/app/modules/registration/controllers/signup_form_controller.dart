@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
+import 'package:qima/app/tools/tools.dart';
 
 class SignupformController extends GetxController {
   var nameTapped = false.obs;
@@ -7,8 +9,14 @@ class SignupformController extends GetxController {
   var passwordTapped = false.obs;
 
   var accept = false.obs;
+
+GraphQLClient  _client  = clientToQuery();
+
+
+
   @override
-  void onInit() {}
+  void onInit() {
+  }
 
   @override
   void onReady() {}
@@ -17,4 +25,6 @@ class SignupformController extends GetxController {
   void onClose() {
     super.onClose();
   }
+ 
 }
+
