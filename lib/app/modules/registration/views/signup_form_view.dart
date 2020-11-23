@@ -45,7 +45,7 @@ class SignupFormView extends StatelessWidget {
 //   """
 //       .replaceAll('\n', '');
 
-  GraphQLClient _client = clientToQuery();
+  final GraphQLClient _client = clientToQuery();
   void signin() async {
     QueryResult result = await _client.mutate(MutationOptions(
       documentNode: gql("""
