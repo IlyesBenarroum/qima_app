@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 
 double screenHeight = Get.height;
 double screenWidth = Get.width;
+
+
+
 
 class SocialMediaCard extends StatelessWidget {
   const SocialMediaCard({

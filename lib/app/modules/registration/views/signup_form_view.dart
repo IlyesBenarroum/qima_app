@@ -1,28 +1,78 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:qima/app/tools/tools.dart';
 import '../../../tools/popUps.dart';
 import '../../../../app/models/user_model.dart';
 import '../../../../app/modules/home/home_view.dart';
 import '../../../../app/modules/registration/controllers/signup_form_controller.dart';
 import '../../../widgets/custom_form_feild.dart';
 import 'package:validators/validators.dart' as validator;
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 Pattern namePattern =
     r"(^[\u0621-\u064A-Za-z]{2,16})([ ]{0,1})([\u0621-\u064A-Za-z]{2,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{3,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{2,16})";
 RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
 
-Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
+// <<<<<<< testA
+Pattern phonePattern = r"^(?:[+0]9)?[0-9]";
+// =======
+// Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
 // Pattern phonePattern = r"^[\u0660-\u0669{10}]$";
+// >>>>>>> main
 RegExp phoneRegex = RegExp(phonePattern);
 String password = "";
 User user = User();
+
 double screenHeight = Get.height;
 double screenWidth = Get.width;
 
 class SignupFormView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final SignupformController controller = Get.put(SignupformController());
+//   String signinwithemail = """
+//    mutation SignupWithEmail(\$user.name:String!,\$user.email:String!,\$password:String!,\$user.phone:String!) {
+//   signupWithEmail(args:{
+//     fullName:\$user.name
+//     email:\$user.email
+//     password:\$password
+//     phone:\$user.phone
+//   }){
+//     accessToken
+//   }
+// }
+//   """
+//       .replaceAll('\n', '');
+
+  GraphQLClient _client = clientToQuery();
+  void signin() async {
+    QueryResult result = await _client.mutate(MutationOptions(
+      documentNode: gql("""
+      mutation {
+  signupWithEmail(args:{
+    fullName:"lkjkj"
+    email:"ljkjkljklk@gmail.com"
+    phone:"0782692788"
+    password:"zaezazea"
+  }){
+    accessToken
+  }
+}
+      """),
+      onCompleted: (data) {
+        print(data.data["signupWithEmail"]["accessToken"]);
+        print('completed');
+      },
+    ));
+    if(!result.hasException){
+      print(result);
+    }else{
+      print(result.exception);
+      // print(result);
+    }
+    // print('result'+result.data);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +163,11 @@ class SignupFormView extends StatelessWidget {
                   onFieldSubmitted: (value) {
                     if (value.length == 0) controller.phoneTapped.value = false;
                   },
-                  isPhone: true,
+// <<<<<<< testA
+                  isPhone : true,
+// =======
+//      /             isPhone: true,
+// >>>>>>> main
                 ),
               ),
               //password
@@ -214,9 +268,21 @@ class SignupFormView extends StatelessWidget {
                       _formKey.currentState.save();
                       // HomeView(),
                       // Get.off(
-                      postPopup();
+// <<<<<<< testA
+                      // postPopup();
                       // );
+            
+                      print('accepte');
+                      print(user.name);
+                      print(user.email);
+                      print(user.phone);
+                      Get.off(HomeView());
+// =======
+//                       postPopup();
+                      // );
+// >>>>>>> main
                     }
+                    signin();
                   },
                   child: Text(
                     "Create_an_account".tr,

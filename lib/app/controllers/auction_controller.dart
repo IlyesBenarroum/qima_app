@@ -47,6 +47,7 @@ query Auctions {
     );
 
     var data = result.data["auctions"];
+    print('hadi ta3 ilyes ' +data);
     if (!result.hasException) {
       for (var i = 0; i < data.length; i++) {
         auctionsList.add(

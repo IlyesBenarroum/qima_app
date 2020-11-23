@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:qima/app/tools/popUps.dart';
+import 'package:qima/app/tools/tools.dart';
 import '../../../../app/models/user_model.dart';
 import '../../../../app/modules/home/home_view.dart';
 import '../../../../app/modules/registration/controllers/login_form_controller.dart';
@@ -20,6 +22,34 @@ Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
 RegExp phoneRegex = RegExp(phonePattern);
 
 User user = User();
+
+GraphQLClient _client = clientToQuery();
+void signin() async {
+  QueryResult result = await _client.mutate(MutationOptions(
+    documentNode: gql("""
+     mutation{
+  loginWithEmail(args:{
+    email:"azeazeazeaze@gmail.com",
+    password:"zaezazea"
+  }){
+    accessToken
+  }
+}
+      """),
+    onCompleted: (data) {
+      print(data.data["loginWithEmail"]["accessToken"]);
+      print('completed');
+      // Get.off(HomeView());
+    },
+  ));
+  if (!result.hasException) {
+    print(result);
+  } else {
+    print(result.exception);
+    // print(result);
+  }
+  // print('result'+result.data);
+}
 
 class LoginFormView extends GetView {
   final _formKey = GlobalKey<FormState>();
@@ -128,26 +158,26 @@ class LoginFormView extends GetView {
                         // msg = await controller.loginPost(
                         //     user.email, password, "0", "");
                         print(msg);
-                        if (msg == "success") {
-                          Get.to(HomeView());
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //   builder: (context) => HomeView(
-                          //       // countryId: countryId,
-                          //       // providerId:providerId,
-                          //       // newOrNot: newOrNot,
-                          //       // paymentMethod:paymentMethod,
-                          //       // credit:credit,
-                          //       // phone: phone,
-                          //       ),
-                          // ));
-                        } else {
-                          Get.snackbar(
-                            "Error".tr,
-                            "Please_Check_Your_Email_or_Password".tr,
-                          );
-                          // controller.emailTextEditFeild.text = "Error";
-                          // showErrorDialog(context, msg);
-                        }
+                        // if (msg == "success") {
+                        //   Get.to(HomeView());
+                        //   // Navigator.of(context).push(MaterialPageRoute(
+                        //   //   builder: (context) => HomeView(
+                        //   //       // countryId: countryId,
+                        //   //       // providerId:providerId,
+                        //   //       // newOrNot: newOrNot,
+                        //   //       // paymentMethod:paymentMethod,
+                        //   //       // credit:credit,
+                        //   //       // phone: phone,
+                        //   //       ),
+                        //   // ));
+                        // } else {
+                        //   Get.snackbar(
+                        //     "Error".tr,
+                        //     "Please_Check_Your_Email_or_Password".tr,
+                        //   );
+                        //   // controller.emailTextEditFeild.text = "Error";
+                        //   // showErrorDialog(context, msg);
+                        // }
                         // Navigator.of(context).push(MaterialPageRoute(
                         //   builder: (context) => HomePage(),
                         // ));
@@ -157,6 +187,8 @@ class LoginFormView extends GetView {
                       //   HomeView(),
                       // );
                     }
+                    Get.to(HomeView());
+                    signin();
                   },
                   child: Text(
                     "Login".tr,

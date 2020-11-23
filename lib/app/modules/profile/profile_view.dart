@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/controllers/user_controller.dart';
+import 'package:qima/app/modules/registration/views/signup_form_view.dart';
 // import '../../.././app/modules/auction_live/auction_live_view.dart';
 import '../../.././app/modules/detail/detail2_view.dart';
 import '../../.././app/modules/profile/profile_controller.dart';
@@ -54,18 +55,24 @@ class ProfileView extends GetView<ProfileController> {
                       () => Visibility(
                         visible: GetUtils.isNullOrBlank(userController.avatar),
                         // visible: userController.avatar == "",
-                        child: Container(
-                          width: Get.width * 0.3,
-                          height: Get.width * 0.3,
-                          decoration: new BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: new DecorationImage(
-                              fit: BoxFit.fill,
-                              image: new NetworkImage(
-                                "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: Get.width * 0.3,
+                              height: Get.width * 0.3,
+                              decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: new DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: new NetworkImage(
+                                    "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
                     ),

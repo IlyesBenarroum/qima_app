@@ -18,7 +18,14 @@ class MainView extends GetView<MainController> {
   Widget build(BuildContext context) {
     double screenHeight = Get.height;
     double screenWidth = Get.width;
-    checkConnection(context);
+// <<<<<<< testA
+    print(_controller.auctionsList.length);
+    // var network = SocketService.checkSocketConnection().obs;
+    // List auctionList = [1];
+    // checkConnection(context);
+// =======
+//     checkConnection(context);
+// >>>>>>> main
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(screenHeight * 0.1),

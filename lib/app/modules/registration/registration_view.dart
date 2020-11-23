@@ -1,14 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/modules/home/home_view.dart';
+import 'package:qima/app/modules/main/main_view.dart';
 import 'registration_controller.dart';
 import 'views/login_form_view.dart';
 
 import 'views/signup_form_view.dart';
 import 'widgets/socialmedia_card.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert' as JSON;
+
 double screenHeight = Get.height;
 double screenWidth = Get.width;
+
+bool _isLoggedIn = false;
+
+Map userProfile;
+final facebookLogin = FacebookLogin();
+
+_loginWithFB() async {
+  final result = await facebookLogin.logIn(['email']);
+
+  switch (result.status) {
+    case FacebookLoginStatus.loggedIn:
+      final token = result.accessToken.token;
+      final graphResponse = await http.get(
+          'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
+      final profile = JSON.jsonDecode(graphResponse.body);
+      print(result);
+      // print(token);
+
+      userProfile = profile;
+      _isLoggedIn = true;
+      Get.off(HomeView());
+
+      break;
+
+    case FacebookLoginStatus.cancelledByUser:
+      _isLoggedIn = false;
+      break;
+    case FacebookLoginStatus.error:
+      _isLoggedIn = false;
+      break;
+  }
+}
 
 class RegistrationView extends GetView<RegistrationController> {
   final RegistrationController controller = Get.put(RegistrationController());
@@ -191,17 +229,24 @@ class RegistrationView extends GetView<RegistrationController> {
               left: screenWidth * 0.1,
               child: Padding(
                 padding: EdgeInsets.only(bottom: screenHeight * 0.025),
-                child: Container(
-                  height: screenHeight * 0.1,
-                  width: screenWidth * 0.8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SocialMediaCard(asset: "assets/images/icons/G_Logo.svg"),
-                      SocialMediaCard(
-                          asset: "assets/images/icons/twitterLogo.svg"),
-                      SocialMediaCard(asset: "assets/images/icons/fbLogo.svg"),
-                    ],
+                child: GestureDetector(
+                  onTap: () {
+                    _loginWithFB();
+                  },
+                  child: Container(
+                    height: screenHeight * 0.1,
+                    width: screenWidth * 0.8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SocialMediaCard(
+                            asset: "assets/images/icons/G_Logo.svg"),
+                        SocialMediaCard(
+                            asset: "assets/images/icons/twitterLogo.svg"),
+                        SocialMediaCard(
+                            asset: "assets/images/icons/fbLogo.svg"),
+                      ],
+                    ),
                   ),
                 ),
               ),
