@@ -15,7 +15,12 @@ Pattern namePattern =
     r"(^[\u0621-\u064A-Za-z]{2,16})([ ]{0,1})([\u0621-\u064A-Za-z]{2,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{3,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{2,16})";
 RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
 
+// <<<<<<< testA
 Pattern phonePattern = r"^(?:[+0]9)?[0-9]";
+// =======
+// Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
+// Pattern phonePattern = r"^[\u0660-\u0669{10}]$";
+// >>>>>>> main
 RegExp phoneRegex = RegExp(phonePattern);
 String password = "";
 User user = User();
@@ -158,7 +163,11 @@ class SignupFormView extends StatelessWidget {
                   onFieldSubmitted: (value) {
                     if (value.length == 0) controller.phoneTapped.value = false;
                   },
+// <<<<<<< testA
                   isPhone : true,
+// =======
+//      /             isPhone: true,
+// >>>>>>> main
                 ),
               ),
               //password
@@ -259,6 +268,7 @@ class SignupFormView extends StatelessWidget {
                       _formKey.currentState.save();
                       // HomeView(),
                       // Get.off(
+// <<<<<<< testA
                       // postPopup();
                       // );
             
@@ -267,6 +277,10 @@ class SignupFormView extends StatelessWidget {
                       print(user.email);
                       print(user.phone);
                       Get.off(HomeView());
+// =======
+//                       postPopup();
+                      // );
+// >>>>>>> main
                     }
                     signin();
                   },
