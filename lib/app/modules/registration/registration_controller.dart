@@ -26,19 +26,19 @@ class RegistrationController extends GetxController {
     emailFeild.dispose();
   }
 
-  String singInnwithEmail() {
-    return """
-   mutation {
-        signupWithEmail(args:{
-          fullName:"lkjkj"
-          email:"zeddeze@gmail.com"
-          phone:"0782692788"
-          password:"zaezazea"
-        }){
-          accessToken
-        }
-      }
-  """
-        .replaceAll('\n', '');
-  }
+  // String singInnwithEmail() {
+  //   return """
+  //  mutation {
+  //       signupWithEmail(args:{
+  //         fullName
+  //         email
+  //         phone
+  //         password
+  //       }){
+  //         accessToken
+  //       }
+  //     }
+  // """
+  //       .replaceAll('\n', '');
+  // }
 }
