@@ -11,6 +11,8 @@ import '../../../widgets/custom_form_feild.dart';
 import 'package:validators/validators.dart' as validator;
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
+import '../registration_controller.dart';
+
 Pattern namePattern =
     r"(^[\u0621-\u064A-Za-z]{2,16})([ ]{0,1})([\u0621-\u064A-Za-z]{2,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{3,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{2,16})";
 RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
@@ -31,8 +33,9 @@ double screenWidth = Get.width;
 class SignupFormView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final SignupformController controller = Get.put(SignupformController());
+  RegistrationController addMutation = RegistrationController();
 //   String signinwithemail = """
-//    mutation SignupWithEmail(\$user.name:String!,\$user.email:String!,\$password:String!,\$user.phone:String!) {
+//    mutation SignupWithEmail(\$user.name:String!,\$user.email:String,\$password:String,\$user.phone:String) {
 //   signupWithEmail(args:{
 //     fullName:\$user.name
 //     email:\$user.email
@@ -45,29 +48,58 @@ class SignupFormView extends StatelessWidget {
 //   """
 //       .replaceAll('\n', '');
 
-  final GraphQLClient _client = clientToQuery();
-  void signin() async {
+// <<<<<<< testA
+  GraphQLClient _client = clientToQuery();
+  RunMutation runMutation;
+  void signin(
+      String fulllName, String email, String password, String phone) async {
+    print('A = ' + fulllName);
+    print('A = ' + email);
+    print('A = ' + password);
+// =======
+//   final GraphQLClient _client = clientToQuery();
+//   void signin() async {
+// >>>>>>> main
     QueryResult result = await _client.mutate(MutationOptions(
+//       documentNode: gql("""
+//       mutation SignupWithEmail(\$name:String!,\$email:String,\$password:String,\$phone:String) {
+//    signupWithEmail(args:{
+//      fullName:\$name
+//      email:\$email
+//      password:\$password
+//      phone:\$phone
+//    }){
+//      accessToken
+//    }
+//  }
+// }
+//   """
+//           .replaceAll('\n', '')),
       documentNode: gql("""
       mutation {
-  signupWithEmail(args:{
-    fullName:"lkjkj"
-    email:"ljkjkljklk@gmail.com"
-    phone:"0782692788"
-    password:"zaezazea"
-  }){
-    accessToken
-  }
-}
-      """),
+        signupWithEmail(args:{
+          fullName:"$fulllName",
+          email:"$email",
+          password:"$password",
+          phone:"$phone"
+        }){
+          accessToken
+        }
+      }
+  """
+          .replaceAll('\n', '')),
+      // document:
+      //     addMutation.singInnwithEmail(user.name, user.email, user.password),
+      // documentNode: gql(addMutation.singInnwithEmail()),
       onCompleted: (data) {
         print(data.data["signupWithEmail"]["accessToken"]);
         print('completed');
+        print('FULL NAME' + fulllName);
       },
     ));
-    if(!result.hasException){
+    if (!result.hasException) {
       print(result);
-    }else{
+    } else {
       print(result.exception);
       // print(result);
     }
@@ -141,36 +173,35 @@ class SignupFormView extends StatelessWidget {
                 ),
               ),
               //phone number
-              Obx(
-                () => MyTextFormField(
-                  hintText: "Phone_number".tr + " * ",
-                  validator: (String value) {
-                    if (!phoneRegex.hasMatch(value)) {
-                      return "Please_enter_a_valid_phone_number".tr;
-                    }
-                    return null;
-                  },
-                  onSaved: (String value) {
-                    user.phone = value;
-                  },
-                  tapped: controller.phoneTapped.value,
-                  onTap: () {
-                    controller.phoneTapped.value = true;
-                    controller.passwordTapped.value = false;
-                    controller.emailTapped.value = false;
-                    controller.nameTapped.value = false;
-                  },
-                  onFieldSubmitted: (value) {
-                    if (value.length == 0) controller.phoneTapped.value = false;
-                  },
-// <<<<<<< testA
-                  isPhone : true,
-// =======
-//      /             isPhone: true,
-// >>>>>>> main
-                ),
-              ),
-              //password
+
+              // Obx(
+              //   () => MyTextFormField(
+              //     hintText: "Phone_number".tr + " * ",
+              //     validator: (String value) {
+              //       if (!phoneRegex.hasMatch(value)) {
+              //         return "Please_enter_a_valid_phone_number".tr;
+              //       }
+              //       return null;
+              //     },
+              //     onSaved: (String value) {
+              //       user.phone = value;
+              //     },
+              //     tapped: controller.phoneTapped.value,
+              //     onTap: () {
+              //       controller.phoneTapped.value = true;
+              //       controller.passwordTapped.value = false;
+              //       controller.emailTapped.value = false;
+              //       controller.nameTapped.value = false;
+              //     },
+              //     onFieldSubmitted: (value) {
+              //       if (value.length == 0) controller.phoneTapped.value = false;
+              //     },
+              //     isPhone : true,
+              //   ),
+              // ),
+
+            
+
               Obx(
                 () => MyTextFormField(
                   hintText: "Password".tr + " * ",
@@ -254,13 +285,13 @@ class SignupFormView extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     // if (user.fullName.isNullOrBlank)
                     controller.nameTapped.value = false;
                     // if (user.email.isNullOrBlank)
                     controller.emailTapped.value = false;
                     // if (user.phoneNumber.isNullOrBlank)
-                    controller.phoneTapped.value = false;
+                    // controller.phoneTapped.value = false;
                     // if (user.password.isNullOrBlank)
                     controller.passwordTapped.value = false;
                     if (_formKey.currentState.validate() &&
@@ -271,18 +302,40 @@ class SignupFormView extends StatelessWidget {
 // <<<<<<< testA
                       // postPopup();
                       // );
-            
                       print('accepte');
                       print(user.name);
                       print(user.email);
                       print(user.phone);
-                      Get.off(HomeView());
-// =======
-//                       postPopup();
-                      // );
-// >>>>>>> main
+
+                      // QueryResult result = await _client.mutate(MutationOptions(
+                      //   document:addMutation.singInnwithEmail(
+                      //     user.name,
+                      //     user.email,
+                      //     password,
+                      //     "125464"
+                      //   ),
+                      //   onCompleted: (data) {
+                      //     print(data.data["signupWithEmail"]["accessToken"]);
+                      //     print('completed');
+                      //   },
+                      // ));
+                      // if (!result.hasException) {
+                      //   print(result);
+                      // } else {
+                      //   print(result.exception);
+                      //   // print(result);
+                      // }
+                      // signin(user.name, user.email,password,"");
+                      // Get.off(HomeView());
+
                     }
-                    signin();
+                    // signin(
+                    //   user.getName().text,
+                    //   user.getEmail().text,
+                    //   user.getPassword().text,
+                    //   user.getPhone().text
+                    // );
+                    signin('fff',"fgtrf@gmail.com","kmkm","d455");
                   },
                   child: Text(
                     "Create_an_account".tr,

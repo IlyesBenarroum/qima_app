@@ -29,8 +29,8 @@ void signin() async {
     documentNode: gql("""
      mutation{
   loginWithEmail(args:{
-    email:"azeazeazeaze@gmail.com",
-    password:"zaezazea"
+    email:"othmane@gmail.com",
+    password:"fdsfs"
   }){
     accessToken
   }
@@ -187,7 +187,6 @@ class LoginFormView extends GetView {
                       //   HomeView(),
                       // );
                     }
-                    Get.to(HomeView());
                     signin();
                   },
                   child: Text(

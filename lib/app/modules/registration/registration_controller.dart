@@ -25,4 +25,20 @@ class RegistrationController extends GetxController {
     fullNameFeild.dispose();
     emailFeild.dispose();
   }
+
+  String singInnwithEmail() {
+    return """
+   mutation {
+        signupWithEmail(args:{
+          fullName:"lkjkj"
+          email:"zeddeze@gmail.com"
+          phone:"0782692788"
+          password:"zaezazea"
+        }){
+          accessToken
+        }
+      }
+  """
+        .replaceAll('\n', '');
+  }
 }
