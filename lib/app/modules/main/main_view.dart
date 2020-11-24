@@ -71,15 +71,16 @@ class MainView extends GetView<MainController> {
                               "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
                           number:
                               "${_controller.auctionsList[index].getProduct.getSpecialNumber}",
-                          info: 'Khartoum'.tr,
+                          info:
+                              "${_controller.auctionsList[index].getProduct.country}",
                           asset: "assets/images/icons/moneyIcon.svg",
                           asset2: "assets/images/icons/dateIcon.svg",
                           title:
-                              "${_controller.auctionsList[index].getProduct.getEntryPrice} " +
+                              "${_controller.auctionsList[index].getEntryPrice} " +
                                   "Pound".tr,
                           subtitle: "Entry_price".tr,
                           title2:
-                              "${_controller.auctionsList[index].getAuctionDate.substring(0, 10)}",
+                              "${_controller.auctionsList[index].getAuctionDate.substring(0, 4)}-${_controller.auctionsList[index].getAuctionDate.substring(4, 6)}-${_controller.auctionsList[index].getAuctionDate.substring(6, 8)}",
                           subtitle2: "Auction_date".tr,
                           screenHeight: screenHeight,
                           screenWidth: screenWidth,

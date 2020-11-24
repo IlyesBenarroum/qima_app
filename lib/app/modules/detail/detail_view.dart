@@ -120,14 +120,14 @@ class DetailView extends GetView<DetailController> {
                 visible: auctionDetails.value,
                 child: AuctionCardDetailView(
                   date:
-                      "${auctionController.auctionsList[index].getAuctionDate.substring(0, 10)}",
-                  timing:
-                      "${auctionController.auctionsList[index].getAuctionTiming.substring(12, 17)}",
+                      "${auctionController.auctionsList[index].getAuctionDate.substring(0, 4)}-${auctionController.auctionsList[index].getAuctionDate.substring(4, 6)}-${auctionController.auctionsList[index].getAuctionDate.substring(6, 8)}",
+                  timing: "${auctionController.auctionsList[index].getAuctionTiming.substring(8, 10)}:" +
+                      "${auctionController.auctionsList[index].getAuctionDate.substring(10, 12)}",
                   duration:
                       "${auctionController.auctionsList[index].auctionPeriod.substring(0, 2)} " +
                           "Minutes".tr,
                   enteryprice:
-                      "${auctionController.auctionsList[index].getProduct.getEntryPrice} " +
+                      "${auctionController.auctionsList[index].getEntryPrice} " +
                           "Pound".tr,
                   screenWidth: screenWidth,
                   screenHeight: screenHeight,
@@ -183,14 +183,20 @@ class DetailView extends GetView<DetailController> {
                   number:
                       "${auctionController.auctionsList[index].getProduct.getSpecialNumber}",
                   type:
-                      "${auctionController.auctionsList[index].getProduct.getType}"
-                          .tr,
-                  condition: "Prepaid".tr,
+                      "${auctionController.auctionsList[index].getProduct.getCondition}" ==
+                              "NEW"
+                          ? "New".tr
+                          : "Used".tr,
+                  condition:
+                      "${auctionController.auctionsList[index].getProduct.getType}" ==
+                              "PRE_PAID"
+                          ? "PrePaid".tr
+                          : "Facture".tr,
                   arrears: auctionController
                               .auctionsList[index].getProduct.arrearsValue ==
                           0
-                      ? "No".tr
-                      : "Yes".tr,
+                      ? "Exist".tr
+                      : "Don't Exist".tr,
                   arrearsvalue:
                       "${auctionController.auctionsList[index].getProduct.getArrearsValue} " +
                           "Pound".tr,

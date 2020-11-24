@@ -24,50 +24,57 @@ class AuctionController extends GetxController {
     QueryResult result = await _client.query(
       QueryOptions(
         documentNode: gql("""
-query getCarriers {
-  getAuctionByID{
+query getAllAuctions {
+  getAllAuctions{
     id
     startsAt
  	  length
+  	entryPrice
     product{
       id
-      type
       number
-      defaultPrice
-    	arrearsValue     
+    	arrearsValue 
+      carrierID  
+      countryID
+      subscription
+    	condition
     }
   }
 }
-
 """),
       ),
     );
 
-    var data = result.data["auctions"];
+    var data = result.data.data["getAllAuctions"];
+    // print(result.exception);
+    // print(data[0]["id"]);
+
     // print('hadi ta3 ilyes ' + data);
-    // print(result.data[0]["length"]);
+
     if (!result.hasException) {
       // print();
       if (!GetUtils.isNullOrBlank(data)) {
         for (var i = 0; i < data.length; i++) {
-          // print();
           auctionsList.add(
             Auction(
               id: data[i]["id"],
-              auctionDate: data[i]["startsAt"].toString().substring(0, 8),
-              auctionTiming: data[i]["startsAt"].toString().substring(9, 13),
+              auctionDate: data[i]["startsAt"],
+              auctionTiming: data[i]["startsAt"],
               auctionPeriod: data[i]["length"],
+              entryPrice: data[i]["entryPrice"],
               product: Product(
                 id: data[i]["product"]["id"],
-                serviceProvider: data[i]["product"]["serviceProvider"],
-                entryPrice: data[i]["product"]["entryPrice"],
-                specialNumber: data[i]["product"]["specialNumber"],
+                serviceProvider: data[i]["product"]["carrierID"],
+                specialNumber: data[i]["product"]["number"],
                 // arrears: data[i]["product"]["arrears"],
                 arrearsValue: data[i]["product"]["arrearsValue"],
-                type: data[i]["product"]["type"],
+                type: data[i]["product"]["subscription"],
+                condition: data[i]["product"]["condition"],
+                country: data[i]["product"]["countryID"],
               ),
             ),
           );
+          auctionsList.refresh();
         }
       } else {
         return;
