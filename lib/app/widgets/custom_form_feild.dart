@@ -13,7 +13,7 @@ class MyTextFormField extends GetView {
   final bool tapped;
   final Function onTap;
   final Function onFieldSubmitted;
-  final bool isPhone;
+  // final bool isPhone;
   // final TextEditingController inputController;
 
 // <<<<<<< testA

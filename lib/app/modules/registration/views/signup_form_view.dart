@@ -48,6 +48,7 @@ class SignupFormView extends StatelessWidget {
 //   """
 //       .replaceAll('\n', '');
 
+// <<<<<<< testA
   GraphQLClient _client = clientToQuery();
   RunMutation runMutation;
   void signin(
@@ -55,6 +56,10 @@ class SignupFormView extends StatelessWidget {
     print('A = ' + fulllName);
     print('A = ' + email);
     print('A = ' + password);
+// =======
+//   final GraphQLClient _client = clientToQuery();
+//   void signin() async {
+// >>>>>>> main
     QueryResult result = await _client.mutate(MutationOptions(
 //       documentNode: gql("""
 //       mutation SignupWithEmail(\$name:String!,\$email:String,\$password:String,\$phone:String) {
