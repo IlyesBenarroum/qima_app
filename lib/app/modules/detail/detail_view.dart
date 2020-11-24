@@ -127,7 +127,7 @@ class DetailView extends GetView<DetailController> {
                       "${auctionController.auctionsList[index].auctionPeriod.substring(0, 2)} " +
                           "Minutes".tr,
                   enteryprice:
-                      "${auctionController.auctionsList[index].getEntryPrice} " +
+                      "${auctionController.auctionsList[index].getProduct.getEntryPrice} " +
                           "Pound".tr,
                   screenWidth: screenWidth,
                   screenHeight: screenHeight,
@@ -187,16 +187,13 @@ class DetailView extends GetView<DetailController> {
                           .tr,
                   condition: "Prepaid".tr,
                   arrears: auctionController
-                              .auctionsList[index].getProduct.getArrears ==
-                          true
-                      ? "Yes".tr
-                      : "No".tr,
-                  arrearsvalue: auctionController
-                              .auctionsList[index].getProduct.getArrears ==
-                          true
-                      ? "${auctionController.auctionsList[index].getProduct.getArrearsValue} " +
-                          "Pound".tr
-                      : "0 " + "Pound".tr,
+                              .auctionsList[index].getProduct.arrearsValue ==
+                          0
+                      ? "No".tr
+                      : "Yes".tr,
+                  arrearsvalue:
+                      "${auctionController.auctionsList[index].getProduct.getArrearsValue} " +
+                          "Pound".tr,
                   screenWidth: screenWidth,
                   screenHeight: screenHeight,
                 ),

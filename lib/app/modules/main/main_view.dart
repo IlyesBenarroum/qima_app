@@ -75,7 +75,7 @@ class MainView extends GetView<MainController> {
                           asset: "assets/images/icons/moneyIcon.svg",
                           asset2: "assets/images/icons/dateIcon.svg",
                           title:
-                              "${_controller.auctionsList[index].getEntryPrice} " +
+                              "${_controller.auctionsList[index].getProduct.getEntryPrice} " +
                                   "Pound".tr,
                           subtitle: "Entry_price".tr,
                           title2:

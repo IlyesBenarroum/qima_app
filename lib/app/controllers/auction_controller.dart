@@ -24,20 +24,17 @@ class AuctionController extends GetxController {
     QueryResult result = await _client.query(
       QueryOptions(
         documentNode: gql("""
-
-query Auctions {
-  auctions(page:1){
+query getCarriers {
+  getAuctionByID{
     id
-    auctionDate
-    auctionTiming
-    auctionPeriod
-  	entryPrice
+    startsAt
+ 	  length
     product{
+      id
       type
-      specialNumber
+      number
       defaultPrice
-      arrears
-      arrearsValue
+    	arrearsValue     
     }
   }
 }
@@ -47,26 +44,33 @@ query Auctions {
     );
 
     var data = result.data["auctions"];
-    print('hadi ta3 ilyes ' +data);
+    // print('hadi ta3 ilyes ' + data);
+    // print(result.data[0]["length"]);
     if (!result.hasException) {
-      for (var i = 0; i < data.length; i++) {
-        auctionsList.add(
-          Auction(
-            id: data[i]["id"],
-            auctionDate: data[i]["auctionDate"],
-            auctionPeriod: data[i]["auctionPeriod"],
-            auctionTiming: data[i]["auctionTiming"],
-            entryPrice: data[i]["entryPrice"],
-            product: Product(
-              id: data[i]["product"]["id"],
-              serviceProvider: data[i]["product"]["serviceProvider"],
-              specialNumber: data[i]["product"]["specialNumber"],
-              arrears: data[i]["product"]["arrears"],
-              arrearsValue: data[i]["product"]["arrearsValue"],
-              type: data[i]["product"]["type"],
+      // print();
+      if (!GetUtils.isNullOrBlank(data)) {
+        for (var i = 0; i < data.length; i++) {
+          // print();
+          auctionsList.add(
+            Auction(
+              id: data[i]["id"],
+              auctionDate: data[i]["startsAt"].toString().substring(0, 8),
+              auctionTiming: data[i]["startsAt"].toString().substring(9, 13),
+              auctionPeriod: data[i]["length"],
+              product: Product(
+                id: data[i]["product"]["id"],
+                serviceProvider: data[i]["product"]["serviceProvider"],
+                entryPrice: data[i]["product"]["entryPrice"],
+                specialNumber: data[i]["product"]["specialNumber"],
+                // arrears: data[i]["product"]["arrears"],
+                arrearsValue: data[i]["product"]["arrearsValue"],
+                type: data[i]["product"]["type"],
+              ),
             ),
-          ),
-        );
+          );
+        }
+      } else {
+        return;
       }
     }
   }

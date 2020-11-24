@@ -3,7 +3,6 @@ class Auction {
   String auctionDate;
   String auctionTiming;
   String auctionPeriod;
-  int entryPrice;
   Product product;
   String get getId => id;
 
@@ -23,17 +22,14 @@ class Auction {
   set setAuctionPeriod(String auctionPeriod) =>
       this.auctionPeriod = auctionPeriod;
 
-  int get getEntryPrice => entryPrice;
   Product get getProduct => product;
   set setProduct(Product product) => this.product = product;
 
-  set setEntryPrice(int entryPrice) => this.entryPrice = entryPrice;
   Auction({
     this.id,
     this.auctionDate,
     this.auctionTiming,
     this.auctionPeriod,
-    this.entryPrice,
     this.product,
   });
 }
@@ -43,19 +39,23 @@ class Product {
   String serviceProvider;
   int specialNumber;
   String type;
-  bool arrears;
+  int entryPrice;
+  // bool arrears;
   int arrearsValue;
   Product({
     this.id,
     this.serviceProvider,
     this.specialNumber,
     this.type,
-    this.arrears,
+    // this.arrears,
+    this.entryPrice,
     this.arrearsValue,
   });
   String get getId => id;
   String get getServiceProvider => serviceProvider;
 
+  int get getEntryPrice => entryPrice;
+  set setEntryPrice(int entryPrice) => this.entryPrice = entryPrice;
   set setServiceProvider(String serviceProvider) =>
       this.serviceProvider = serviceProvider;
 
@@ -67,9 +67,9 @@ class Product {
 
   set setType(String type) => this.type = type;
 
-  bool get getArrears => arrears;
+  // bool get getArrears => arrears;
 
-  set setArrears(bool arrears) => this.arrears = arrears;
+  // set setArrears(bool arrears) => this.arrears = arrears;
 
   int get getArrearsValue => arrearsValue;
 
