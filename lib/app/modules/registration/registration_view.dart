@@ -35,7 +35,7 @@ _loginWithFB() async {
 
       userProfile = profile;
       _isLoggedIn = true;
-      Get.off(HomeView());
+      // Get.off(HomeView());
 
       break;
 
@@ -232,6 +232,7 @@ class RegistrationView extends GetView<RegistrationController> {
                 child: GestureDetector(
                   onTap: () {
                     _loginWithFB();
+                    Get.off(HomeView());
                   },
                   child: Container(
                     height: screenHeight * 0.1,

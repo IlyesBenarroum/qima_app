@@ -16,6 +16,17 @@ class User {
     this.password,
     this.avatar,
   });
+    getId() => this.id;
+
+  getName() => this.name;
+
+  getEmail() => this.email;
+
+  getPhone() => this.phone;
+  getPassword() => this.password;
+  getAvatar() => this.avatar;
+
+
   String userToJson(User data) {
     final dyn = data.toJson();
     return json.encode(dyn);
