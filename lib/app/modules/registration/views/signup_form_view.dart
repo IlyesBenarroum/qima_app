@@ -17,7 +17,12 @@ Pattern namePattern =
     r"(^[\u0621-\u064A-Za-z]{2,16})([ ]{0,1})([\u0621-\u064A-Za-z]{2,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{3,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{2,16})";
 RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
 
+// <<<<<<< testA
 Pattern phonePattern = r"^(?:[+0]9)?[0-9]";
+// =======
+// Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
+// Pattern phonePattern = r"^[\u0660-\u0669{10}]$";
+// >>>>>>> main
 RegExp phoneRegex = RegExp(phonePattern);
 String password = "";
 User user = User();
@@ -163,6 +168,7 @@ class SignupFormView extends StatelessWidget {
                 ),
               ),
               //phone number
+
               // Obx(
               //   () => MyTextFormField(
               //     hintText: "Phone_number".tr + " * ",
@@ -188,7 +194,9 @@ class SignupFormView extends StatelessWidget {
               //     isPhone : true,
               //   ),
               // ),
-              //password
+
+            
+
               Obx(
                 () => MyTextFormField(
                   hintText: "Password".tr + " * ",
@@ -286,12 +294,14 @@ class SignupFormView extends StatelessWidget {
                       _formKey.currentState.save();
                       // HomeView(),
                       // Get.off(
+// <<<<<<< testA
                       // postPopup();
                       // );
                       print('accepte');
                       print(user.name);
                       print(user.email);
                       print(user.phone);
+
                       // QueryResult result = await _client.mutate(MutationOptions(
                       //   document:addMutation.singInnwithEmail(
                       //     user.name,
@@ -312,6 +322,7 @@ class SignupFormView extends StatelessWidget {
                       // }
                       // signin(user.name, user.email,password,"");
                       // Get.off(HomeView());
+
                     }
                     // signin(
                     //   user.getName().text,
