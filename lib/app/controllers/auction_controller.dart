@@ -24,49 +24,60 @@ class AuctionController extends GetxController {
     QueryResult result = await _client.query(
       QueryOptions(
         documentNode: gql("""
-
-query Auctions {
-  auctions(page:1){
+query getAllAuctions {
+  getAllAuctions{
     id
-    auctionDate
-    auctionTiming
-    auctionPeriod
+    startsAt
+ 	  length
   	entryPrice
     product{
-      type
-      specialNumber
-      defaultPrice
-      arrears
-      arrearsValue
+      id
+      number
+    	arrearsValue 
+      carrierID  
+      countryID
+      subscription
+    	condition
     }
   }
 }
-
 """),
       ),
     );
 
-    var data = result.data["auctions"];
-    print('hadi ta3 ilyes ' +data);
+    var data = result.data.data["getAllAuctions"];
+    // print(result.exception);
+    // print(data[0]["id"]);
+
+    // print('hadi ta3 ilyes ' + data);
+
     if (!result.hasException) {
-      for (var i = 0; i < data.length; i++) {
-        auctionsList.add(
-          Auction(
-            id: data[i]["id"],
-            auctionDate: data[i]["auctionDate"],
-            auctionPeriod: data[i]["auctionPeriod"],
-            auctionTiming: data[i]["auctionTiming"],
-            entryPrice: data[i]["entryPrice"],
-            product: Product(
-              id: data[i]["product"]["id"],
-              serviceProvider: data[i]["product"]["serviceProvider"],
-              specialNumber: data[i]["product"]["specialNumber"],
-              arrears: data[i]["product"]["arrears"],
-              arrearsValue: data[i]["product"]["arrearsValue"],
-              type: data[i]["product"]["type"],
+      // print();
+      if (!GetUtils.isNullOrBlank(data)) {
+        for (var i = 0; i < data.length; i++) {
+          auctionsList.add(
+            Auction(
+              id: data[i]["id"],
+              auctionDate: data[i]["startsAt"],
+              auctionTiming: data[i]["startsAt"],
+              auctionPeriod: data[i]["length"],
+              entryPrice: data[i]["entryPrice"],
+              product: Product(
+                id: data[i]["product"]["id"],
+                serviceProvider: data[i]["product"]["carrierID"],
+                specialNumber: data[i]["product"]["number"],
+                // arrears: data[i]["product"]["arrears"],
+                arrearsValue: data[i]["product"]["arrearsValue"],
+                type: data[i]["product"]["subscription"],
+                condition: data[i]["product"]["condition"],
+                country: data[i]["product"]["countryID"],
+              ),
             ),
-          ),
-        );
+          );
+          auctionsList.refresh();
+        }
+      } else {
+        return;
       }
     }
   }

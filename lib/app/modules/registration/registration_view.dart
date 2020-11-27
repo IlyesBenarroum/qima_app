@@ -16,7 +16,7 @@ import 'dart:convert' as JSON;
 double screenHeight = Get.height;
 double screenWidth = Get.width;
 
-bool _isLoggedIn = false;
+bool isLoggedIn = false;
 
 Map userProfile;
 final facebookLogin = FacebookLogin();
@@ -26,24 +26,27 @@ _loginWithFB() async {
 
   switch (result.status) {
     case FacebookLoginStatus.loggedIn:
+      Get.off(HomeView());
       final token = result.accessToken.token;
       final graphResponse = await http.get(
-          'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
+          'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=$token');
       final profile = JSON.jsonDecode(graphResponse.body);
       print(result);
-      // print(token);
-
       userProfile = profile;
-      _isLoggedIn = true;
+// <<<<<<< Updated upstream
+      // _isLoggedIn = true;
       // Get.off(HomeView());
 
+// =======
+      isLoggedIn = true;
+// >>>>>>> Stashed changes
       break;
 
     case FacebookLoginStatus.cancelledByUser:
-      _isLoggedIn = false;
+      isLoggedIn = false;
       break;
     case FacebookLoginStatus.error:
-      _isLoggedIn = false;
+      isLoggedIn = false;
       break;
   }
 }

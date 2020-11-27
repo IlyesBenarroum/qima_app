@@ -79,7 +79,9 @@ class AuctionNotificationCard extends StatelessWidget {
           width: screenWidth,
         ),
         GestureDetector(
-          onTap: () => Get.to(AuctionLiveView()),
+          onTap: () => Get.to(
+            AuctionLiveView(),
+          ),
           child: NotificationCardView(
             screenHeight: screenHeight,
             screenWidth: screenWidth,
