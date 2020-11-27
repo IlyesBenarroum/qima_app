@@ -120,10 +120,13 @@ class DetailView extends GetView<DetailController> {
                 visible: auctionDetails.value,
                 child: AuctionCardDetailView(
                   date:
-                      "${auctionController.auctionsList[index].getAuctionDate.substring(0, 4)}-${auctionController.auctionsList[index].getAuctionDate.substring(4, 6)}-${auctionController.auctionsList[index].getAuctionDate.substring(6, 8)}",
-                  timing: "${auctionController.auctionsList[index].getAuctionTiming.substring(8, 10)}:" +
-                      "${auctionController.auctionsList[index].getAuctionDate.substring(10, 12)}",
+                      //  "0",
+                      "${auctionController.auctionsList[index].getAuctionDate.substring(0, 10)}",
+                  timing:
+                      //  "0",
+                      "${auctionController.auctionsList[index].getAuctionTiming.substring(11, 16)}",
                   duration:
+                      //  "0",
                       "${auctionController.auctionsList[index].auctionPeriod.substring(0, 2)} " +
                           "Minutes".tr,
                   enteryprice:
@@ -178,9 +181,11 @@ class DetailView extends GetView<DetailController> {
                 visible: phoneDetails.value,
                 child: PhoneCardDetailView(
                   provider:
+                      // "0",
                       "${auctionController.auctionsList[index].getProduct.getServiceProvider}"
                           .tr,
                   number:
+                      // "0",
                       "${auctionController.auctionsList[index].getProduct.getSpecialNumber}",
                   type:
                       "${auctionController.auctionsList[index].getProduct.getCondition}" ==
@@ -191,12 +196,15 @@ class DetailView extends GetView<DetailController> {
                       "${auctionController.auctionsList[index].getProduct.getType}" ==
                               "PRE_PAID"
                           ? "PrePaid".tr
-                          : "Facture".tr,
-                  arrears: auctionController
-                              .auctionsList[index].getProduct.arrearsValue ==
-                          0
-                      ? "Exist".tr
-                      : "Don't Exist".tr,
+                          : "${auctionController.auctionsList[index].getProduct.getType}" ==
+                                  "POST_PAID"
+                              ? "PostPaid"
+                              : "No Subscription",
+                  arrears:
+                      "${auctionController.auctionsList[index].getProduct.arrearsValue}" !=
+                              "0"
+                          ? "Exist".tr
+                          : "Don't Exist".tr,
                   arrearsvalue:
                       "${auctionController.auctionsList[index].getProduct.getArrearsValue} " +
                           "Pound".tr,

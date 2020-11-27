@@ -1,0 +1,28 @@
+{
+      "SA": {
+        "flag": "🇸🇦",
+        "countryName": "Saudi Arabia",
+        "carriers": [
+          {
+            "carrierName": "Mobily",
+            "carrierID": "42003"
+          },
+          {
+            "carrierName": "Zain SA",
+            "carrierID": "42004"
+          },
+          {
+            "carrierName": "Virgin Mobile",
+            "carrierID": "42005"
+          },
+          {
+            "carrierName": "Lebara Mobile",
+            "carrierID": "42006"
+          },
+          {
+            "carrierName": "RGSM",
+            "carrierID": "42021"
+          }
+        ]
+      }
+      }

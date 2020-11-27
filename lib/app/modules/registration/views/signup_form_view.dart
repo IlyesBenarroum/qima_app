@@ -61,6 +61,12 @@ class SignupFormView extends StatelessWidget {
 //   void signin() async {
 // >>>>>>> main
     QueryResult result = await _client.mutate(MutationOptions(
+      variables: {
+        "fullName": "$fulllName",
+        "email": "$email",
+        "password": "$password",
+        "phone": "$phone"
+      },
 //       documentNode: gql("""
 //       mutation SignupWithEmail(\$name:String!,\$email:String,\$password:String,\$phone:String) {
 //    signupWithEmail(args:{

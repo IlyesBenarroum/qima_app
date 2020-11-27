@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/controllers/auction_controller.dart';
+import 'package:qima/app/controllers/provider_controller.dart';
+import 'package:qima/app/models/auction_model.dart';
+import 'package:qima/app/models/provider_model.dart';
+import 'package:qima/app/modules/add_auction/widgets/country_cutumDropDown.dart';
 import '../../../../app/modules/add_auction/widgets/add_auction_drop_down_card_view.dart';
 import '../../../../app/modules/add_auction/widgets/factureUI.dart';
 import '../../../../app/modules/add_auction/widgets/number_text_feildUi.dart';
@@ -16,9 +20,7 @@ import '../widgets/white_circle_container.dart';
 double screenHeight = Get.height;
 double screenWidth = Get.width;
 
-Widget _selectedImage;
-String _selectedCountry;
-String _selectedProvider;
+var selectedCountry = 0.obs;
 
 String phone = '0';
 String number = "0";
@@ -46,8 +48,11 @@ class NewAuction1View extends GetView {
   final _formKey = Globals.formKeys[0];
   final AddAuctionController controller = Get.put(AddAuctionController());
   final AuctionController auctionController = Get.put(AuctionController());
+  final ProviderController providerController = Get.put(ProviderController());
+
   @override
   Widget build(BuildContext context) {
+    // print(selectedCountry.value);
     return Scaffold(
       appBar: PreferredSize(
         child: CustomAddingAuctionAppbar(
@@ -77,112 +82,7 @@ class NewAuction1View extends GetView {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            AddAuctionDropDownCardView(
-                              title: "Country".tr,
-                              child: GetBuilder<AddAuctionController>(
-                                id: "country",
-                                init: controller,
-                                builder: (_) => Container(
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      items:
-                                          _.countryData.keys.map((String val) {
-                                        return DropdownMenuItem<String>(
-                                          value: val,
-                                          child: Stack(
-                                            children: [
-                                              Row(
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 10.0),
-                                                    child: _.countryData[val],
-                                                  ),
-                                                  Container(
-                                                    width: screenWidth * 0.2,
-                                                    child: FittedBox(
-                                                      fit: BoxFit.scaleDown,
-                                                      child: Text(val),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      }).toList(),
-                                      hint: Row(
-                                        children: <Widget>[
-                                          Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 12.0),
-                                              child: _selectedImage ??
-                                                  _.countryData.values
-                                                      .toList()[0]),
-                                          Container(
-                                            width: screenWidth * 0.16,
-                                            child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: Text(
-                                                _selectedCountry ??
-                                                    _.countryData.keys
-                                                        .toList()[0],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      onChanged: (String val) {
-                                        // auctionController.setCountry(val);
-                                        _selectedCountry = val;
-                                        _selectedImage = _.countryData[val];
-                                        controller.onInit();
-                                        // print(auctionController.country);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            AddAuctionDropDownCardView(
-                              title: "Service_provider".tr,
-                              child: GetBuilder<AddAuctionController>(
-                                id: "service_providers",
-                                init: controller,
-                                builder: (_) => Container(
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      items: _.serviceProviderData
-                                          .map<DropdownMenuItem<String>>(
-                                              (String val) {
-                                        return DropdownMenuItem<String>(
-                                          value: val,
-                                          child: FittedBox(
-                                            fit: BoxFit.contain,
-                                            child: Text(
-                                              val,
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                      hint: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Text(_selectedProvider ??
-                                            _.serviceProviderData[0]),
-                                      ),
-                                      onChanged: (String val) {
-                                        // auctionController.setProvider(val);
-                                        _selectedProvider = val;
-                                        controller.onInit();
-                                        // print(auctionController
-                                        //     .auction.value.provider);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            CustomDropDown(),
                           ],
                         ),
                       ),
@@ -209,7 +109,17 @@ class NewAuction1View extends GetView {
                           phone,
                           "0913000001",
                           (String val) {
-                            // auctionController.setPhoneNumber(val);
+                            // print(val);
+
+                            // if (!GetUtils.isNullOrBlank(val))
+                            //  auctionController.setS
+                            // .setArrearsValue
+                            auctionController.setSpecialNumber(val);
+                            // .setSpecialNumber(val); // val;
+                            //  Auction(
+                            // product: Product(
+                            // specialNumber: val,
+                            // ));
                             phone = val;
                             // print(auctionController.phoneNumber);
                           },
@@ -264,6 +174,10 @@ class NewAuction1View extends GetView {
                                                 : controller.isArrears.value =
                                                     false;
                                             _selectedAnwser = val;
+                                            auctionController
+                                                .setArrearsValue("0");
+                                            // .arrearsValue = 0;
+
                                             // auctionController.setArrears(true);
                                             // auctionController
                                             //     .setArrearsValue("0");
@@ -288,6 +202,10 @@ class NewAuction1View extends GetView {
                                         } else {
                                           controller.arrearsVisibility.value =
                                               true;
+
+                                          auctionController
+                                              .setArrearsValue(value);
+                                          // .arrearsValue = value;
                                           // auctionController
                                           //     .setArrearsValue(value);
 
@@ -318,6 +236,7 @@ class NewAuction1View extends GetView {
                   GestureDetector(
                     onTap: () {
                       _validateInputs();
+                      print(auctionController.country);
                       // if (GetUtils.isNullOrBlank(auctionController.country))
                       //   auctionController.setCountry(
                       //       controller.countryData.keys.toList()[0]);

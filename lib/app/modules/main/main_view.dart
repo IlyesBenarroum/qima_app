@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/controllers/auction_controller.dart';
+import 'package:qima/app/controllers/provider_controller.dart';
 import 'package:qima/app/tools/popUps.dart';
 import 'package:qima/app/tools/tools.dart';
 import '../../../app/modules/add_auction/add_auction_view.dart';
@@ -14,18 +15,22 @@ import 'main_controller.dart';
 
 class MainView extends GetView<MainController> {
   final AuctionController _controller = Get.put(AuctionController());
+  final ProviderController providerController = Get.put(ProviderController());
   @override
   Widget build(BuildContext context) {
     double screenHeight = Get.height;
     double screenWidth = Get.width;
 // <<<<<<< testA
     print(_controller.auctionsList.length);
+    if (_controller.auctionsList.length != 0)
+      print(_controller.auctionsList[0].auctionDate);
     // var network = SocketService.checkSocketConnection().obs;
     // List auctionList = [1];
     // checkConnection(context);
 // =======
 //     checkConnection(context);
 // >>>>>>> main
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(screenHeight * 0.1),
@@ -70,17 +75,21 @@ class MainView extends GetView<MainController> {
                           icon:
                               "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
                           number:
-                              "${_controller.auctionsList[index].getProduct.getSpecialNumber}",
+                              //  "05402220103",
+                              "${_controller.auctionsList[index].getProduct.specialNumber}",
                           info:
+                              //  '000',
                               "${_controller.auctionsList[index].getProduct.country}",
                           asset: "assets/images/icons/moneyIcon.svg",
                           asset2: "assets/images/icons/dateIcon.svg",
                           title:
-                              "${_controller.auctionsList[index].getEntryPrice} " +
+                              // "0"
+                              "${_controller.auctionsList[index].entryPrice} " +
                                   "Pound".tr,
                           subtitle: "Entry_price".tr,
                           title2:
-                              "${_controller.auctionsList[index].getAuctionDate.substring(0, 4)}-${_controller.auctionsList[index].getAuctionDate.substring(4, 6)}-${_controller.auctionsList[index].getAuctionDate.substring(6, 8)}",
+                              // "0",
+                              "${_controller.auctionsList[index].getAuctionDate.substring(0, 10)}",
                           subtitle2: "Auction_date".tr,
                           screenHeight: screenHeight,
                           screenWidth: screenWidth,

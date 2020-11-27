@@ -12,7 +12,7 @@ class Auction {
   String get getEntryPrice => entryPrice;
   Product get getProduct => product;
 
-  set setId(String id) => this.id = id;
+  // set setId(String id) => this.id = id;
   set setAuctionDate(String auctionDate) => this.auctionDate = auctionDate;
   set setAuctionTiming(String auctionTiming) =>
       this.auctionTiming = auctionTiming;
@@ -37,13 +37,15 @@ class Product {
   String specialNumber;
   String serviceProvider;
   String condition;
+  String subscription;
   String country;
-  int arrearsValue;
+  String arrearsValue;
 
   Product({
     this.id,
     this.specialNumber,
     this.serviceProvider,
+    this.subscription,
     this.condition,
     this.type,
     this.country,
@@ -55,7 +57,7 @@ class Product {
   String get getCondition => condition;
   String get getType => type;
   String get getCountry => country;
-  int get getArrearsValue => arrearsValue;
+  String get getArrearsValue => arrearsValue;
 
   set setServiceProvider(String serviceProvider) =>
       this.serviceProvider = serviceProvider;
@@ -64,5 +66,5 @@ class Product {
   set setCondition(String condition) => this.condition = condition;
   set setType(String type) => this.type = type;
   set setCountry(String country) => this.country = country;
-  set setArrearsValue(int arrearsValue) => this.arrearsValue = arrearsValue;
+  set setArrearsValue(String arrearsValue) => this.arrearsValue = arrearsValue;
 }

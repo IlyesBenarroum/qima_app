@@ -6,6 +6,7 @@ import 'package:qima/app/controllers/auction_controller.dart';
 import 'package:qima/app/controllers/auctions_controller.dart';
 import 'package:qima/app/modules/add_auction/widgets/add_auction_info.dart';
 import 'package:qima/app/modules/add_auction/widgets/add_auction_timing.dart';
+import 'package:qima/app/modules/home/home_view.dart';
 
 import '../../../../gloabals.dart';
 import '../../../tools/constants.dart';
@@ -89,6 +90,8 @@ class NewAuction2BodyView extends StatelessWidget {
                                 controller.pickedDate.value = date;
                               }, onConfirm: (date) {
                                 controller.pickedDate.value = date;
+                                auctionController
+                                    .setAuctionDate(date.toIso8601String());
                                 // auctionController.setAuctionDate(
                                 // "${date.year.toString()}/" +
                                 // "${date.month.toString()}/" +
@@ -131,7 +134,9 @@ class NewAuction2BodyView extends StatelessWidget {
                                 showSecondsColumn: false,
                                 onConfirm: (time) {
                                   controller.pickedTime.value = time;
-                                  // auctionController.setAuctionTime("$time");
+                                  auctionController
+                                      .setAuctionTiming(time.toIso8601String());
+                                  // print(auctionController.auctionTiming);
                                 },
                                 currentTime: DateTime.now(),
                                 locale: lang == "ar"
@@ -178,6 +183,9 @@ class NewAuction2BodyView extends StatelessWidget {
                                   GestureDetector(
                                     onTap: () {
                                       controller.minusAuctionPeriod(-5);
+
+                                      auctionController.setAuctionPeriod(
+                                          "${controller.auctionPeriod.value}");
                                       // auctionController.setAuctionPeriod(
                                       // controller.auctionPeriod.value
                                       // .toString());
@@ -194,8 +202,9 @@ class NewAuction2BodyView extends StatelessWidget {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      // controller.addAuctionPeriod(5);
-                                      // auctionController.setAuctionPeriod(
+                                      controller.addAuctionPeriod(5);
+                                      auctionController.setAuctionPeriod(
+                                          "${controller.auctionPeriod.value}");
                                       // controller.auctionPeriod.value
                                       // .toString());
                                     },
@@ -236,9 +245,14 @@ class NewAuction2BodyView extends StatelessWidget {
                                               return null;
                                             }
                                           },
-                                          onSaved: (String val) {
-                                            // auctionController
-                                            //     .setStartingPrice(val);
+                                          // onSaved: (String val) {},
+                                          onFieldSubmitted: (String val) {
+                                            auctionController
+                                                .setEntryPrice(val);
+                                          },
+                                          onChanged: (String val) {
+                                            auctionController
+                                                .setEntryPrice(val);
                                           },
                                           controller:
                                               controller.auctionEntryPrice,
@@ -297,19 +311,33 @@ class NewAuction2BodyView extends StatelessWidget {
                       onTap: () {
                         print("tapped");
                         if (_formKey.currentState.validate()) {
-                          // if (GetUtils.isNullOrBlank(
-                          // auctionController.startingPrice))
-                          // auctionController.setStartingPrice("10");
-                          // if (GetUtils.isNullOrBlank(
-                          // auctionController.auctionTime))
-                          // auctionController.setAuctionTime("${now.hour}+"":${now.minute}");
+                          if (GetUtils.isNullOrBlank(
+                              auctionController.entryPrice))
+                            auctionController.setEntryPrice("30");
+
+                          if (GetUtils.isNullOrBlank(
+                              auctionController.auctionPeriod))
+                            auctionController.setAuctionPeriod(
+                                "${controller.auctionPeriod.value}");
+                          if (GetUtils.isNullOrBlank(
+                              auctionController.auctionTiming))
+                            auctionController
+                                .setAuctionTiming(now.toIso8601String());
+                          if (GetUtils.isNullOrBlank(
+                              auctionController.auctionDate))
+                            auctionController
+                                .setAuctionDate(now.toIso8601String());
 
                           // _formKey.currentState.save();
                           // auctionsController
                           // .addAuction(auctionController.auction.value);
-                          // print(auctionsController
+                          // print(auctionController.country);
                           // .auctionsList.first.auctionTime);
-                          Get.to(NewAuction3View());
+                          auctionController.auctionsList
+                              .add(auctionController.auction.value);
+                          auctionController.auctionsList.refresh();
+                          // Get.to(NewAuction3View());
+                          Get.to(HomeView());
                         }
                       },
                       child: Card(

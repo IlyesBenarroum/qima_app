@@ -58,7 +58,7 @@ class PhoneCardDetailView extends GetView {
               ),
               PhoneDetailInfoView(
                 screenHeight: screenHeight,
-                title: "Condition".tr,
+                title: "Subscription".tr,
                 info: condition,
               ),
               Divider(

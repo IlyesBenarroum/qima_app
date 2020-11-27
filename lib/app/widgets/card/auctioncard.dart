@@ -46,6 +46,7 @@ class AuctionCard extends StatelessWidget {
         vertical: screenHeight * 0.01,
       ),
       height: screenHeight * 0.175,
+      // width: 210,
       child: Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(color: Colors.white70, width: 1),

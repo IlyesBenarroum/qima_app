@@ -28,7 +28,7 @@ Widget factureUi() {
                 splashColor: Get.theme.primaryColor.withOpacity(0.2),
                 onTap: () {
                   controller.isPostPaid.value = true;
-                  // auctionController.setPostPaid(true);
+                  auctionController.setsubscription("POST_PAID");
                   // auctionController.setArrears(false);
                   // auctionController.setArrearsValue("0");
                 },
@@ -61,6 +61,9 @@ Widget factureUi() {
                 splashColor: Get.theme.primaryColor.withOpacity(0.2),
                 onTap: () {
                   controller.isPostPaid.value = false;
+                  auctionController.setsubscription("PRE_PAID");
+                  // auctionController.auction.product.type = "PRE_PAID";
+
                   // auctionController.setPostPaid(false);
                 },
                 child: Container(

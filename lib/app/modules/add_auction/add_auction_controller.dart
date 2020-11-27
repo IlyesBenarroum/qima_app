@@ -35,7 +35,7 @@ class AddAuctionController extends GetxController {
   var isArrears = false.obs;
   var arrearsVisibility = true.obs;
   var autoValidate = false.obs;
-  var auctionPeriod = 10.obs;
+  var auctionPeriod = 30.obs;
   var pickedDate = DateTime.now().obs;
   var pickedTime = DateTime.now().obs;
   @override

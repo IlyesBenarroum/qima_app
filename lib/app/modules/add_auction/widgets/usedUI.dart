@@ -29,6 +29,9 @@ Widget usedUi() {
                 splashColor: Get.theme.primaryColor.withOpacity(0.2),
                 onTap: () {
                   controller.isUsed.value = true;
+                  // auctionController.auction.product.condition = "NEW";
+                  auctionController.setCondition("USED");
+                  // auc/tionController.auction.product.type = "USED";
                   // auctionController.setUsedPhone(true);
                   // auctionController.setPostPaid(false);
                 },
@@ -64,6 +67,8 @@ Widget usedUi() {
                 onTap: () {
                   controller.isUsed.value = false;
                   controller.isPostPaid.value = false;
+                  // auctionController.auction.product.type = "NEW";
+                  auctionController.setCondition("NEW");
                   // auctionController.setUsedPhone(false);
                   // auctionController.setPostPaid(false);
                   // auctionController.setArrears(false);
