@@ -75,6 +75,14 @@ class SignupFormView extends StatelessWidget {
 // }
 //   """
 //           .replaceAll('\n', '')),
+
+      // variables: {
+      //   "fullName": "$fulllName",
+      //   "email": "$email",
+      //   "password": "$password",
+      //   "phone": "$phone"
+      // },
+
       documentNode: gql("""
       mutation {
         signupWithEmail(args:{
@@ -92,9 +100,9 @@ class SignupFormView extends StatelessWidget {
       //     addMutation.singInnwithEmail(user.name, user.email, user.password),
       // documentNode: gql(addMutation.singInnwithEmail()),
       onCompleted: (data) {
-        print(data.data["signupWithEmail"]["accessToken"]);
-        print('completed');
-        print('FULL NAME' + fulllName);
+        // print(data.data["signupWithEmail"]["accessToken"]);
+        // print('completed');
+        // print('FULL NAME' + fulllName);
       },
     ));
     if (!result.hasException) {
@@ -199,8 +207,6 @@ class SignupFormView extends StatelessWidget {
               //     isPhone : true,
               //   ),
               // ),
-
-            
 
               Obx(
                 () => MyTextFormField(
@@ -325,8 +331,8 @@ class SignupFormView extends StatelessWidget {
                       //   print(result.exception);
                       //   // print(result);
                       // }
-                      // signin(user.name, user.email,password,"");
-                      // Get.off(HomeView());
+                      signin(user.name, user.email, password, "");
+                      Get.off(HomeView());
 
                     }
                     // signin(
@@ -335,7 +341,7 @@ class SignupFormView extends StatelessWidget {
                     //   user.getPassword().text,
                     //   user.getPhone().text
                     // );
-                    signin('fff',"fgtrf@gmail.com","kmkm","d455");
+                    // signin('fff',"fgtrf@gmail.com","kmkm","d455");
                   },
                   child: Text(
                     "Create_an_account".tr,
