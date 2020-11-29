@@ -120,7 +120,7 @@ class AuctionController extends GetxController {
   mutation createAuction {
     createAuction(
         auctionParams: {
-                userID: "9f705c1a-8570-4b6d-957d-92521fd2fd55"
+                userID: "d38a0049-27d3-4226-845e-862af46b401c"
                 startsAt: "${auction.auctionDate.substring(0, 9)}${auction.auctionTiming.substring(10)}"
                 length: ${int.parse(auction.auctionPeriod)}
                 entryPrice:"${auction.entryPrice}"
