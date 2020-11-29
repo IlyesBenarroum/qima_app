@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/controllers/auction_controller.dart';
 import 'package:qima/app/controllers/provider_controller.dart';
+import 'package:qima/app/modules/add_auction/widgets/country_cutumDropDown.dart';
 import 'package:qima/app/tools/popUps.dart';
 import 'package:qima/app/tools/tools.dart';
 import '../../../app/modules/add_auction/add_auction_view.dart';
@@ -20,17 +21,6 @@ class MainView extends GetView<MainController> {
   Widget build(BuildContext context) {
     double screenHeight = Get.height;
     double screenWidth = Get.width;
-// <<<<<<< testA
-    print(_controller.auctionsList.length);
-    if (_controller.auctionsList.length != 0)
-      print(_controller.auctionsList[0].auctionDate);
-    // var network = SocketService.checkSocketConnection().obs;
-    // List auctionList = [1];
-    // checkConnection(context);
-// =======
-//     checkConnection(context);
-// >>>>>>> main
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(screenHeight * 0.1),
@@ -61,41 +51,10 @@ class MainView extends GetView<MainController> {
                     ),
                   ),
                   Flexible(
-                    child: ListView.builder(
-                      itemCount: _controller.auctionsList.length,
-                      itemBuilder: (context, index) => GestureDetector(
-                        onTap: () {
-                          Get.to(DetailView(index: index));
-                        },
-                        child: AuctionCard(
-                          //type 0 for main and created auctions
-                          //type 1 for joined
-                          //type 2 intersted auction
-                          type: 0,
-                          icon:
-                              "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
-                          number:
-                              //  "05402220103",
-                              "${_controller.auctionsList[index].getProduct.specialNumber}",
-                          info:
-                              //  '000',
-                              "${_controller.auctionsList[index].getProduct.country}",
-                          asset: "assets/images/icons/moneyIcon.svg",
-                          asset2: "assets/images/icons/dateIcon.svg",
-                          title:
-                              // "0"
-                              "${_controller.auctionsList[index].entryPrice} " +
-                                  "Pound".tr,
-                          subtitle: "Entry_price".tr,
-                          title2:
-                              // "0",
-                              "${_controller.auctionsList[index].getAuctionDate.substring(0, 10)}",
-                          subtitle2: "Auction_date".tr,
-                          screenHeight: screenHeight,
-                          screenWidth: screenWidth,
-                        ),
-                      ),
-                    ),
+                    child: CustomRefreshWidget(
+                        controller: _controller,
+                        screenHeight: screenHeight,
+                        screenWidth: screenWidth),
                   ),
                 ],
               ),
@@ -107,6 +66,69 @@ class MainView extends GetView<MainController> {
         },
         child: Icon(
           Icons.add,
+        ),
+      ),
+    );
+  }
+}
+
+class CustomRefreshWidget extends StatefulWidget {
+  const CustomRefreshWidget({
+    Key key,
+    @required AuctionController controller,
+    @required this.screenHeight,
+    @required this.screenWidth,
+  })  : _controller = controller,
+        super(key: key);
+
+  final AuctionController _controller;
+  final double screenHeight;
+  final double screenWidth;
+
+  @override
+  _CustomRefreshWidgetState createState() => _CustomRefreshWidgetState();
+}
+
+class _CustomRefreshWidgetState extends State<CustomRefreshWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+      onRefresh: auctionController.getAuctions,
+      child: ListView.builder(
+        itemCount: widget._controller.auctionsList.length,
+        itemBuilder: (context, index) => GestureDetector(
+          onTap: () {
+            setState(() {
+              Get.to(DetailView(index: index));
+            });
+          },
+          child: AuctionCard(
+            //type 0 for main and created auctions
+            //type 1 for joined
+            //type 2 intersted auction
+            type: 0,
+            icon:
+                "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
+            number:
+                //  "05402220103",
+                "${widget._controller.auctionsList[index].getProduct.specialNumber}",
+            info:
+                //  '000',
+                "${widget._controller.auctionsList[index].getProduct.country}",
+            asset: "assets/images/icons/moneyIcon.svg",
+            asset2: "assets/images/icons/dateIcon.svg",
+            title:
+                // "0"
+                "${widget._controller.auctionsList[index].entryPrice} " +
+                    "Pound".tr,
+            subtitle: "Entry_price".tr,
+            title2:
+                // "0",
+                "${widget._controller.auctionsList[index].getAuctionDate.substring(0, 10)}",
+            subtitle2: "Auction_date".tr,
+            screenHeight: widget.screenHeight,
+            screenWidth: widget.screenWidth,
+          ),
         ),
       ),
     );

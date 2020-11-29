@@ -26,7 +26,7 @@ class AuctionView extends GetView<AuctionController> {
       ),
       Tab(
         child: InterestedauctionsView(
-          interestedAuctionList: interestedAuctionList,
+         
         ),
       ),
     ];

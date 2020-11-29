@@ -78,6 +78,7 @@ class DetailView extends GetView<DetailController> {
             ),
             GestureDetector(
               onTap: () {
+                
                 controller.toggleDetail(auctionDetails);
               },
               child: InkWell(
@@ -205,8 +206,10 @@ class DetailView extends GetView<DetailController> {
                               "0"
                           ? "Exist".tr
                           : "Don't Exist".tr,
-                  arrearsvalue:
-                      "${auctionController.auctionsList[index].getProduct.getArrearsValue} " +
+                  arrearsvalue: GetUtils.isNullOrBlank(auctionController
+                          .auctionsList[index].getProduct.getArrearsValue)
+                      ? "0 " + "Pound".tr
+                      : "${auctionController.auctionsList[index].getProduct.getArrearsValue}" +
                           "Pound".tr,
                   screenWidth: screenWidth,
                   screenHeight: screenHeight,
@@ -230,6 +233,8 @@ class DetailView extends GetView<DetailController> {
                         ),
                         color: Color(0xff3686bd),
                         onPressed: () {
+                          auctionController.joinAuction(
+                              auctionController.auctionsList[index].id);
                           joinAuction();
                         },
                         child: Text('Join'.tr),
@@ -245,6 +250,8 @@ class DetailView extends GetView<DetailController> {
                         ),
                         color: Color(0xffffe477),
                         onPressed: () {
+                          auctionController.intrestAuction(
+                              auctionController.auctionsList[index].id);
                           addedToIntersted();
                         },
                         child: Text('Interest'.tr),

@@ -29,7 +29,9 @@ class CreatedauctionsView extends GetView {
                   child: Column(
                     children: [
                       GestureDetector(
-                        onTap: () => Get.to(Detail2View()),
+                        onTap: () => Get.to(Detail2View(
+                          index: 0,
+                        )),
                         child: AuctionCard(
                           //type 0 for main and created auctions
                           //type 1 for joined
@@ -52,7 +54,9 @@ class CreatedauctionsView extends GetView {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Get.to(Detail2View()),
+                        onTap: () => Get.to(Detail2View(
+                          index: 0,
+                        )),
                         child: AuctionCard(
                           //type 0 for main and created auctions
                           //type 1 for joined
@@ -73,7 +77,9 @@ class CreatedauctionsView extends GetView {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Get.to(Detail2View()),
+                        onTap: () => Get.to(Detail2View(
+                          index: 0,
+                        )),
                         child: AuctionCard(
                           //type 0 for main and created auctions
                           //type 1 for joined

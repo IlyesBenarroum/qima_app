@@ -7,6 +7,8 @@ import 'package:qima/app/tools/tools.dart';
 class AuctionController extends GetxController {
   // var auctionsList = .obs;
   var auctionsList = List<Auction>().obs;
+  var joinedList = List<Auction>().obs;
+  var intressetList = List<Auction>().obs;
 
   var auction = Auction(
     auctionDate: "${DateTime.now().toIso8601String()}",
@@ -14,13 +16,14 @@ class AuctionController extends GetxController {
     auctionPeriod: "30",
     entryPrice: "0",
     product: Product(
-        type: "PHONE_NUMBER",
-        specialNumber: "",
-        serviceProvider: "42001",
-        condition: "NEW",
-        subscription: "",
-        country: "SA",
-        arrearsValue: "0"),
+      type: "PHONE_NUMBER",
+      specialNumber: "",
+      serviceProvider: "42001",
+      condition: "NEW",
+      subscription: "",
+      country: "SA",
+      arrearsValue: "0",
+    ),
   ).obs;
   get country => auction.value.product.country;
   get serviceProvider => auction.value.product.serviceProvider;
@@ -113,29 +116,13 @@ class AuctionController extends GetxController {
   void onClose() {}
   void addAuction(Auction auction) async {
     QueryResult result = await _client.mutate(MutationOptions(
-      // "phone": "$phone"
-      // },
-//       documentNode: gql("""
-//       mutation SignupWithEmail(\$name:String!,\$email:String,\$password:String,\$phone:String) {
-//    signupWithEmail(args:{
-//      fullName:\$name
-//      email:\$email
-//      password:\$password
-//      phone:\$phone
-//    }){
-//      accessToken
-//    }
-//  }
-// }
-//   """
-//           .replaceAll('\n', '')),
       documentNode: gql("""
   mutation createAuction {
     createAuction(
         auctionParams: {
-                userID: "d1ba81e8-2226-4db9-be1d-67c12c237df3"
-                startsAt: "${auction.auctionDate.substring(0, 10)}+${auction.auctionTiming.substring(11)}"
-                length: "${int.parse(auction.auctionTiming)}"
+                userID: "9f705c1a-8570-4b6d-957d-92521fd2fd55"
+                startsAt: "${auction.auctionDate.substring(0, 9)}${auction.auctionTiming.substring(10)}"
+                length: ${int.parse(auction.auctionPeriod)}
                 entryPrice:"${auction.entryPrice}"
     }
     productParams: {
@@ -152,123 +139,55 @@ class AuctionController extends GetxController {
   )
 }
       """),
-      // .replaceAll('\n', '')),
-      // document:
-      //     addMutation.singInnwithEmail(user.name, user.email, user.password),
-      // documentNode: gql(addMutation.singInnwithEmail()),
-      onCompleted: (data) {
-        print(data.data);
-        print('completed');
-        // print('FULL NAME' + fulllName);
-      },
+
+      // onCompleted: (data) {
+      //   // print(data.data["createAuction"]);
+      //   print('completed');
+      //   // print('FULL NAME' + fulllName);
+      // },
     ));
     if (!result.hasException) {
-      print(result);
+      print(result.data.data["createAuction"]);
     } else {
       print(result.exception);
       // print(result);
     }
-//     Mutation result = await _client.mutate(
-//       MutationOptions(
-//         documentNode: gql("""
-// query getAllAuctions {
-//   getAllAuctions{
-//     id
-//     startsAt
-//  	  length
-//   	entryPrice
-//     product{
-//       id
-//       number
-//     	arrearsValue
-//       carrierID
-//       countryID
-//       subscription
-//     	condition
-//     }
-//   }
-// }
-// """),
-//       ),
-//     );
-
-    // var data = result.data.data["getAllAuctions"];
-    // // print(result.exception);
-    // // print(data[0]["id"]);
-
-    // // print('hadi ta3 ilyes ' + data);
-
-    // if (!result.hasException) {
-    //   // print();
-    //   if (!GetUtils.isNullOrBlank(data)) {
-    //     for (var i = 0; i < data.length; i++) {
-    //       auctionsList.add(
-    //         Auction(
-    //           id: data[i]["id"],
-    //           auctionDate: data[i]["startsAt"],
-    //           auctionTiming: data[i]["startsAt"],
-    //           auctionPeriod: data[i]["length"],
-    //           entryPrice: data[i]["entryPrice"],
-    //           product: Product(
-    //             id: data[i]["product"]["id"],
-    //             serviceProvider: data[i]["product"]["carrierID"],
-    //             specialNumber: data[i]["product"]["number"],
-    //             // arrears: data[i]["product"]["arrears"],
-    //             arrearsValue: data[i]["product"]["arrearsValue"],
-    //             type: data[i]["product"]["subscription"],
-    //             condition: data[i]["product"]["condition"],
-    //             country: data[i]["product"]["countryID"],
-    //           ),
-    //         ),
-    //       );
-    //       auctionsList.refresh();
-    //     }
-    //   } else {
-    //     return;
-    //   }
-    // }
   }
 
-  void getAuctions() async {
+  Future<void> getAuctions() async {
     QueryResult result = await _client.query(
       QueryOptions(
         documentNode: gql("""
- query getAllAuctions {
-        getAllAuctions{
-							        id
-											entryPrice
-											startsAt
-											length 
-											product{
-  														id
-  														defaultPrice
-															type
-															condition
-															options{
-                                 __typename
-   																		 ... on PhoneNumberOpts {
-                                        countryID
-                                        carrierID
-                                        subscription
-                                      }
-                                	
-                              }				
-                      }
-      								}
+ query getAuctions{
+  getAllAuctions{
+    id
+  	entryPrice
+    startsAt
+    length
+    product
+    {
+      id
+      countryID
+      carrierID
+      condition
+    	number
+      subscription
+      arrearsValue
+    }
+  }
 }
 """),
       ),
     );
 
     var data = result.data.data["getAllAuctions"];
-    // print(result.exception);
-    // print(data[0]["id"]);
 
-    // print('hadi ta3 ilyes ' + data);
-
+    print("get auctions");
     if (!result.hasException) {
       // print();
       if (!GetUtils.isNullOrBlank(data)) {
+        auctionsList.clear();
+        print("get auctions");
         for (var i = 0; i < data.length; i++) {
           auctionsList.add(
             Auction(
@@ -279,12 +198,12 @@ class AuctionController extends GetxController {
               entryPrice: data[i]["entryPrice"],
               product: Product(
                 id: data[i]["product"]["id"],
-                // serviceProvider: data[i]["product"]["carrierID"],
-                // specialNumber: data[i]["product"]["number"],
-                // arrearsValue: data[i]["product"]["arrearsValue"],
+                serviceProvider: data[i]["product"]["carrierID"],
+                specialNumber: data[i]["product"]["number"],
+                arrearsValue: data[i]["product"]["arrearsValue"],
                 type: data[i]["product"]["subscription"],
                 condition: data[i]["product"]["condition"],
-                // country: data[i]["product"]["countryID"],
+                country: data[i]["product"]["countryID"],
               ),
             ),
           );
@@ -293,6 +212,169 @@ class AuctionController extends GetxController {
       } else {
         return;
       }
+    }
+    auctionsList.refresh();
+  }
+
+  Future<void> getIntressetedAuctions() async {
+    QueryResult result = await _client.query(
+      QueryOptions(
+        documentNode: gql("""
+query followedAuctions {
+  getUserByID(userID: "4a3360b5-3ef8-4763-9e45-7abf1717dfd9") {
+    followedAuctions {
+      id
+      entryPrice
+      startsAt
+      length
+      product {
+        id
+        countryID
+        carrierID
+        condition
+        number
+        subscription
+        arrearsValue
+      }
+    }
+  }
+}
+"""),
+      ),
+    );
+
+    var data = result.data.data["getUserByID"];
+
+    print("get  intressetd auctions");
+    if (!result.hasException) {
+      // print();
+      if (!GetUtils.isNullOrBlank(data)) {
+        intressetList.clear();
+        print("get  intressetd auctions");
+        // print("get auctions");
+        for (var i = 0; i < data.length; i++) {
+          intressetList.add(
+            Auction(
+              id: data[i]["id"],
+              auctionDate: data[i]["startsAt"],
+              auctionTiming: data[i]["startsAt"],
+              auctionPeriod: data[i]["length"].toString(),
+              entryPrice: data[i]["entryPrice"],
+              product: Product(
+                id: data[i]["product"]["id"],
+                serviceProvider: data[i]["product"]["carrierID"],
+                specialNumber: data[i]["product"]["number"],
+                arrearsValue: data[i]["product"]["arrearsValue"],
+                type: data[i]["product"]["subscription"],
+                condition: data[i]["product"]["condition"],
+                country: data[i]["product"]["countryID"],
+              ),
+            ),
+          );
+          intressetList.refresh();
+        }
+      } else {
+        return;
+      }
+    }
+    intressetList.refresh();
+  }
+
+  Future<void> getJoinedAuctions() async {
+    QueryResult result = await _client.query(
+      QueryOptions(
+        documentNode: gql("""
+query followedAuctions {
+  getUserByID(userID: "4a3360b5-3ef8-4763-9e45-7abf1717dfd9") {
+    joinedAuctions {
+      id
+      entryPrice
+      startsAt
+      length
+      product {
+        id
+        countryID
+        carrierID
+        condition
+        number
+        subscription
+        arrearsValue
+      }
+    }
+  }
+}
+"""),
+      ),
+    );
+
+    var data = result.data.data["getUserByID"];
+
+    print("get  joinedAuctions ");
+    if (!result.hasException) {
+      // print();
+      if (!GetUtils.isNullOrBlank(data)) {
+        joinedList.clear();
+        print("get joinedAuctions");
+        // print("get auctions");
+        for (var i = 0; i < data.length; i++) {
+          intressetList.add(
+            Auction(
+              id: data[i]["id"],
+              auctionDate: data[i]["startsAt"],
+              auctionTiming: data[i]["startsAt"],
+              auctionPeriod: data[i]["length"].toString(),
+              entryPrice: data[i]["entryPrice"],
+              product: Product(
+                id: data[i]["product"]["id"],
+                serviceProvider: data[i]["product"]["carrierID"],
+                specialNumber: data[i]["product"]["number"],
+                arrearsValue: data[i]["product"]["arrearsValue"],
+                type: data[i]["product"]["subscription"],
+                condition: data[i]["product"]["condition"],
+                country: data[i]["product"]["countryID"],
+              ),
+            ),
+          );
+          intressetList.refresh();
+        }
+      } else {
+        return;
+      }
+    }
+    intressetList.refresh();
+  }
+
+  void joinAuction(String auctionID) async {
+    QueryResult result = await _client.mutate(MutationOptions(
+      documentNode: gql("""
+                            mutation join{joinAuction(
+                              userID:"4a3360b5-3ef8-4763-9e45-7abf1717dfd9"
+                            auctionID:"$auctionID")
+}
+      """),
+    ));
+    if (!result.hasException) {
+      print(result.data.data);
+    } else {
+      print(result.exception);
+      // print(result);
+    }
+  }
+
+  void intrestAuction(String auctionID) async {
+    QueryResult result = await _client.mutate(MutationOptions(
+      documentNode: gql("""
+                            mutation intrest{followAuction(
+                              userID:"4a3360b5-3ef8-4763-9e45-7abf1717dfd9"
+                            auctionID:"$auctionID")
+}
+      """),
+    ));
+    if (!result.hasException) {
+      print(result.data.data);
+    } else {
+      print(result.exception);
+      // print(result);
     }
   }
 }

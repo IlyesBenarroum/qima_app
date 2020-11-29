@@ -3,9 +3,9 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/controllers/auction_controller.dart';
-import 'package:qima/app/controllers/auctions_controller.dart';
 import 'package:qima/app/modules/add_auction/widgets/add_auction_info.dart';
 import 'package:qima/app/modules/add_auction/widgets/add_auction_timing.dart';
+import 'package:qima/app/modules/add_auction/widgets/country_cutumDropDown.dart';
 import 'package:qima/app/modules/home/home_view.dart';
 
 import '../../../../gloabals.dart';
@@ -333,9 +333,13 @@ class NewAuction2BodyView extends StatelessWidget {
                           // .addAuction(auctionController.auction.value);
                           // print(auctionController.country);
                           // .auctionsList.first.auctionTime);
-                          auctionController.auctionsList
-                              .add(auctionController.auction.value);
-                          auctionController.auctionsList.refresh();
+                           auctionController
+                              
+                              .addAuction(auctionController.auction.value);
+                          // auctionController.auctionsList
+                          // .add(auctionController.auction.value);
+                          // auctionController.auctionsList.refresh();
+
                           // Get.to(NewAuction3View());
                           Get.to(HomeView());
                         }

@@ -28,7 +28,9 @@ class JoinedauctionsView extends GetView {
                   child: ListView.builder(
                     itemCount: 5,
                     itemBuilder: (context, index) => GestureDetector(
-                      onTap: () => Get.to(Detail2View()),
+                      onTap: () => Get.to(Detail2View(
+                        index: index,
+                      )),
                       child: AuctionCard(
                         //type 0 for main and created auctions
                         //type 1 for joined
