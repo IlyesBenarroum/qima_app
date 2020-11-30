@@ -43,7 +43,7 @@ class ProviderController extends GetxController {
             );
           }
           carriersList.refresh();
-          print(data[0]["carriers"]);
+          // print(data[0]["carriers"]);
           providersList.add(
             Provider(
               // countryID: CountryID(
@@ -54,9 +54,9 @@ class ProviderController extends GetxController {
               // ),
             ),
           );
-          for (var j = 0; j < data[i]["carriers"].length; j++) {
-            print("");
-          }
+          // for (var j = 0; j < data[i]["carriers"].length; j++) {
+          //   print("");
+          // }
           providersList.refresh();
         }
       } else {

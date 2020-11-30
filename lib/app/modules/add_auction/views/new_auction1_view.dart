@@ -126,15 +126,18 @@ class NewAuction1View extends GetView {
                         ),
                       ),
                       usedUi(),
+                      // Obx(
+                      // () => Visibility(
+                      // visible: controller.isUsed.value,
+                      // child:
                       Obx(
-                        () => Visibility(
-                          visible: controller.isUsed.value,
-                          child: factureUi(),
-                        ),
+                        () => factureUi(),
                       ),
+                      // ),
+                      // ),
                       Obx(
                         () => Visibility(
-                          visible: !controller.isPostPaid.value &
+                          visible: controller.isPostPaid.value &
                               controller.isUsed.value,
                           child: Container(
                             child: Row(
@@ -236,10 +239,10 @@ class NewAuction1View extends GetView {
                   GestureDetector(
                     onTap: () {
                       _validateInputs();
-                      print(auctionController.country);
                       // if (GetUtils.isNullOrBlank(auctionController.country))
                       //   auctionController.setCountry(
                       //       controller.countryData.keys.toList()[0]);
+                      // print(auctionController.country);
                       // if (GetUtils.isNullOrBlank(auctionController.provider))
                       //   auctionController
                       //       .setProvider(controller.serviceProviderData[0]);
@@ -287,6 +290,10 @@ class NewAuction1View extends GetView {
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+
+      if (auctionController.country.isNullOrBlank) {
+        auctionController.setCountry("SA");
+      }
       // _formKey.currentState.dispose();
       Get.to(NewAuction2View());
     } else {

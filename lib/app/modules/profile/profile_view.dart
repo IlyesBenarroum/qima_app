@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:qima/app/controllers/user_controller.dart';
-import 'package:qima/app/modules/registration/views/signup_form_view.dart';
+import 'package:qima/app/models/user_model.dart';
+import 'package:qima/app/modules/splash/splash_controller.dart';
+// import 'package:qima/app/modules/registration/views/signup_form_view.dart';
 // import '../../.././app/modules/auction_live/auction_live_view.dart';
 import '../../.././app/modules/detail/detail2_view.dart';
 import '../../.././app/modules/profile/profile_controller.dart';
@@ -21,6 +24,7 @@ class ProfileView extends GetView<ProfileController> {
   final UserController userController = Get.put(UserController());
 
   final List pastAuctionList = [1];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +76,16 @@ class ProfileView extends GetView<ProfileController> {
                                 ),
                               ),
                             ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            if (userS.name != null)
+                              Text(
+                                userS.name,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              )
                           ],
                         ),
                       ),
@@ -90,15 +104,15 @@ class ProfileView extends GetView<ProfileController> {
                         ),
                       ),
                     ),
-                    Obx(
-                      () => Text(
-                        userController.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                    // Obx(
+                    //   () => Text(
+                    //     user.name,
+                    //     style: TextStyle(
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

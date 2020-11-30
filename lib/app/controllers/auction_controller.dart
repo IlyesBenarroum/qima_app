@@ -9,6 +9,7 @@ class AuctionController extends GetxController {
   var auctionsList = List<Auction>().obs;
   var joinedList = List<Auction>().obs;
   var intressetList = List<Auction>().obs;
+  var ownerList = List<Auction>().obs;
 
   var auction = Auction(
     auctionDate: "${DateTime.now().toIso8601String()}",
@@ -20,8 +21,8 @@ class AuctionController extends GetxController {
       specialNumber: "",
       serviceProvider: "42001",
       condition: "NEW",
-      subscription: "",
-      country: "SA",
+      subscription: "PRE_PAID",
+      country: "",
       arrearsValue: "0",
     ),
   ).obs;
@@ -38,7 +39,7 @@ class AuctionController extends GetxController {
   get auctionPeriod => auction.value.auctionPeriod;
   get entryPrice => auction.value.entryPrice;
 
-  void setCountry(country) {
+  void setCountry(String country) {
     auction.value.product.country = country;
     auction.refresh();
   }
@@ -107,6 +108,9 @@ class AuctionController extends GetxController {
   @override
   void onInit() {
     getAuctions();
+    getIntressetedAuctions();
+    getJoinedAuctions();
+    getOwnedAuctions();
   }
 
   @override
@@ -120,7 +124,7 @@ class AuctionController extends GetxController {
   mutation createAuction {
     createAuction(
         auctionParams: {
-                userID: "d38a0049-27d3-4226-845e-862af46b401c"
+                userID: "faebe27c-8351-439b-92cd-6ffb1359a05d"
                 startsAt: "${auction.auctionDate.substring(0, 9)}${auction.auctionTiming.substring(10)}"
                 length: ${int.parse(auction.auctionPeriod)}
                 entryPrice:"${auction.entryPrice}"
@@ -139,12 +143,6 @@ class AuctionController extends GetxController {
   )
 }
       """),
-
-      // onCompleted: (data) {
-      //   // print(data.data["createAuction"]);
-      //   print('completed');
-      //   // print('FULL NAME' + fulllName);
-      // },
     ));
     if (!result.hasException) {
       print(result.data.data["createAuction"]);
@@ -155,7 +153,8 @@ class AuctionController extends GetxController {
   }
 
   Future<void> getAuctions() async {
-    QueryResult result = await _client.query(
+    GraphQLClient _getclient = clientToQuery();
+    QueryResult result = await _getclient.query(
       QueryOptions(
         documentNode: gql("""
  query getAuctions{
@@ -182,12 +181,10 @@ class AuctionController extends GetxController {
 
     var data = result.data.data["getAllAuctions"];
 
-    print("get auctions");
     if (!result.hasException) {
-      // print();
       if (!GetUtils.isNullOrBlank(data)) {
         auctionsList.clear();
-        print("get auctions");
+
         for (var i = 0; i < data.length; i++) {
           auctionsList.add(
             Auction(
@@ -216,12 +213,81 @@ class AuctionController extends GetxController {
     auctionsList.refresh();
   }
 
-  Future<void> getIntressetedAuctions() async {
+  Future<void> getOwnedAuctions() async {
     QueryResult result = await _client.query(
       QueryOptions(
         documentNode: gql("""
+
+query getUserByID {
+  
+  getUserByID(userID: "faebe27c-8351-439b-92cd-6ffb1359a05d") {
+    ownAuctions {
+      id
+      entryPrice
+      startsAt
+      length
+      joinedBy{id}
+      followedBy{id}
+      product {
+        id
+        countryID
+        carrierID
+        condition
+        number
+        subscription
+        arrearsValue
+      }
+    }
+  }
+}
+"""),
+      ),
+    );
+
+    var data = result.data.data["getUserByID"]["ownAuctions"];
+
+    if (!result.hasException) {
+      // print();
+      // print(data[0]["id"]);
+      if (!GetUtils.isNullOrBlank(data)) {
+        ownerList.clear();
+
+        // print("get auctions");
+        for (var i = 0; i < data.length; i++) {
+          ownerList.add(
+            Auction(
+              id: data[i]["id"],
+              auctionDate: data[i]["startsAt"],
+              auctionTiming: data[i]["startsAt"],
+              auctionPeriod: data[i]["length"].toString(),
+              entryPrice: data[i]["entryPrice"],
+              product: Product(
+                id: data[i]["product"]["id"],
+                serviceProvider: data[i]["product"]["carrierID"],
+                specialNumber: data[i]["product"]["number"],
+                arrearsValue: data[i]["product"]["arrearsValue"],
+                type: data[i]["product"]["subscription"],
+                condition: data[i]["product"]["condition"],
+                country: data[i]["product"]["countryID"],
+              ),
+            ),
+          );
+          ownerList.refresh();
+        }
+      } else {
+        return;
+      }
+    }
+    ownerList.refresh();
+  }
+
+  Future<void> getIntressetedAuctions() async {
+    GraphQLClient getIntresseted = clientToQuery();
+    QueryResult result = await getIntresseted.query(
+      QueryOptions(
+        documentNode: gql("""
 query followedAuctions {
-  getUserByID(userID: "4a3360b5-3ef8-4763-9e45-7abf1717dfd9") {
+  getUserByID(userID: "6bf7e1a8-3c7f-485f-8968-64487090f0de") {
     followedAuctions {
       id
       entryPrice
@@ -243,14 +309,14 @@ query followedAuctions {
       ),
     );
 
-    var data = result.data.data["getUserByID"];
+    var data = result.data.data["getUserByID"]["followedAuctions"];
 
-    print("get  intressetd auctions");
     if (!result.hasException) {
       // print();
+      // print(data[0]["id"]);
       if (!GetUtils.isNullOrBlank(data)) {
         intressetList.clear();
-        print("get  intressetd auctions");
+
         // print("get auctions");
         for (var i = 0; i < data.length; i++) {
           intressetList.add(
@@ -281,11 +347,13 @@ query followedAuctions {
   }
 
   Future<void> getJoinedAuctions() async {
-    QueryResult result = await _client.query(
+    GraphQLClient getJoin = clientToQuery();
+
+    QueryResult result = await getJoin.query(
       QueryOptions(
         documentNode: gql("""
-query followedAuctions {
-  getUserByID(userID: "4a3360b5-3ef8-4763-9e45-7abf1717dfd9") {
+query getUserByID {
+  getUserByID(userID: "6bf7e1a8-3c7f-485f-8968-64487090f0de") {
     joinedAuctions {
       id
       entryPrice
@@ -307,17 +375,17 @@ query followedAuctions {
       ),
     );
 
-    var data = result.data.data["getUserByID"];
+    var data = result.data.data["getUserByID"]["joinedAuctions"];
 
-    print("get  joinedAuctions ");
     if (!result.hasException) {
       // print();
+
       if (!GetUtils.isNullOrBlank(data)) {
         joinedList.clear();
-        print("get joinedAuctions");
+
         // print("get auctions");
         for (var i = 0; i < data.length; i++) {
-          intressetList.add(
+          joinedList.add(
             Auction(
               id: data[i]["id"],
               auctionDate: data[i]["startsAt"],
@@ -335,20 +403,20 @@ query followedAuctions {
               ),
             ),
           );
-          intressetList.refresh();
+          joinedList.refresh();
         }
       } else {
         return;
       }
     }
-    intressetList.refresh();
+    joinedList.refresh();
   }
 
   void joinAuction(String auctionID) async {
     QueryResult result = await _client.mutate(MutationOptions(
       documentNode: gql("""
                             mutation join{joinAuction(
-                              userID:"4a3360b5-3ef8-4763-9e45-7abf1717dfd9"
+                              userID:"6bf7e1a8-3c7f-485f-8968-64487090f0de"
                             auctionID:"$auctionID")
 }
       """),
@@ -365,7 +433,7 @@ query followedAuctions {
     QueryResult result = await _client.mutate(MutationOptions(
       documentNode: gql("""
                             mutation intrest{followAuction(
-                              userID:"4a3360b5-3ef8-4763-9e45-7abf1717dfd9"
+                              userID:"6bf7e1a8-3c7f-485f-8968-64487090f0de"
                             auctionID:"$auctionID")
 }
       """),

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/modules/splash/splash_controller.dart';
 import '../../../controllers/user_controller.dart';
 import 'package:qima/app/modules/home/home_view.dart';
 // import '../../../../gloabals.dart';
@@ -200,7 +201,7 @@ class EditProfileView extends GetView {
                       width: screenWidth * 0.9,
                       child: Obx(
                         () => MyTextFormField(
-                          hintText: "Full_Name".tr,
+                          hintText: "${userS.name}".tr,
                           validator: (String value) {
                             if (value.length == 0) return null;
 
@@ -230,7 +231,7 @@ class EditProfileView extends GetView {
                       width: screenWidth * 0.9,
                       child: Obx(
                         () => MyTextFormField(
-                          hintText: "Email".tr,
+                          hintText: "${userS.email}".tr,
                           isEmail: true,
                           validator: (String value) {
                             if (value.length == 0) return null;

@@ -78,7 +78,6 @@ class DetailView extends GetView<DetailController> {
             ),
             GestureDetector(
               onTap: () {
-                
                 controller.toggleDetail(auctionDetails);
               },
               child: InkWell(

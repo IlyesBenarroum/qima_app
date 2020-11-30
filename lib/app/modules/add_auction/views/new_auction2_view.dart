@@ -333,8 +333,7 @@ class NewAuction2BodyView extends StatelessWidget {
                           // .addAuction(auctionController.auction.value);
                           // print(auctionController.country);
                           // .auctionsList.first.auctionTime);
-                           auctionController
-                              
+                          auctionController
                               .addAuction(auctionController.auction.value);
                           // auctionController.auctionsList
                           // .add(auctionController.auction.value);

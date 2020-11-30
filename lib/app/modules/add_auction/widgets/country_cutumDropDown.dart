@@ -113,11 +113,9 @@ class _CustomDropDownState extends State<CustomDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    if (GetUtils.isNullOrBlank(auctionController.country))
-      auctionController.setCountry(_dropdownMenuItems[0].value.id);
-    if (GetUtils.isNullOrBlank(auctionController.serviceProvider))
-      auctionController
-          .setServiceProvider(_providerDropdownMenuItems[0].value.id);
+    // if (GetUtils.isNullOrBlank(auctionController.serviceProvider))
+    // auctionController
+    // .setServiceProvider(_providerDropdownMenuItems[0].value.id);
 
     return Row(
       children: [
@@ -136,7 +134,9 @@ class _CustomDropDownState extends State<CustomDropDown> {
                       // bool past = true; // print();
                       // print(value.value);
                       setState(() {
-                        auctionController.setCountry(value.id);
+                        // print(value.id);
+                        auctionController.setCountry("${value.id}");
+                        print(auctionController.country);
                         _selectedItem = value;
                       });
                     },

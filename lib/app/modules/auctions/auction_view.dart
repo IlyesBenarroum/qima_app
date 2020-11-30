@@ -15,19 +15,13 @@ class AuctionView extends GetView<AuctionController> {
   Widget build(BuildContext context) {
     final List<Tab> myTabs = <Tab>[
       Tab(
-        child: CreatedauctionsView(
-          createdAuctionList: createdAuctionList,
-        ),
+        child: CreatedauctionsView(),
       ),
       Tab(
-        child: JoinedauctionsView(
-          joinedAuctionList: joinedAuctionList,
-        ),
+        child: JoinedauctionsView(),
       ),
       Tab(
-        child: InterestedauctionsView(
-         
-        ),
+        child: InterestedauctionsView(),
       ),
     ];
 

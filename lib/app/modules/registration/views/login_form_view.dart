@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:qima/app/modules/splash/splash_view.dart';
 import 'package:qima/app/tools/popUps.dart';
 import 'package:qima/app/tools/tools.dart';
 import '../../../../app/models/user_model.dart';
@@ -22,24 +24,43 @@ Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
 RegExp phoneRegex = RegExp(phonePattern);
 
 User user = User();
-
+GetStorage obs = GetStorage();
+var accsT;
 GraphQLClient _client = clientToQuery();
-void signin() async {
+void signin(String email, String password) async {
   QueryResult result = await _client.mutate(MutationOptions(
     documentNode: gql("""
      mutation{
   loginWithEmail(args:{
-    email:"othmane@gmail.com",
-    password:"fdsfs"
+    email:"$email",
+    password:"$password"
   }){
-    accessToken
+     accessToken,
+    me{
+      id
+      fullName
+      email
+    }
   }
 }
       """),
     onCompleted: (data) {
       print(data.data["loginWithEmail"]["accessToken"]);
+      accsT = (data.data["loginWithEmail"]["accessToken"]).toString();
+      print(data.data["loginWithEmail"]["me"]["id"]);
+      user.id = data.data["loginWithEmail"]["me"]["id"];
+      user.name = data.data["loginWithEmail"]["me"]["fullName"];
+      user.email = data.data["loginWithEmail"]["me"]["email"];
+
+      obs.write('SignUp',accsT);
+      print('A');
+      obs.write('id',user.id);
+      print('B');
+      obs.write('fullName',user.name);
+      obs.write('email',user.email);
+      
       print('completed');
-      // Get.off(HomeView());
+      Get.off(SplashView());
     },
   ));
   if (!result.hasException) {
@@ -181,13 +202,13 @@ class LoginFormView extends GetView {
                         // Navigator.of(context).push(MaterialPageRoute(
                         //   builder: (context) => HomePage(),
                         // ));
+                        signin(user.email, password);
                       }
 
                       // Get.off(
                       //   HomeView(),
                       // );
                     }
-                    signin();
                   },
                   child: Text(
                     "Login".tr,

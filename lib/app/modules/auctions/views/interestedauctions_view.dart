@@ -12,37 +12,29 @@ double screenWidth = Get.width;
 
 class InterestedauctionsView extends GetView {
   final AuctionController _controller = Get.put(AuctionController());
+
   @override
   Widget build(BuildContext context) {
-    return _controller.intressetList.length == 0
-        ? NotFoundWidget(
-            title: "It_seems_you_are_not_interest_in_any_auction_so_far".tr,
-          )
-        : Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: screenHeight * 0.025,
-                      horizontal: screenHeight * 0.035),
-                  child: Text(
-                    'Recently_added_offers'.tr,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
+    return Obx(
+      () => _controller.intressetList.length == 0
+          ? NotFoundWidget(
+              title: "It_seems_you_are_not_interest_in_any_auction_so_far".tr,
+            )
+          : Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Flexible(
+                    child: CustomRefreshWidget(
+                        controller: _controller,
+                        screenHeight: screenHeight,
+                        screenWidth: screenWidth),
                   ),
-                ),
-                Flexible(
-                  child: CustomRefreshWidget(
-                      controller: _controller,
-                      screenHeight: screenHeight,
-                      screenWidth: screenWidth),
-                ),
-              ],
+                ],
+              ),
             ),
-          );
+    );
   }
 }
 
@@ -80,7 +72,7 @@ class _CustomRefreshWidgetState extends State<CustomRefreshWidget> {
             //type 0 for main and created auctions
             //type 1 for joined
             //type 2 intersted auction
-            type: 0,
+            type: 2,
             icon:
                 "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
             number:

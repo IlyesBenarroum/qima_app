@@ -66,7 +66,7 @@ Widget usedUi() {
                 splashColor: Get.theme.primaryColor,
                 onTap: () {
                   controller.isUsed.value = false;
-                  controller.isPostPaid.value = false;
+                  // controller.isPostPaid.value = false;
                   // auctionController.auction.product.type = "NEW";
                   auctionController.setCondition("NEW");
                   // auctionController.setUsedPhone(false);

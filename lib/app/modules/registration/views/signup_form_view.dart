@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:qima/app/modules/splash/splash_view.dart';
 import 'package:qima/app/tools/tools.dart';
 import '../../../tools/popUps.dart';
 import '../../../../app/models/user_model.dart';
@@ -17,12 +19,8 @@ Pattern namePattern =
     r"(^[\u0621-\u064A-Za-z]{2,16})([ ]{0,1})([\u0621-\u064A-Za-z]{2,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{3,16})?([ ]{0,1})?([\u0621-\u064A-Za-z]{2,16})";
 RegExp nameRegex = RegExp(namePattern, caseSensitive: false);
 
-// <<<<<<< testA
 Pattern phonePattern = r"^(?:[+0]9)?[0-9]";
-// =======
-// Pattern phonePattern = r"^(?:[+0]9)?[0-9]{10}$";
-// Pattern phonePattern = r"^[\u0660-\u0669{10}]$";
-// >>>>>>> main
+
 RegExp phoneRegex = RegExp(phonePattern);
 String password = "";
 User user = User();
@@ -34,81 +32,50 @@ class SignupFormView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final SignupformController controller = Get.put(SignupformController());
   RegistrationController addMutation = RegistrationController();
-//   String signinwithemail = """
-//    mutation SignupWithEmail(\$user.name:String!,\$user.email:String,\$password:String,\$user.phone:String) {
-//   signupWithEmail(args:{
-//     fullName:\$user.name
-//     email:\$user.email
-//     password:\$password
-//     phone:\$user.phone
-//   }){
-//     accessToken
-//   }
-// }
-//   """
-//       .replaceAll('\n', '');
 
-// <<<<<<< testA
   GraphQLClient _client = clientToQuery();
   RunMutation runMutation;
+  GetStorage obs = GetStorage();
+  var accsT;
   void signin(
-      String fulllName, String email, String password, String phone) async {
-    print('A = ' + fulllName);
+      String fullName, String email, String password, String phone) async {
+    print('A = ' + fullName);
     print('A = ' + email);
     print('A = ' + password);
-// =======
-//   final GraphQLClient _client = clientToQuery();
-//   void signin() async {
-// >>>>>>> main
     QueryResult result = await _client.mutate(MutationOptions(
-      variables: {
-        "fullName": "$fulllName",
-        "email": "$email",
-        "password": "$password",
-        "phone": "$phone"
-      },
-//       documentNode: gql("""
-//       mutation SignupWithEmail(\$name:String!,\$email:String,\$password:String,\$phone:String) {
-//    signupWithEmail(args:{
-//      fullName:\$name
-//      email:\$email
-//      password:\$password
-//      phone:\$phone
-//    }){
-//      accessToken
-//    }
-//  }
-// }
-//   """
-//           .replaceAll('\n', '')),
-
-      // variables: {
-      //   "fullName": "$fulllName",
-      //   "email": "$email",
-      //   "password": "$password",
-      //   "phone": "$phone"
-      // },
-
       documentNode: gql("""
       mutation {
         signupWithEmail(args:{
-          fullName:"$fulllName",
+          fullName:"$fullName",
           email:"$email",
           password:"$password",
           phone:"$phone"
-        }){
-          accessToken
+          }){
+             accessToken,
+            me{
+              id
+              fullName
+              email
+            }
+          }
         }
-      }
   """
           .replaceAll('\n', '')),
-      // document:
-      //     addMutation.singInnwithEmail(user.name, user.email, user.password),
-      // documentNode: gql(addMutation.singInnwithEmail()),
       onCompleted: (data) {
-        // print(data.data["signupWithEmail"]["accessToken"]);
-        // print('completed');
-        // print('FULL NAME' + fulllName);
+        print(data.data["signupWithEmail"]["accessToken"]);
+        accsT = (data.data["signupWithEmail"]["accessToken"]).toString();
+        obs.write('SignUp', accsT);
+
+        user.id = data.data["signupWithEmail"]["me"]["id"];
+        user.name = data.data["signupWithEmail"]["me"]["fullName"];
+        user.email = data.data["signupWithEmail"]["me"]["email"];
+
+        obs.write('SignUp', accsT);
+        obs.write('id', user.id);
+        obs.write('fullName', user.name);
+        obs.write('email', user.email);
+
+        Get.off(SplashView());
       },
     ));
     if (!result.hasException) {
@@ -309,44 +276,12 @@ class SignupFormView extends StatelessWidget {
                     if (_formKey.currentState.validate() &&
                         controller.accept.value) {
                       _formKey.currentState.save();
-                      // HomeView(),
-                      // Get.off(
-// <<<<<<< testA
-                      // postPopup();
-                      // );
+
                       print('accepte');
-                      print(user.name);
-                      print(user.email);
-                      print(user.phone);
 
-                      // QueryResult result = await _client.mutate(MutationOptions(
-                      //   document:addMutation.singInnwithEmail(
-                      //     user.name,
-                      //     user.email,
-                      //     password,
-                      //     "125464"
-                      //   ),
-                      //   onCompleted: (data) {
-                      //     print(data.data["signupWithEmail"]["accessToken"]);
-                      //     print('completed');
-                      //   },
-                      // ));
-                      // if (!result.hasException) {
-                      //   print(result);
-                      // } else {
-                      //   print(result.exception);
-                      //   // print(result);
-                      // }
-                      signin(user.name, user.email, password, "");
-                      Get.off(HomeView());
-
+                      signin(user.name, user.email, password, "450");
+                      // Get.off(HomeView());
                     }
-                    // signin(
-                    //   user.getName().text,
-                    //   user.getEmail().text,
-                    //   user.getPassword().text,
-                    //   user.getPhone().text
-                    // );
                     // signin('fff',"fgtrf@gmail.com","kmkm","d455");
                   },
                   child: Text(

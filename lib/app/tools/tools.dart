@@ -13,7 +13,8 @@ ValueNotifier<GraphQLClient> client = ValueNotifier(
 GraphQLClient clientToQuery() {
   return GraphQLClient(
     cache: OptimisticCache(dataIdFromObject: typenameDataIdFromObject),
-    link: HttpLink(uri: 'http://217.79.241.72/graphql'),
+    // link: HttpLink(uri: 'http://217.79.241.72/graphql'),
+    link: HttpLink(uri: 'http://217.79.241.72:3200/graphql'),
   );
 }
 
