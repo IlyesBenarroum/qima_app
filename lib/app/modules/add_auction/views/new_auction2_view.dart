@@ -339,7 +339,8 @@ class NewAuction2BodyView extends StatelessWidget {
                           // .add(auctionController.auction.value);
                           // auctionController.auctionsList.refresh();
 
-                          // Get.to(NewAuction3View());
+
+                          Get.to(NewAuction3View());
                           Get.to(HomeView());
                         }
                       },

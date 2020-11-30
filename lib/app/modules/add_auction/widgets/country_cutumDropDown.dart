@@ -55,11 +55,13 @@ class _CustomDropDownState extends State<CustomDropDown> {
       ));
     }
     for (int i = 0; i < providerController.providersList.length; i++) {
-      _dropdownItems.add(ListItem(
-          providerController.providersList[i].countryID,
-          i,
-          providerController.providersList[i].flag,
-          providerController.providersList[i].countryName));
+      _dropdownItems.add(
+        ListItem(
+            providerController.providersList[i].countryID,
+            i,
+            providerController.providersList[i].flag,
+            providerController.providersList[i].countryName),
+      );
     }
   }
 

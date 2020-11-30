@@ -37,7 +37,7 @@ _loginWithFB() async {
 
   switch (result.status) {
     case FacebookLoginStatus.loggedIn:
-      // Get.off(HomeView());
+      Get.off(HomeView());
       final token = result.accessToken.token;
       final graphResponse = await http.get(
           'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');

@@ -290,10 +290,12 @@ class NewAuction1View extends GetView {
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-
-      if (auctionController.country.isNullOrBlank) {
+      print(auctionController.country);
+      if (auctionController.country == "") {
+        print(true);
         auctionController.setCountry("SA");
       }
+      print(auctionController.country);
       // _formKey.currentState.dispose();
       Get.to(NewAuction2View());
     } else {
