@@ -8,9 +8,6 @@ import 'views/interestedauctions_view.dart';
 import 'views/joinedauctions_view.dart';
 
 class AuctionView extends GetView<AuctionController> {
-  final List createdAuctionList = [1];
-  final List joinedAuctionList = [1];
-  final List interestedAuctionList = [1];
   @override
   Widget build(BuildContext context) {
     final List<Tab> myTabs = <Tab>[

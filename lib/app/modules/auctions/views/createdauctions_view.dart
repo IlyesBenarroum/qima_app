@@ -16,6 +16,7 @@ class CreatedauctionsView extends GetView {
 
   @override
   Widget build(BuildContext context) {
+    _controller.getOwnedAuctions();
     return Obx(
       () => _controller.ownerList.length == 0
           ? NotFoundWidget(
@@ -59,6 +60,9 @@ class CustomRefreshWidget extends StatefulWidget {
 class _CustomRefreshWidgetState extends State<CustomRefreshWidget> {
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      auctionController.getOwnedAuctions();
+    });
     return RefreshIndicator(
       onRefresh: auctionController.getOwnedAuctions,
       child: ListView.builder(

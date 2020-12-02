@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:qima/app/models/auction_model.dart';
 import 'package:qima/app/modules/splash/splash_controller.dart';
 import 'package:qima/app/tools/tools.dart';
+
+import '../../gloabals.dart';
 // import '../models/auction_model.dart';
 
 class AuctionController extends GetxController {
@@ -111,11 +113,9 @@ class AuctionController extends GetxController {
   void onInit() {
     getAuctions();
 
-    if (userS.id != null && userS.id != "") {
-      getIntressetedAuctions();
-      getJoinedAuctions();
-      getOwnedAuctions();
-    }
+    getIntressetedAuctions();
+    getJoinedAuctions();
+    getOwnedAuctions();
   }
 
   @override
@@ -125,31 +125,6 @@ class AuctionController extends GetxController {
   void onClose() {}
 
   void addAuction(Auction auction) async {
-//     QueryResult result = await _client.mutate(MutationOptions(
-//       documentNode: gql("""
-//   mutation createAuction {
-//     createAuction(
-//         auctionParams: {
-//                 userID: "${userS.id}"
-//                 startsAt: "${auction.auctionDate.substring(0, 9)}${auction.auctionTiming.substring(10)}"
-//                 length: ${int.parse(auction.auctionPeriod)}
-//                 entryPrice:"${auction.entryPrice}"
-//     }
-//     productParams: {
-//                 defaultPrice: "${auction.entryPrice}"
-//                 type: ${auction.product.type}
-//                 condition: ${auction.product.condition}
-//                 options: {
-//                   number: "${auction.product.specialNumber}"
-//                   countryID: "${auction.product.country}"
-//                   carrierID: "${auction.product.serviceProvider}"
-//                   arrearsValue: "${auction.product.arrearsValue}"
-//       }
-//     }
-//   )
-// }
-//       """),
-//     ));
     GraphQLClient createClient = clientToQuery();
     QueryResult result = await createClient.mutate(MutationOptions(
       documentNode: gql("""
@@ -169,7 +144,7 @@ mutation createAuction1 {
                 options: {
                   number: "${auction.product.specialNumber}"
                   countryID: "${auction.product.country}"
-                  carrierID: "${auction.product.serviceProvider}"
+                  carrierID: "${Globals.provider}"
                   arrearsValue: "${auction.product.arrearsValue}"
       }
     }
@@ -191,7 +166,6 @@ mutation createAuction1 {
     GraphQLClient _getclient = clientToQuery();
     QueryResult result = await _getclient.query(
       QueryOptions(
-        pollInterval: 30,
         documentNode: gql("""
  query getAuctions{
   getAllAuctions{
@@ -234,7 +208,6 @@ mutation createAuction1 {
                 serviceProvider: data[i]["product"]["carrierID"],
                 specialNumber: data[i]["product"]["number"],
                 arrearsValue: data[i]["product"]["arrearsValue"],
-                // type: data[i]["product"]["type"],
                 subscription: data[i]["product"]["subscription"],
                 condition: data[i]["product"]["condition"],
                 country: data[i]["product"]["countryID"],

@@ -330,15 +330,14 @@ class NewAuction2BodyView extends StatelessWidget {
                               auctionController.auctionPeriod))
                             auctionController.setAuctionPeriod(
                                 "${controller.auctionPeriod.value}");
-                          if (GetUtils.isNullOrBlank(
-                              auctionController.auctionTiming))
-                            auctionController
-                                .setAuctionTiming(DateTime.now().toIso8601String());
-                          if (GetUtils.isNullOrBlank(
-                              auctionController.auctionDate))
-                            auctionController
-                                .setAuctionDate(DateTime.now().toIso8601String());
-
+                          // if (GetUtils.isNullOrBlank(
+                          //     auctionController.auctionTiming))
+                          //   auctionController.setAuctionTiming(
+                          //       DateTime.now().toIso8601String());
+                          // // if (GetUtils.isNullOrBlank(
+                          //     auctionController.auctionDate))
+                          //   auctionController.setAuctionDate(minDate);
+          
                           // _formKey.currentState.save();
                           // auctionsController
                           // .addAuction(auctionController.auction.value);
@@ -368,9 +367,7 @@ class NewAuction2BodyView extends StatelessWidget {
                           print("auctionController.arrearsValue");
                           auctionController
                               .addAuction(auctionController.auction.value);
-                          // auctionController.auctionsList
-                          // .add(auctionController.auction.value);
-                          // auctionController.auctionsList.refresh();
+
                           if (GetUtils.isNullOrBlank(userS.id)) {
                             print("Login");
                             Get.to(NewAuction3View());

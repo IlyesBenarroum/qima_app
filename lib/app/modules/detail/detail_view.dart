@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/controllers/auction_controller.dart';
+import 'package:qima/app/modules/registration/registration_view.dart';
+import 'package:qima/app/modules/splash/splash_controller.dart';
 import '../../../app/modules/detail/detail_controller.dart';
 import '../../../app/tools/popUps.dart';
 import '../../../app/widgets/customappbar.dart';
@@ -226,9 +228,13 @@ class DetailView extends GetView<DetailController> {
                         ),
                         color: Color(0xff3686bd),
                         onPressed: () {
-                          auctionController.joinAuction(
-                              auctionController.auctionsList[index].id);
-                          joinAuction();
+                          if (GetUtils.isNullOrBlank(userS.id)) {
+                            Get.to(RegistrationView());
+                          } else {
+                            auctionController.joinAuction(
+                                auctionController.auctionsList[index].id);
+                            joinAuction();
+                          }
                         },
                         child: Text('Join'.tr),
                       ),
@@ -243,9 +249,13 @@ class DetailView extends GetView<DetailController> {
                         ),
                         color: Color(0xffffe477),
                         onPressed: () {
-                          auctionController.intrestAuction(
-                              auctionController.auctionsList[index].id);
-                          addedToIntersted();
+                          if (GetUtils.isNullOrBlank(userS.id)) {
+                            Get.to(RegistrationView());
+                          } else {
+                            auctionController.intrestAuction(
+                                auctionController.auctionsList[index].id);
+                            addedToIntersted();
+                          }
                         },
                         child: Text('Interest'.tr),
                       ),

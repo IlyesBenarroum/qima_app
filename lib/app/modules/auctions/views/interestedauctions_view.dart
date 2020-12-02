@@ -15,6 +15,7 @@ class InterestedauctionsView extends GetView {
 
   @override
   Widget build(BuildContext context) {
+    _controller.getIntressetedAuctions();
     return Obx(
       () => _controller.intressetList.length == 0
           ? NotFoundWidget(
@@ -58,6 +59,9 @@ class CustomRefreshWidget extends StatefulWidget {
 class _CustomRefreshWidgetState extends State<CustomRefreshWidget> {
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      auctionController.intressetList();
+    });
     return RefreshIndicator(
       onRefresh: auctionController.getIntressetedAuctions,
       child: ListView.builder(

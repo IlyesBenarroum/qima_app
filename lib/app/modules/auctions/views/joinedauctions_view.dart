@@ -16,25 +16,30 @@ class JoinedauctionsView extends GetView {
 
   @override
   Widget build(BuildContext context) {
+    
+    _controller.getJoinedAuctions();
     return Obx(
-      () => _controller.joinedList.length == 0
-          ? NotFoundWidget(
-              title: "It_seems_you_are_not_interest_in_any_auction_so_far".tr,
-            )
-          : Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Flexible(
-                    child: CustomRefreshWidget(
-                        controller: _controller,
-                        screenHeight: screenHeight,
-                        screenWidth: screenWidth),
-                  ),
-                ],
-              ),
-            ),
+      () {
+        _controller.getJoinedAuctions();
+        return _controller.joinedList.length == 0
+            ? NotFoundWidget(
+                title: "It_seems_you_are_not_interest_in_any_auction_so_far".tr,
+              )
+            : Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Flexible(
+                      child: CustomRefreshWidget(
+                          controller: _controller,
+                          screenHeight: screenHeight,
+                          screenWidth: screenWidth),
+                    ),
+                  ],
+                ),
+              );
+      },
     );
   }
 }
@@ -59,6 +64,9 @@ class CustomRefreshWidget extends StatefulWidget {
 class _CustomRefreshWidgetState extends State<CustomRefreshWidget> {
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      auctionController.getJoinedAuctions();
+    });
     return RefreshIndicator(
       onRefresh: auctionController.getJoinedAuctions,
       child: ListView.builder(

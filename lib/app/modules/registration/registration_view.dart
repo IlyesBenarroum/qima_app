@@ -63,6 +63,10 @@ _loginWithFB() async {
 }
 
 void signin(String fullName, String accessToken) async {
+  print("Sign In TEst");
+  print(fullName);
+  print(accessToken);
+
   QueryResult result = await _client.mutate(MutationOptions(
     documentNode: gql("""
  mutation{
@@ -81,7 +85,7 @@ void signin(String fullName, String accessToken) async {
   """),
     onCompleted: (data) {
       print('Token with Api' + data.data["loginWithFacebook"]["accessToken"]);
-      accsT = (data.data["loginWithFacebook"]["accessToken"]).toString();
+      accsT = data.data["loginWithFacebook"]["accessToken"].toString();
       obs.write('SignUp', accsT);
       user.id = data.data["loginWithFacebook"]["me"]["id"];
       user.name = data.data["loginWithFacebook"]["me"]["fullName"];
@@ -95,11 +99,11 @@ void signin(String fullName, String accessToken) async {
       obs.write('fullName', user.name);
       obs.write('email', user.email);
       print('completed');
-      // Get.off(SplashView());
+      Get.off(SplashView());
     },
   ));
   if (!result.hasException) {
-    print(result);
+    print(result.data.data);
   } else {
     print(result.exception);
   }

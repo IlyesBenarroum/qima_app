@@ -30,36 +30,37 @@ class MainView extends GetView<MainController> {
           screenWidth: screenWidth,
         ),
       ),
-      body: _controller.auctionsList.length == 0
-          ? NotFoundWidget(
-              title: 'There_are_no_offer_added_recently'.tr,
-            )
-          : Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: screenHeight * 0.025,
-                        horizontal: screenHeight * 0.035),
-                    child: Text(
-                      'Recently_added_offers'.tr,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
+      body: Obx(
+        () => _controller.auctionsList.length == 0
+            ? NotFoundWidget(
+                title: 'There_are_no_offer_added_recently'.tr,
+              )
+            : Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.025,
+                          horizontal: screenHeight * 0.035),
+                      child: Text(
+                        'Recently_added_offers'.tr,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                  ),
-                  Flexible(
-                    child: CustomRefreshWidget(
-                        controller: _controller,
-                        screenHeight: screenHeight,
-                        screenWidth: screenWidth),
-                  ),
-                ],
+                    Flexible(
+                      child: CustomRefreshWidget(
+                          controller: _controller,
+                          screenHeight: screenHeight,
+                          screenWidth: screenWidth),
+                    ),
+                  ],
+                ),
               ),
-            ),
-      // ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.to(AddAuctionView());

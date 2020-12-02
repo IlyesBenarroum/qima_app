@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
-class NotFoundWidget extends StatelessWidget {
+class NotFoundWidget extends StatefulWidget {
   const NotFoundWidget({
     @required this.title,
     Key key,
   }) : super(key: key);
   final String title;
+
+  @override
+  _NotFoundWidgetState createState() => _NotFoundWidgetState();
+}
+
+class _NotFoundWidgetState extends State<NotFoundWidget> {
   @override
   Widget build(BuildContext context) {
+    setState(() {});
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -20,7 +27,7 @@ class NotFoundWidget extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                '$title',
+                '${widget.title}',
               ),
             ),
           ),

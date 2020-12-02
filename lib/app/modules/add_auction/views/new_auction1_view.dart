@@ -296,13 +296,13 @@ class NewAuction1View extends GetView {
       auctionController.setCountry(Globals.country);
       print(auctionController.country);
     }
-    if (Globals.provider == "") {
-      print(Globals.provider);
-      auctionController.setServiceProvider("42001");
-    } else {
-      print(Globals.provider);
-      auctionController.setServiceProvider(Globals.provider);
-    }
+    // if (Globals.provider == "") {
+    //   print(Globals.provider);
+    //   auctionController.setServiceProvider("42001");
+    // } else {
+    //   print(Globals.provider);
+    auctionController.setServiceProvider(Globals.provider);
+    // }
     // auctionController.setCondition(Globals.condition);
     auctionController.auction.value.product.condition = Globals.condition;
     auctionController.auction.value.product.subscription = Globals.subscription;
@@ -316,7 +316,7 @@ class NewAuction1View extends GetView {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       Get.to(NewAuction2View());
-      
+
       // print(auctionController.country);
     } else {
       autoValidate.value = false;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qima/app/controllers/auction_controller.dart';
 import '../../../app/modules/auctions/auction_view.dart';
 import '../../../app/modules/main/main_view.dart';
 import '../../../app/modules/notification/notification_view.dart';
@@ -43,6 +44,7 @@ class _HomePageState extends State<HomePage> {
   final String auctionIcon = 'assets/images/icons/auctionIcon.svg';
   @override
   Widget build(BuildContext context) {
+    AuctionController().onInit();
     double screenHeight = Get.height;
     return Scaffold(
       body: _children[_currentIndex],
@@ -70,7 +72,6 @@ class _HomePageState extends State<HomePage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.business),
-             
               label: 'Auctions'.tr,
             ),
             BottomNavigationBarItem(

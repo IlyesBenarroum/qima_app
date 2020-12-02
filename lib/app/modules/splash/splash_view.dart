@@ -10,6 +10,8 @@ class SplashView extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     SplashController().onInit();
+    auctionController.onInit();
+    // auctionController.getAuctions();
     return Scaffold(
       body: Stack(
         children: <Widget>[
