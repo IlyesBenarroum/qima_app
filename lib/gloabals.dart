@@ -2,6 +2,10 @@ import 'package:flutter/widgets.dart';
 
 class Globals {
   static var firstCamera;
+  static String country = "";
+  static String provider = "";
+  static String condition = "";
+  static String subscription = "";
   static List<GlobalKey<FormState>> formKeys = [
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),

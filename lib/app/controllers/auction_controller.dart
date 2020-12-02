@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:qima/app/models/auction_model.dart';
+import 'package:qima/app/modules/splash/splash_controller.dart';
 import 'package:qima/app/tools/tools.dart';
 // import '../models/auction_model.dart';
 
@@ -19,9 +21,9 @@ class AuctionController extends GetxController {
     product: Product(
       type: "PHONE_NUMBER",
       specialNumber: "",
-      serviceProvider: "42001",
-      condition: "NEW",
-      subscription: "PRE_PAID",
+      serviceProvider: "",
+      condition: "",
+      subscription: "",
       country: "",
       arrearsValue: "0",
     ),
@@ -39,7 +41,7 @@ class AuctionController extends GetxController {
   get auctionPeriod => auction.value.auctionPeriod;
   get entryPrice => auction.value.entryPrice;
 
-  void setCountry(String country) {
+  void setCountry(country) {
     auction.value.product.country = country;
     auction.refresh();
   }
@@ -108,9 +110,12 @@ class AuctionController extends GetxController {
   @override
   void onInit() {
     getAuctions();
-    getIntressetedAuctions();
-    getJoinedAuctions();
-    getOwnedAuctions();
+
+    if (userS.id != null && userS.id != "") {
+      getIntressetedAuctions();
+      getJoinedAuctions();
+      getOwnedAuctions();
+    }
   }
 
   @override
@@ -118,20 +123,48 @@ class AuctionController extends GetxController {
 
   @override
   void onClose() {}
+
   void addAuction(Auction auction) async {
-    QueryResult result = await _client.mutate(MutationOptions(
+//     QueryResult result = await _client.mutate(MutationOptions(
+//       documentNode: gql("""
+//   mutation createAuction {
+//     createAuction(
+//         auctionParams: {
+//                 userID: "${userS.id}"
+//                 startsAt: "${auction.auctionDate.substring(0, 9)}${auction.auctionTiming.substring(10)}"
+//                 length: ${int.parse(auction.auctionPeriod)}
+//                 entryPrice:"${auction.entryPrice}"
+//     }
+//     productParams: {
+//                 defaultPrice: "${auction.entryPrice}"
+//                 type: ${auction.product.type}
+//                 condition: ${auction.product.condition}
+//                 options: {
+//                   number: "${auction.product.specialNumber}"
+//                   countryID: "${auction.product.country}"
+//                   carrierID: "${auction.product.serviceProvider}"
+//                   arrearsValue: "${auction.product.arrearsValue}"
+//       }
+//     }
+//   )
+// }
+//       """),
+//     ));
+    GraphQLClient createClient = clientToQuery();
+    QueryResult result = await createClient.mutate(MutationOptions(
       documentNode: gql("""
-  mutation createAuction {
+
+mutation createAuction1 {
     createAuction(
         auctionParams: {
-                userID: "faebe27c-8351-439b-92cd-6ffb1359a05d"
-                startsAt: "${auction.auctionDate.substring(0, 9)}${auction.auctionTiming.substring(10)}"
+                userID: "${userS.id}"
+                startsAt: "${DateTime.now().toIso8601String()}"
                 length: ${int.parse(auction.auctionPeriod)}
                 entryPrice:"${auction.entryPrice}"
-    }
+                }
     productParams: {
                 defaultPrice: "${auction.entryPrice}"
-                type: ${auction.product.type}
+                type: PHONE_NUMBER
                 condition: ${auction.product.condition}
                 options: {
                   number: "${auction.product.specialNumber}"
@@ -142,7 +175,7 @@ class AuctionController extends GetxController {
     }
   )
 }
-      """),
+ """),
     ));
     if (!result.hasException) {
       print(result.data.data["createAuction"]);
@@ -150,12 +183,15 @@ class AuctionController extends GetxController {
       print(result.exception);
       // print(result);
     }
+    getAuctions();
   }
 
   Future<void> getAuctions() async {
+    print("test");
     GraphQLClient _getclient = clientToQuery();
     QueryResult result = await _getclient.query(
       QueryOptions(
+        pollInterval: 30,
         documentNode: gql("""
  query getAuctions{
   getAllAuctions{
@@ -180,7 +216,7 @@ class AuctionController extends GetxController {
     );
 
     var data = result.data.data["getAllAuctions"];
-
+    print(data[0]["subscription"]);
     if (!result.hasException) {
       if (!GetUtils.isNullOrBlank(data)) {
         auctionsList.clear();
@@ -198,7 +234,8 @@ class AuctionController extends GetxController {
                 serviceProvider: data[i]["product"]["carrierID"],
                 specialNumber: data[i]["product"]["number"],
                 arrearsValue: data[i]["product"]["arrearsValue"],
-                type: data[i]["product"]["subscription"],
+                // type: data[i]["product"]["type"],
+                subscription: data[i]["product"]["subscription"],
                 condition: data[i]["product"]["condition"],
                 country: data[i]["product"]["countryID"],
               ),
@@ -210,17 +247,19 @@ class AuctionController extends GetxController {
         return;
       }
     }
+    sortAuctions();
     auctionsList.refresh();
   }
 
   Future<void> getOwnedAuctions() async {
-    QueryResult result = await _client.query(
+    GraphQLClient getOwned = clientToQuery();
+    QueryResult result = await getOwned.query(
       QueryOptions(
         documentNode: gql("""
 
 query getUserByID {
   
-  getUserByID(userID: "faebe27c-8351-439b-92cd-6ffb1359a05d") {
+  getUserByID(userID: "${userS.id}") {
     ownAuctions {
       id
       entryPrice
@@ -247,12 +286,9 @@ query getUserByID {
     var data = result.data.data["getUserByID"]["ownAuctions"];
 
     if (!result.hasException) {
-      // print();
-      // print(data[0]["id"]);
       if (!GetUtils.isNullOrBlank(data)) {
         ownerList.clear();
 
-        // print("get auctions");
         for (var i = 0; i < data.length; i++) {
           ownerList.add(
             Auction(
@@ -266,7 +302,7 @@ query getUserByID {
                 serviceProvider: data[i]["product"]["carrierID"],
                 specialNumber: data[i]["product"]["number"],
                 arrearsValue: data[i]["product"]["arrearsValue"],
-                type: data[i]["product"]["subscription"],
+                subscription: data[i]["product"]["subscription"],
                 condition: data[i]["product"]["condition"],
                 country: data[i]["product"]["countryID"],
               ),
@@ -287,7 +323,7 @@ query getUserByID {
       QueryOptions(
         documentNode: gql("""
 query followedAuctions {
-  getUserByID(userID: "6bf7e1a8-3c7f-485f-8968-64487090f0de") {
+  getUserByID(userID: "${userS.id}") {
     followedAuctions {
       id
       entryPrice
@@ -331,7 +367,7 @@ query followedAuctions {
                 serviceProvider: data[i]["product"]["carrierID"],
                 specialNumber: data[i]["product"]["number"],
                 arrearsValue: data[i]["product"]["arrearsValue"],
-                type: data[i]["product"]["subscription"],
+                subscription: data[i]["product"]["subscription"],
                 condition: data[i]["product"]["condition"],
                 country: data[i]["product"]["countryID"],
               ),
@@ -353,7 +389,7 @@ query followedAuctions {
       QueryOptions(
         documentNode: gql("""
 query getUserByID {
-  getUserByID(userID: "6bf7e1a8-3c7f-485f-8968-64487090f0de") {
+  getUserByID(userID: "${userS.id}") {
     joinedAuctions {
       id
       entryPrice
@@ -397,7 +433,7 @@ query getUserByID {
                 serviceProvider: data[i]["product"]["carrierID"],
                 specialNumber: data[i]["product"]["number"],
                 arrearsValue: data[i]["product"]["arrearsValue"],
-                type: data[i]["product"]["subscription"],
+                subscription: data[i]["product"]["subscription"],
                 condition: data[i]["product"]["condition"],
                 country: data[i]["product"]["countryID"],
               ),
@@ -416,7 +452,7 @@ query getUserByID {
     QueryResult result = await _client.mutate(MutationOptions(
       documentNode: gql("""
                             mutation join{joinAuction(
-                              userID:"6bf7e1a8-3c7f-485f-8968-64487090f0de"
+                              userID:"${userS.id}"
                             auctionID:"$auctionID")
 }
       """),
@@ -433,7 +469,7 @@ query getUserByID {
     QueryResult result = await _client.mutate(MutationOptions(
       documentNode: gql("""
                             mutation intrest{followAuction(
-                              userID:"6bf7e1a8-3c7f-485f-8968-64487090f0de"
+                              userID:"${userS.id}"
                             auctionID:"$auctionID")
 }
       """),
@@ -444,5 +480,13 @@ query getUserByID {
       print(result.exception);
       // print(result);
     }
+  }
+
+  void sortAuctions() {
+    auctionsList.sort((a, b) {
+      var adate = a.auctionDate; //before -> var adate = a.expiry;
+      var bdate = b.auctionDate; //var bdate = b.expiry;
+      return -adate.compareTo(bdate);
+    });
   }
 }

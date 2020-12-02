@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/controllers/auction_controller.dart';
 
+import '../../../../gloabals.dart';
 import '../add_auction_controller.dart';
 
 Widget usedUi() {
@@ -30,7 +31,14 @@ Widget usedUi() {
                 onTap: () {
                   controller.isUsed.value = true;
                   // auctionController.auction.product.condition = "NEW";
-                  auctionController.setCondition("USED");
+                  // auctionController.setCondition("USED");
+                  // print(auctionController.condition);
+
+                  // if (Globals.condition == "") Globals.condition = "USED";
+                  // if (Globals.condition == "NEW")
+                  Globals.condition = "USED";
+                  print(Globals.condition);
+                  // auc/tionController.auction.product.type = "USED";
                   // auc/tionController.auction.product.type = "USED";
                   // auctionController.setUsedPhone(true);
                   // auctionController.setPostPaid(false);
@@ -68,7 +76,11 @@ Widget usedUi() {
                   controller.isUsed.value = false;
                   // controller.isPostPaid.value = false;
                   // auctionController.auction.product.type = "NEW";
-                  auctionController.setCondition("NEW");
+                  // auctionController.setCondition("NEW");
+                  // if (Globals.condition == "") Globals.condition = "NEW";
+                  // if (Globals.condition == "USED")
+                  Globals.condition = "NEW";
+                  print(Globals.condition);
                   // auctionController.setUsedPhone(false);
                   // auctionController.setPostPaid(false);
                   // auctionController.setArrears(false);

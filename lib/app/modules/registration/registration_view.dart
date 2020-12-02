@@ -40,7 +40,7 @@ _loginWithFB() async {
       Get.off(HomeView());
       final token = result.accessToken.token;
       final graphResponse = await http.get(
-          'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${token}');
+          'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=$token');
       print("ja mal fc");
       final profile = JSON.jsonDecode(graphResponse.body);
       print(result);
@@ -90,7 +90,7 @@ void signin(String fullName, String accessToken) async {
       obs.write('SignUp', accsT);
       print('A');
       obs.write('id', user.id);
-      print('B ID======' +user.id);
+      print('B ID======' + user.id);
       print('B');
       obs.write('fullName', user.name);
       obs.write('email', user.email);
@@ -290,8 +290,8 @@ class RegistrationView extends GetView<RegistrationController> {
                   onTap: () {
                     // controller.handelSignIn();
 
+                    Get.off(HomeView());
                     _loginWithFB();
-                    // Get.off(HomeView());
                   },
                   child: Container(
                     height: screenHeight * 0.1,

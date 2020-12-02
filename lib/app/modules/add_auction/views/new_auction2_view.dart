@@ -7,6 +7,7 @@ import 'package:qima/app/modules/add_auction/widgets/add_auction_info.dart';
 import 'package:qima/app/modules/add_auction/widgets/add_auction_timing.dart';
 import 'package:qima/app/modules/add_auction/widgets/country_cutumDropDown.dart';
 import 'package:qima/app/modules/home/home_view.dart';
+import 'package:qima/app/modules/splash/splash_controller.dart';
 
 import '../../../../gloabals.dart';
 import '../../../tools/constants.dart';
@@ -92,6 +93,8 @@ class NewAuction2BodyView extends StatelessWidget {
                                 controller.pickedDate.value = date;
                                 auctionController
                                     .setAuctionDate(date.toIso8601String());
+                                print(auctionController
+                                    .auction.value.auctionDate);
                                 // auctionController.setAuctionDate(
                                 // "${date.year.toString()}/" +
                                 // "${date.month.toString()}/" +
@@ -309,7 +312,15 @@ class NewAuction2BodyView extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        print("tapped");
+                        // print(auctionController.auction.value.auctionDate);
+                        // print(auctionController.auction.value.auctionDate);
+                        // print(auctionController.auction.value.auctionPeriod);
+                        // print(auctionController.auction.value.auctionTiming);
+                        // print(
+                        //     auctionController.auction.value.product.condition);
+                        // print(auctionController
+                        //     .auction.value.product.serviceProvider);
+
                         if (_formKey.currentState.validate()) {
                           if (GetUtils.isNullOrBlank(
                               auctionController.entryPrice))
@@ -322,26 +333,52 @@ class NewAuction2BodyView extends StatelessWidget {
                           if (GetUtils.isNullOrBlank(
                               auctionController.auctionTiming))
                             auctionController
-                                .setAuctionTiming(now.toIso8601String());
+                                .setAuctionTiming(DateTime.now().toIso8601String());
                           if (GetUtils.isNullOrBlank(
                               auctionController.auctionDate))
                             auctionController
-                                .setAuctionDate(now.toIso8601String());
+                                .setAuctionDate(DateTime.now().toIso8601String());
 
                           // _formKey.currentState.save();
                           // auctionsController
                           // .addAuction(auctionController.auction.value);
                           // print(auctionController.country);
                           // .auctionsList.first.auctionTime);
+
+                          print("tapped");
+                          print("auctionController.auctionDate");
+                          print(auctionController.auctionDate);
+                          print("auctionController.auctionTiming");
+                          print(auctionController.auctionTiming);
+                          print("auctionController.auctionPeriod");
+                          print(auctionController.auctionPeriod);
+                          print("auctionController.entryPrice");
+                          print(auctionController.entryPrice);
+                          print("auctionController.country");
+                          print(auctionController.country);
+                          print("auctionController.serviceProvider");
+                          print(auctionController.serviceProvider);
+                          print("auctionController.specialNumber");
+                          print(auctionController.specialNumber);
+                          print("auctionController.condition");
+                          print(auctionController.condition);
+                          print("auctionController.subscription");
+                          print(auctionController.subscription);
+                          print(auctionController.arrearsValue);
+                          print("auctionController.arrearsValue");
                           auctionController
                               .addAuction(auctionController.auction.value);
                           // auctionController.auctionsList
                           // .add(auctionController.auction.value);
                           // auctionController.auctionsList.refresh();
-
-
-                          Get.to(NewAuction3View());
-                          Get.to(HomeView());
+                          if (GetUtils.isNullOrBlank(userS.id)) {
+                            print("Login");
+                            Get.to(NewAuction3View());
+                          } else {
+                            print("Signup");
+                            print(userS.id);
+                            Get.to(HomeView());
+                          }
                         }
                       },
                       child: Card(

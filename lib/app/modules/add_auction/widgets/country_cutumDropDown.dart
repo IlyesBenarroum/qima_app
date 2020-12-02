@@ -4,6 +4,7 @@ import 'package:qima/app/controllers/auction_controller.dart';
 import 'package:qima/app/controllers/provider_controller.dart';
 import 'package:qima/app/modules/add_auction/views/new_auction1_view.dart';
 
+import '../../../../gloabals.dart';
 import '../add_auction_controller.dart';
 import 'add_auction_drop_down_card_view.dart';
 
@@ -135,10 +136,13 @@ class _CustomDropDownState extends State<CustomDropDown> {
                     onChanged: (value) {
                       // bool past = true; // print();
                       // print(value.value);
+
+                      Globals.country = value.id;
                       setState(() {
+                        // auctionController.setCountry(value.id);
                         // print(value.id);
-                        auctionController.setCountry("${value.id}");
-                        print(auctionController.country);
+
+                        // print(auctionController.country);
                         _selectedItem = value;
                       });
                     },
@@ -162,10 +166,10 @@ class _CustomDropDownState extends State<CustomDropDown> {
                     onChanged: (value) {
                       // print();
                       // print(value.value);
+                      Globals.provider = value.id;
                       setState(() {
                         // auctionController.auction.product.serviceProvider =
                         auctionController.setServiceProvider(value.id);
-
                         // value.id; // selectedCountry.value = value.value;
                         _providerSelectedItem = value;
                       });

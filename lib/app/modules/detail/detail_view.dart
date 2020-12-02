@@ -193,13 +193,7 @@ class DetailView extends GetView<DetailController> {
                           ? "New".tr
                           : "Used".tr,
                   condition:
-                      "${auctionController.auctionsList[index].getProduct.getType}" ==
-                              "PRE_PAID"
-                          ? "PrePaid".tr
-                          : "${auctionController.auctionsList[index].getProduct.getType}" ==
-                                  "POST_PAID"
-                              ? "PostPaid"
-                              : "No Subscription",
+                      "${auctionController.auctionsList[index].getProduct.getSubscription}",
                   arrears:
                       "${auctionController.auctionsList[index].getProduct.arrearsValue}" !=
                               "0"

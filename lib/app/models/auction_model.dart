@@ -56,6 +56,7 @@ class Product {
   String get getSpecialNumber => specialNumber;
   String get getCondition => condition;
   String get getType => type;
+  String get getSubscription => subscription;
   String get getCountry => country;
   String get getArrearsValue => arrearsValue;
 
@@ -65,6 +66,8 @@ class Product {
       this.specialNumber = specialNumber;
   set setCondition(String condition) => this.condition = condition;
   set setType(String type) => this.type = type;
+  set setSubscritption(String subscritption) =>
+      this.subscription = subscription;
   set setCountry(String country) => this.country = country;
   set setArrearsValue(String arrearsValue) => this.arrearsValue = arrearsValue;
 }

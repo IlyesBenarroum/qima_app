@@ -10,6 +10,7 @@ import '../../../../app/modules/add_auction/widgets/add_auction_drop_down_card_v
 import '../../../../app/modules/add_auction/widgets/factureUI.dart';
 import '../../../../app/modules/add_auction/widgets/number_text_feildUi.dart';
 import '../../../../gloabals.dart';
+import '../../../../gloabals.dart';
 import '../widgets/usedUI.dart';
 import '../add_auction_controller.dart';
 import '../widgets/custom_adding_auction_app_bar.dart';
@@ -288,16 +289,35 @@ class NewAuction1View extends GetView {
   }
 
   void _validateInputs() {
+    if (Globals.country == "") {
+      auctionController.setCountry("SA");
+      print(auctionController.country);
+    } else {
+      auctionController.setCountry(Globals.country);
+      print(auctionController.country);
+    }
+    if (Globals.provider == "") {
+      print(Globals.provider);
+      auctionController.setServiceProvider("42001");
+    } else {
+      print(Globals.provider);
+      auctionController.setServiceProvider(Globals.provider);
+    }
+    // auctionController.setCondition(Globals.condition);
+    auctionController.auction.value.product.condition = Globals.condition;
+    auctionController.auction.value.product.subscription = Globals.subscription;
+    print(auctionController.auction.value.product.condition);
+    print(auctionController.auction.value.product.subscription);
+    // if (auctionController.condition == "")
+    //   auctionController.setCondition("NEW");
+
+    // print(auctionController.country);
+    // _formKey.currentState.dispose();
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      print(auctionController.country);
-      if (auctionController.country == "") {
-        print(true);
-        auctionController.setCountry("SA");
-      }
-      print(auctionController.country);
-      // _formKey.currentState.dispose();
       Get.to(NewAuction2View());
+      
+      // print(auctionController.country);
     } else {
       autoValidate.value = false;
     }

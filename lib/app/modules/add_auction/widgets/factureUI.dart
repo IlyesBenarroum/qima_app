@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/controllers/auction_controller.dart';
 
+import '../../../../gloabals.dart';
 import '../add_auction_controller.dart';
 
 Widget factureUi() {
@@ -28,7 +29,9 @@ Widget factureUi() {
                 splashColor: Get.theme.primaryColor.withOpacity(0.2),
                 onTap: () {
                   controller.isPostPaid.value = true;
-                  auctionController.setsubscription("POST_PAID");
+                  // auctionController.setsubscription("POST_PAID");
+                  Globals.subscription = "POST_PAID";
+                  print(Globals.subscription);
                   // auctionController.setArrears(false);
                   // auctionController.setArrearsValue("0");
                 },
@@ -61,7 +64,9 @@ Widget factureUi() {
                 splashColor: Get.theme.primaryColor.withOpacity(0.2),
                 onTap: () {
                   controller.isPostPaid.value = false;
-                  auctionController.setsubscription("PRE_PAID");
+                  Globals.subscription = "PRE_PAID";
+                  print(Globals.subscription);
+                  // auctionController.setsubscription("PRE_PAID");
                   // auctionController.auction.product.type = "PRE_PAID";
 
                   // auctionController.setPostPaid(false);
