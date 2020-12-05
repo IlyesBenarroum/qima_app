@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../app/modules/auction_live/widgets/auction_room_card_view.dart';
+import '../../../../app/modules/auction_room/widgets/auction_room_card_view.dart';
 
 class PhoneDetailInfoView extends GetView {
   const PhoneDetailInfoView({

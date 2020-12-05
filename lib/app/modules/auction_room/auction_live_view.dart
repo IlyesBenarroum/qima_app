@@ -1,9 +1,13 @@
+import 'dart:async';
 import 'dart:ui';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../.././app/modules/auction_live/auction_live_controller.dart';
+import 'package:qima/app/controllers/auction_controller.dart';
+import 'package:qima/app/models/auction_model.dart';
+import '../../.././app/modules/auction_room/auction_live_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../.././app/modules/auction_live/widgets/auction_room_card_view.dart';
+import '../../.././app/modules/auction_room/widgets/auction_room_card_view.dart';
 import '../../.././app/widgets/customappbar.dart';
 import '../../tools/constants.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
@@ -14,8 +18,17 @@ final double screenWidth = Get.width;
 
 String text = 'Qima';
 String subject = 'Win Auction with friends';
+int amount = 0;
 
 class AuctionLiveView extends GetView<AuctionLiveController> {
+  final AuctionController auctionController = Get.put(AuctionController());
+  final AuctionLiveController auctionLiveController =
+      Get.put(AuctionLiveController());
+  AuctionLiveView({
+    @required this.auction,
+    Key key,
+  }) : super(key: key);
+  final Auction auction;
   final GlobalKey<AnimatedCircularChartState> _chartKey =
       new GlobalKey<AnimatedCircularChartState>();
 
@@ -91,12 +104,11 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
             child: Container(
               height: screenHeight * 0.1,
               width: screenWidth * 0.75,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  "0912300000",
+                  "${auction.getProduct.getSpecialNumber}",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -122,15 +134,39 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
+                      SizedBox(
                         width: screenWidth * 0.26,
                         height: screenHeight * 0.055,
-                        child: FittedBox(
-                          fit: BoxFit.fill,
-                          child: Text(
-                            " 680 " + "Pound".tr,
-                            style: Constants.kAuctionInfoTitleTextStyle,
-                          ),
+                        child: StreamBuilder(
+                          stream: controller.logStream,
+                          builder: (context, snapshot) {
+                            // if (snapshot.connectionState==ConnectionState.waiting)
+                            if (snapshot.hasData) {
+                              print(
+                                  snapshot.data.data["subToEvents"]["payload"]);
+                              return FittedBox(
+                                //Sub
+                                fit: BoxFit.fill,
+                                child: Text(
+                                  "${snapshot.data.data["subToEvents"]["payload"]["currentPrice"]} " +
+                                      "Pound".tr,
+                                  // style: TextSt/yle(
+                                  // fontSize: 10,
+                                  // ),
+                                  style: Constants.kAuctionInfoTitleTextStyle,
+                                ),
+                              );
+                            }
+
+                            return FittedBox(
+                              //Sub
+                              fit: BoxFit.fill,
+                              child: Text(
+                                "${auction.getEntryPrice} " + "Pound".tr,
+                                style: Constants.kAuctionInfoTitleTextStyle,
+                              ),
+                            );
+                          },
                         ),
                       ),
                       Container(
@@ -165,7 +201,7 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                   children: [
                     SvgPicture.asset("assets/images/icons/notifIcon.svg"),
                     Text(
-                      " 10 " + "Bidders".tr,
+                      "${auction.getJoiners}" + "Bidders".tr,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -177,27 +213,7 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                   width: screenHeight * 0.06,
                   child: Stack(
                     children: [
-                      AnimatedCircularChart(
-                        key: _chartKey,
-                        size: Size(screenHeight * 0.06, screenHeight * 0.06),
-                        initialChartData: <CircularStackEntry>[
-                          new CircularStackEntry(
-                            <CircularSegmentEntry>[
-                              new CircularSegmentEntry(
-                                90, // value of time to update
-                                Get.theme.primaryColor,
-                                rankKey: 'remaining',
-                              ),
-                            ],
-                            rankKey: 'progress',
-                          ),
-                        ],
-                        holeLabel: "20د",
-                        labelStyle: Constants.kAuctionInfoTitleTextStyle,
-                        chartType: CircularChartType.Radial,
-                        edgeStyle: SegmentEdgeStyle.round,
-                        percentageValues: true,
-                      ),
+                      TimerWidget(chartKey: _chartKey, auction: auction),
                     ],
                   ),
                 ),
@@ -208,8 +224,11 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
             top: screenHeight * 0.425,
             child: Container(
               child: ListView.builder(
-                itemCount: 18,
-                itemBuilder: (context, index) => AuctionRoomCardView(),
+                itemCount: auction.joiners,
+                itemBuilder: (context, index) => AuctionRoomCardView(
+                  
+                  joiners: auction.joiners,
+                ),
               ),
             ),
           ),
@@ -220,6 +239,9 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
             bottom: screenHeight * 0.025,
             child: InkWell(
               onTap: () {
+                if (amount != 0)
+                  auctionController.placeBid("$amount", auction.getId);
+                amount = 0;
                 firstPrice.value = false;
                 secondPrice.value = false;
                 thirdPrice.value = false;
@@ -275,11 +297,11 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
               children: [
                 InkWell(
                   onTap: () {
-                    // setState(() {
+                    // auctionController.placeBid("500", auction.getId);
+                    amount = 500;
                     firstPrice.value = false;
                     secondPrice.value = false;
                     thirdPrice.value = true;
-                    // });
                   },
                   child: Obx(
                     () => Container(
@@ -307,9 +329,8 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                           "500",
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            color: thirdPrice.value
-                                ? Colors.white
-                                : Colors.black,
+                            color:
+                                thirdPrice.value ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
@@ -318,6 +339,9 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                 ),
                 InkWell(
                   onTap: () {
+                    // auctionController.placeBid(200, auction.getId);
+                    amount = 200;
+
                     firstPrice.value = false;
                     secondPrice.value = true;
                     thirdPrice.value = false;
@@ -348,9 +372,8 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                           "200",
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            color: secondPrice.value
-                                ? Colors.white
-                                : Colors.black,
+                            color:
+                                secondPrice.value ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
@@ -359,6 +382,9 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                 ),
                 InkWell(
                   onTap: () {
+                    // auctionController.placeBid(100, auction.getId);
+                    amount = 100;
+
                     firstPrice.value = true;
                     secondPrice.value = false;
                     thirdPrice.value = false;
@@ -389,9 +415,8 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                           "100",
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            color: firstPrice.value
-                                ? Colors.white
-                                : Colors.black,
+                            color:
+                                firstPrice.value ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
@@ -404,5 +429,122 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
         ],
       ),
     );
+  }
+}
+
+class TimerWidget extends StatefulWidget {
+  const TimerWidget({
+    Key key,
+    @required GlobalKey<AnimatedCircularChartState> chartKey,
+    @required this.auction,
+  })  : _chartKey = chartKey,
+        super(key: key);
+
+  final GlobalKey<AnimatedCircularChartState> _chartKey;
+  final Auction auction;
+
+  @override
+  _TimerWidgetState createState() => _TimerWidgetState();
+}
+
+class _TimerWidgetState extends State<TimerWidget> {
+  Timer _timer;
+  int _start;
+  void startTimer() {
+    const oneMin = const Duration(minutes: 1);
+    _timer = new Timer.periodic(
+      oneMin,
+      (Timer timer) => setState(
+        () {
+          if (_start < 1) {
+            timer.cancel();
+          } else {
+            setState(() {
+              _start = _start - 1;
+            });
+          }
+        },
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _start = int.parse(widget.auction.auctionPeriod);
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(children: [
+        Align(
+          alignment: Alignment.center,
+          child: CircularCountDownTimer(
+            key: UniqueKey(),
+            duration: int.parse(widget.auction.auctionPeriod) * 60,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Colors.grey[300],
+            fillColor: Colors.yellow[800],
+            strokeWidth: 4.0,
+            textStyle: TextStyle(
+                fontSize: 0.0,
+                color: Colors.black87,
+                fontWeight: FontWeight.bold),
+            isReverse: false,
+            onComplete: () {
+              print("complete");
+              setState(() {
+                //min--;
+              });
+            },
+          ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Text("$_start"),
+        ),
+//           child: Timer(
+//             (
+//               Duration(minutes: int.parse(widget.auction.auctionPeriod),(){
+// print('');
+//               };
+//               )
+//               ),),
+
+//         ),
+      ]),
+    );
+    // AnimatedCircularChart(
+    //   key: widget._chartKey,
+    //   size: Size(screenHeight * 0.06, screenHeight * 0.06),
+    //   initialChartData: <CircularStackEntry>[
+    //     new CircularStackEntry(
+    //       <CircularSegmentEntry>[
+    //         new CircularSegmentEntry(
+    //           90, // value of time to update
+    //           Get.theme.primaryColor,
+    //           rankKey: 'remaining',
+    //         ),
+    //       ],
+    //       rankKey: 'progress',
+    //     ),
+    //   ],
+    //   // holeLabel: "20د",
+    //   holeLabel: "${widget.auction.auctionPeriod}",
+    //   labelStyle: Constants.kAuctionInfoTitleTextStyle,
+    //   chartType: CircularChartType.Radial,
+    //   edgeStyle: SegmentEdgeStyle.round,
+    //   percentageValues: true,
+    // ),
+    // );
   }
 }

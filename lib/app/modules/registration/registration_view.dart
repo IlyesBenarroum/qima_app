@@ -63,7 +63,6 @@ _loginWithFB() async {
 }
 
 void signin(String fullName, String accessToken) async {
-  print("Sign In TEst");
   print(fullName);
   print(accessToken);
 

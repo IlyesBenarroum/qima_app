@@ -24,7 +24,6 @@ class DetailView extends GetView<DetailController> {
   Widget build(BuildContext context) {
     var auctionDetails = true.obs;
     var phoneDetails = true.obs;
-
     DetailController controller = Get.put(DetailController());
 
     double screenHeight = MediaQuery.of(context).size.height;
@@ -211,59 +210,65 @@ class DetailView extends GetView<DetailController> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(screenWidth * 0.05),
-              child: Container(
-                width: screenWidth * 0.9,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: screenHeight * 0.0875,
-                      width: screenWidth * 0.425,
-                      child: RaisedButton(
-                        textColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+            Obx(() {
+              return Visibility(
+                visible: auctionController.auctionsList[index].getCreatedBy !=
+                    userS.id,
+                child: Padding(
+                  padding: EdgeInsets.all(screenWidth * 0.05),
+                  child: Container(
+                    width: screenWidth * 0.9,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: screenHeight * 0.0875,
+                          width: screenWidth * 0.425,
+                          child: RaisedButton(
+                            textColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            color: Color(0xff3686bd),
+                            onPressed: () {
+                              if (GetUtils.isNullOrBlank(userS.id)) {
+                                Get.to(RegistrationView());
+                              } else {
+                                auctionController.joinAuction(
+                                    auctionController.auctionsList[index].id);
+                                joinAuction();
+                              }
+                            },
+                            child: Text('Join'.tr),
+                          ),
                         ),
-                        color: Color(0xff3686bd),
-                        onPressed: () {
-                          if (GetUtils.isNullOrBlank(userS.id)) {
-                            Get.to(RegistrationView());
-                          } else {
-                            auctionController.joinAuction(
-                                auctionController.auctionsList[index].id);
-                            joinAuction();
-                          }
-                        },
-                        child: Text('Join'.tr),
-                      ),
-                    ),
-                    Container(
-                      height: screenHeight * 0.0875,
-                      width: screenWidth * 0.425,
-                      child: RaisedButton(
-                        textColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                        Container(
+                          height: screenHeight * 0.0875,
+                          width: screenWidth * 0.425,
+                          child: RaisedButton(
+                            textColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            color: Color(0xffffe477),
+                            onPressed: () {
+                              if (GetUtils.isNullOrBlank(userS.id)) {
+                                Get.to(RegistrationView());
+                              } else {
+                                auctionController.intrestAuction(
+                                    auctionController.auctionsList[index].id);
+                                addedToIntersted();
+                              }
+                            },
+                            child: Text('Interest'.tr),
+                          ),
                         ),
-                        color: Color(0xffffe477),
-                        onPressed: () {
-                          if (GetUtils.isNullOrBlank(userS.id)) {
-                            Get.to(RegistrationView());
-                          } else {
-                            auctionController.intrestAuction(
-                                auctionController.auctionsList[index].id);
-                            addedToIntersted();
-                          }
-                        },
-                        child: Text('Interest'.tr),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            }),
           ],
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../modules/auction_live/auction_live_view.dart';
+import '../modules/auction_room/auction_live_view.dart';
 import '../modules/registration/controllers/signup_form_controller.dart';
 
 class MyTextFormField extends GetView {

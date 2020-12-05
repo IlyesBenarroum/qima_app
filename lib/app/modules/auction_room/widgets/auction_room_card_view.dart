@@ -8,8 +8,14 @@ double screenHeight = Get.height;
 
 class AuctionRoomCardView extends GetView {
   const AuctionRoomCardView({
+    @required this.joiners,
+    @required this.name,
+    @required this.bid,
     Key key,
   }) : super(key: key);
+  final int joiners;
+  final String name;
+  final String bid;
 
   @override
   Widget build(BuildContext context) {
@@ -51,25 +57,25 @@ class AuctionRoomCardView extends GetView {
                       child: FittedBox(
                         fit: BoxFit.fill,
                         child: Text(
-                          "بن نصر أحمد زكي",
+                          "$name",
                           textAlign: TextAlign.right,
                           style: Constants.kLiveAuctionCardNameTextStyle,
                         ),
                       ),
                     ),
-                    Container(
-                      width: screenWidth * .15,
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          // " 10" + "m".tr + " 23" + "S".tr,
-                          "10:23",
-                          // textDirection: TextDirection.rtl,
-                          // textAlign: TextAlign.right,
-                          style: Constants.kLiveAuctionCardTimeTextStyle,
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   width: screenWidth * .15,
+                    //   child: FittedBox(
+                    //     fit: BoxFit.scaleDown,
+                    //     child: Text(
+                    //       // " 10" + "m".tr + " 23" + "S".tr,
+                    //       "10:23",
+                    //       // textDirection: TextDirection.rtl,
+                    //       // textAlign: TextAlign.right,
+                    //       style: Constants.kLiveAuctionCardTimeTextStyle,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 //price
@@ -87,7 +93,7 @@ class AuctionRoomCardView extends GetView {
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          "2500" + "Pound".tr,
+                          "$bid" + "Pound".tr,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),

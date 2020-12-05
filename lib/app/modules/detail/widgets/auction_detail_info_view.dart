@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../../../app/modules/auction_live/widgets/auction_room_card_view.dart';
+import '../../../../app/modules/auction_room/widgets/auction_room_card_view.dart';
 
 class AuctionDetailInfoView extends GetView {
   const AuctionDetailInfoView({

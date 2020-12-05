@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../app/modules/auction_live/auction_live_view.dart';
+import 'package:qima/app/controllers/auction_controller.dart';
+import 'package:qima/app/modules/add_auction/widgets/country_cutumDropDown.dart';
+import '../../../app/modules/auction_room/auction_live_view.dart';
 import '../../../app/widgets/customappbar.dart';
 import '../../../app/widgets/notfoundwidget.dart';
 
@@ -8,11 +10,12 @@ import 'notification_controller.dart';
 import 'views/notification_card_view.dart';
 
 class NotificationView extends GetView<NotificationController> {
+  final AuctionController auctionController = Get.put(AuctionController());
   @override
   Widget build(BuildContext context) {
     double screenHeight = Get.height;
     double screenWidth = Get.width;
-    List auctionList = [1];
+    // List auctionList = [1];
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(screenHeight * 0.1),
@@ -22,7 +25,7 @@ class NotificationView extends GetView<NotificationController> {
           screenWidth: screenWidth,
         ),
       ),
-      body: auctionList.length == 0
+      body: auctionController.joinedList.length == 0
           ? NotFoundWidget(title: 'There_are_no_notifications'.tr)
           : Padding(
               padding: EdgeInsets.only(
@@ -32,12 +35,13 @@ class NotificationView extends GetView<NotificationController> {
                 children: [
                   Flexible(
                     child: ListView.builder(
-                      itemCount: 7,
+                      itemCount: 1,
                       itemBuilder: (context, index) => AuctionNotificationCard(
                         title:
                             "The_auction_has_started_You_can_access_the_room_now"
                                 .tr,
-                        phone: "0912300000",
+                        phone:
+                            "${auctionController.joinedList[0].getProduct.getSpecialNumber}",
                         time: "Now".tr,
                         icon:
                             "https://upload.wikimedia.org/wikipedia/commons/2/28/Sillitoe-black-white.gif",
@@ -80,7 +84,9 @@ class AuctionNotificationCard extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () => Get.to(
-            AuctionLiveView(),
+            AuctionLiveView(
+              auction: auctionController.joinedList[0],
+            ),
           ),
           child: NotificationCardView(
             screenHeight: screenHeight,

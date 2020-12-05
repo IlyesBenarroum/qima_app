@@ -6,6 +6,7 @@ class Globals {
   static String provider = "42001";
   static String condition = "NEW";
   static String subscription = "POST_PAID";
+  static String auctionDate = "${DateTime.now()}";
   static List<GlobalKey<FormState>> formKeys = [
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),

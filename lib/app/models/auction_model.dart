@@ -4,9 +4,15 @@ class Auction {
   String auctionTiming;
   String auctionPeriod;
   String entryPrice;
+  int joiners;
+  int followers;
+  String createdBy;
   Product product;
   String get getId => id;
+  int get getJoiners => joiners;
+  int get getFollowers => followers;
   String get getAuctionDate => auctionDate;
+  String get getCreatedBy => createdBy;
   String get getAuctionTiming => auctionTiming;
   String get getAuctionPeriod => auctionPeriod;
   String get getEntryPrice => entryPrice;
@@ -27,6 +33,9 @@ class Auction {
     this.auctionTiming,
     this.auctionPeriod,
     this.entryPrice,
+    this.joiners,
+    this.followers,
+    this.createdBy,
     this.product,
   });
 }

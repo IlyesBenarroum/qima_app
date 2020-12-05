@@ -112,9 +112,8 @@ class AuctionController extends GetxController {
   @override
   void onInit() {
     getAuctions();
-
-    getIntressetedAuctions();
     getJoinedAuctions();
+    getIntressetedAuctions();
     getOwnedAuctions();
   }
 
@@ -123,6 +122,27 @@ class AuctionController extends GetxController {
 
   @override
   void onClose() {}
+
+  void placeBid(String amount, String auctionID) async {
+    GraphQLClient placebidClient = clientToQuery();
+    QueryResult result =
+        await placebidClient.mutate(MutationOptions(documentNode: gql("""
+   mutation bid{
+placeBid(
+amount: "$amount"
+userID: "${userS.id}"
+auctionID: "$auctionID"
+)
+}
+  
+      """)));
+    if (!result.hasException) {
+      print(result.data.data);
+    } else {
+      print(result.exception);
+      // print(result);
+    }
+  }
 
   void addAuction(Auction auction) async {
     GraphQLClient createClient = clientToQuery();
@@ -162,17 +182,18 @@ mutation createAuction1 {
   }
 
   Future<void> getAuctions() async {
-    print("test");
     GraphQLClient _getclient = clientToQuery();
     QueryResult result = await _getclient.query(
       QueryOptions(
         documentNode: gql("""
- query getAuctions{
-  getAllAuctions{
+        query getAuctions{
+          getAllAuctions{
     id
   	entryPrice
     startsAt
     length
+    joinedBy{id}
+    createdBy{id}
     product
     {
       id
@@ -201,7 +222,9 @@ mutation createAuction1 {
               id: data[i]["id"],
               auctionDate: data[i]["startsAt"],
               auctionTiming: data[i]["startsAt"],
+              joiners: data[i]["joinedBy"].length,
               auctionPeriod: data[i]["length"].toString(),
+              createdBy: data[i]["createdBy"]['id'],
               entryPrice: data[i]["entryPrice"],
               product: Product(
                 id: data[i]["product"]["id"],
@@ -368,6 +391,8 @@ query getUserByID {
       entryPrice
       startsAt
       length
+      joinedBy{id}
+      createdBy{id}
       product {
         id
         countryID
@@ -400,7 +425,9 @@ query getUserByID {
               auctionDate: data[i]["startsAt"],
               auctionTiming: data[i]["startsAt"],
               auctionPeriod: data[i]["length"].toString(),
+              joiners: data[i]["joinedBy"],
               entryPrice: data[i]["entryPrice"],
+              createdBy: data[i]["createdBy"],
               product: Product(
                 id: data[i]["product"]["id"],
                 serviceProvider: data[i]["product"]["carrierID"],
