@@ -145,14 +145,10 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                               print(
                                   snapshot.data.data["subToEvents"]["payload"]);
                               return FittedBox(
-                                //Sub
                                 fit: BoxFit.fill,
                                 child: Text(
                                   "${snapshot.data.data["subToEvents"]["payload"]["currentPrice"]} " +
                                       "Pound".tr,
-                                  // style: TextSt/yle(
-                                  // fontSize: 10,
-                                  // ),
                                   style: Constants.kAuctionInfoTitleTextStyle,
                                 ),
                               );
@@ -201,7 +197,7 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                   children: [
                     SvgPicture.asset("assets/images/icons/notifIcon.svg"),
                     Text(
-                      "${auction.getJoiners}" + "Bidders".tr,
+                      "${auction.getJoiners} " + "Joiners".tr,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -223,12 +219,24 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
           Positioned.fill(
             top: screenHeight * 0.425,
             child: Container(
-              child: ListView.builder(
-                itemCount: auction.joiners,
-                itemBuilder: (context, index) => AuctionRoomCardView(
-                  
-                  joiners: auction.joiners,
-                ),
+              child: StreamBuilder(
+                stream: controller.logStream2,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData)
+                    return ListView.builder(
+                      reverse: true,
+                      itemCount: snapshot
+                          .data.data["subToEvents"]["payload"]["bids"].length,
+                      itemBuilder: (context, index) => AuctionRoomCardView(
+                        name:
+                            "${snapshot.data.data["subToEvents"]["payload"]["bids"][index]["createdBy"]["fullName"]}",
+                        bid:
+                            "${snapshot.data.data["subToEvents"]["payload"]["bids"][index]["amount"]}",
+                        joiners: auction.joiners,
+                      ),
+                    );
+                  return Container();
+                },
               ),
             ),
           ),
@@ -457,7 +465,7 @@ class _TimerWidgetState extends State<TimerWidget> {
       (Timer timer) => setState(
         () {
           if (_start < 1) {
-            timer.cancel();
+            _timer.cancel();
           } else {
             setState(() {
               _start = _start - 1;
@@ -503,6 +511,7 @@ class _TimerWidgetState extends State<TimerWidget> {
             onComplete: () {
               print("complete");
               setState(() {
+                _start--;
                 //min--;
               });
             },

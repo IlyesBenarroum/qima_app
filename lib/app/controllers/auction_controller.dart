@@ -253,16 +253,15 @@ mutation createAuction1 {
       QueryOptions(
         documentNode: gql("""
 
-query getUserByID {
-  
-  getUserByID(userID: "${userS.id}") {
-    ownAuctions {
+query getOwned {
+  getCreatedAuctionsByUserID(userID: "${userS.id}") {
+    
       id
       entryPrice
       startsAt
       length
       joinedBy{id}
-      followedBy{id}
+      createdBy{id}
       product {
         id
         countryID
@@ -272,14 +271,15 @@ query getUserByID {
         subscription
         arrearsValue
       }
-    }
+    
   }
 }
+
 """),
       ),
     );
 
-    var data = result.data.data["getUserByID"]["ownAuctions"];
+    var data = result.data.data["getCreatedAuctionsByUserID"];
 
     if (!result.hasException) {
       if (!GetUtils.isNullOrBlank(data)) {
@@ -318,13 +318,15 @@ query getUserByID {
     QueryResult result = await getIntresseted.query(
       QueryOptions(
         documentNode: gql("""
-query followedAuctions {
-  getUserByID(userID: "${userS.id}") {
-    followedAuctions {
+query getFollow {
+  getFollowedAuctionsByUserID(userID: "${userS.id}") {
+    
       id
       entryPrice
       startsAt
       length
+      joinedBy{id}
+      createdBy{id}
       product {
         id
         countryID
@@ -334,14 +336,14 @@ query followedAuctions {
         subscription
         arrearsValue
       }
-    }
+    
   }
 }
 """),
       ),
     );
 
-    var data = result.data.data["getUserByID"]["followedAuctions"];
+    var data = result.data.data["getFollowedAuctionsByUserID"];
 
     if (!result.hasException) {
       // print();
@@ -384,9 +386,9 @@ query followedAuctions {
     QueryResult result = await getJoin.query(
       QueryOptions(
         documentNode: gql("""
-query getUserByID {
-  getUserByID(userID: "${userS.id}") {
-    joinedAuctions {
+query getJoin {
+  getJoinedAuctionsByUserID(userID: "${userS.id}") {
+    
       id
       entryPrice
       startsAt
@@ -402,14 +404,14 @@ query getUserByID {
         subscription
         arrearsValue
       }
-    }
+    
   }
 }
 """),
       ),
     );
 
-    var data = result.data.data["getUserByID"]["joinedAuctions"];
+    var data = result.data.data["getJoinedAuctionsByUserID"];
 
     if (!result.hasException) {
       // print();
@@ -425,7 +427,7 @@ query getUserByID {
               auctionDate: data[i]["startsAt"],
               auctionTiming: data[i]["startsAt"],
               auctionPeriod: data[i]["length"].toString(),
-              joiners: data[i]["joinedBy"],
+              joiners: data[i]["joinedBy"].length,
               entryPrice: data[i]["entryPrice"],
               createdBy: data[i]["createdBy"],
               product: Product(

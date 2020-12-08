@@ -5,7 +5,7 @@ import 'package:qima/app/modules/splash/splash_controller.dart';
 class AuctionLiveController extends GetxController {
   final count = 0.obs;
   static final WebSocketLink _webSocketLink = WebSocketLink(
-    url: 'ws://217.79.241.72:3200/graphql',
+    url: 'ws://185.70.196.103/dev/graphql',
     config: SocketClientConfig(
       autoReconnect: true,
 
@@ -21,8 +21,10 @@ class AuctionLiveController extends GetxController {
     cache: InMemoryCache(),
   );
   Operation operation;
+  Operation operation2;
 
   Stream<FetchResult> logStream;
+  Stream<FetchResult> logStream2;
   // Stream<BroadcastChannel> logStream;
   @override
   void onInit() {
@@ -36,6 +38,16 @@ class AuctionLiveController extends GetxController {
  """),
     );
     logStream = client.subscribe(operation);
+    operation2 = Operation(
+      documentNode: gql("""   
+      subscription sub{
+  subToEvents(
+    userID:"${userS.id}"
+  )
+}
+ """),
+    );
+    logStream2 = client.subscribe(operation2);
   }
 
   @override
