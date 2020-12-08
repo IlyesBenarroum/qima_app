@@ -34,6 +34,17 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
 
   @override
   Widget build(BuildContext context) {
+    auctionLiveController.getRoomSnapshot(auction.getId);
+    String start = auction.getStartsAt;
+    DateTime isoDate = DateTime.parse(start);
+    // print("start ${isoDate.minute}");
+    DateTime end =
+        isoDate.add(Duration(minutes: int.parse(auction.getAuctionPeriod)));
+
+    // print("end +${end.minute}");
+    // String diff = end.difference(DateTime.now()).inMinutes.toString();
+    int diff = int.parse(end.minute.toString())-int.parse(DateTime.now().minute.toString());
+    print("diff +$diff");
     var firstPrice = false.obs;
     var secondPrice = false.obs;
     var thirdPrice = false.obs;
@@ -142,8 +153,8 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                           builder: (context, snapshot) {
                             // if (snapshot.connectionState==ConnectionState.waiting)
                             if (snapshot.hasData) {
-                              print(
-                                  snapshot.data.data["subToEvents"]["payload"]);
+                              // print(
+                              // snapshot.data.data["subToEvents"]["payload"]);
                               return FittedBox(
                                 fit: BoxFit.fill,
                                 child: Text(
@@ -157,9 +168,12 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                             return FittedBox(
                               //Sub
                               fit: BoxFit.fill,
-                              child: Text(
-                                "${auction.getEntryPrice} " + "Pound".tr,
-                                style: Constants.kAuctionInfoTitleTextStyle,
+                              child: Obx(
+                                () => Text(
+                                  "${auctionLiveController.currentPrice.value} " +
+                                      "Pound".tr,
+                                  style: Constants.kAuctionInfoTitleTextStyle,
+                                ),
                               ),
                             );
                           },
@@ -197,6 +211,7 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                   children: [
                     SvgPicture.asset("assets/images/icons/notifIcon.svg"),
                     Text(
+                      //   "",
                       "${auction.getJoiners} " + "Joiners".tr,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -209,7 +224,7 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                   width: screenHeight * 0.06,
                   child: Stack(
                     children: [
-                      TimerWidget(chartKey: _chartKey, auction: auction),
+                      TimerWidget(chartKey: _chartKey, period: '$diff'),
                     ],
                   ),
                 ),
@@ -225,6 +240,7 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                   if (snapshot.hasData)
                     return ListView.builder(
                       reverse: true,
+                      shrinkWrap: true,
                       itemCount: snapshot
                           .data.data["subToEvents"]["payload"]["bids"].length,
                       itemBuilder: (context, index) => AuctionRoomCardView(
@@ -232,10 +248,29 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
                             "${snapshot.data.data["subToEvents"]["payload"]["bids"][index]["createdBy"]["fullName"]}",
                         bid:
                             "${snapshot.data.data["subToEvents"]["payload"]["bids"][index]["amount"]}",
-                        joiners: auction.joiners,
+                        joiners: 2,
+                        // joiners: auction.joiners,
                       ),
                     );
-                  return Container();
+                  return Obx(
+                    () => ListView.builder(
+                      reverse: true,
+                      shrinkWrap: true,
+                      itemCount: auctionLiveController.bidsList.length,
+                      // snapshot
+                      // .data.data["subToEvents"]["payload"]["bids"].length,
+                      itemBuilder: (context, index) => AuctionRoomCardView(
+                        name:
+                            "${auctionLiveController.bidsList[index].getName}",
+                        // "${snapshot.data.data["subToEvents"]["payload"]["bids"][index]["createdBy"]["fullName"]}",
+                        bid:
+                            "${auctionLiveController.bidsList[index].getAmount}",
+                        // "${snapshot.data.data["subToEvents"]["payload"]["bids"][index]["amount"]}",
+                        // joiners: a,
+                        joiners: auction.joiners,
+                      ),
+                    ),
+                  );
                 },
               ),
             ),
@@ -444,12 +479,12 @@ class TimerWidget extends StatefulWidget {
   const TimerWidget({
     Key key,
     @required GlobalKey<AnimatedCircularChartState> chartKey,
-    @required this.auction,
+    @required this.period,
   })  : _chartKey = chartKey,
         super(key: key);
 
   final GlobalKey<AnimatedCircularChartState> _chartKey;
-  final Auction auction;
+  final String period;
 
   @override
   _TimerWidgetState createState() => _TimerWidgetState();
@@ -459,7 +494,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   Timer _timer;
   int _start;
   void startTimer() {
-    const oneMin = const Duration(minutes: 1);
+    const oneMin = const Duration(seconds: 60);
     _timer = new Timer.periodic(
       oneMin,
       (Timer timer) => setState(
@@ -479,7 +514,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   @override
   void initState() {
     super.initState();
-    _start = int.parse(widget.auction.auctionPeriod);
+    _start = int.parse(widget.period);
     startTimer();
   }
 
@@ -497,7 +532,7 @@ class _TimerWidgetState extends State<TimerWidget> {
           alignment: Alignment.center,
           child: CircularCountDownTimer(
             key: UniqueKey(),
-            duration: int.parse(widget.auction.auctionPeriod) * 60,
+            duration: 60,
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             color: Colors.grey[300],
@@ -509,9 +544,8 @@ class _TimerWidgetState extends State<TimerWidget> {
                 fontWeight: FontWeight.bold),
             isReverse: false,
             onComplete: () {
-              print("complete");
               setState(() {
-                _start--;
+                // _start--;
                 //min--;
               });
             },

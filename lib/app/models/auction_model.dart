@@ -7,6 +7,7 @@ class Auction {
   int joiners;
   int followers;
   String createdBy;
+  String startsAt;
   Product product;
   String get getId => id;
   int get getJoiners => joiners;
@@ -16,6 +17,7 @@ class Auction {
   String get getAuctionTiming => auctionTiming;
   String get getAuctionPeriod => auctionPeriod;
   String get getEntryPrice => entryPrice;
+  String get getStartsAt => startsAt;
   Product get getProduct => product;
 
   // set setId(String id) => this.id = id;
@@ -36,6 +38,7 @@ class Auction {
     this.joiners,
     this.followers,
     this.createdBy,
+    this.startsAt,
     this.product,
   });
 }

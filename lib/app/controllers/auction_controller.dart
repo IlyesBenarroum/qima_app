@@ -137,9 +137,9 @@ auctionID: "$auctionID"
   
       """)));
     if (!result.hasException) {
-      print(result.data.data);
+      // print(result.data.data);
     } else {
-      print(result.exception);
+      // print(result.exception);
       // print(result);
     }
   }
@@ -173,9 +173,9 @@ mutation createAuction1 {
  """),
     ));
     if (!result.hasException) {
-      print(result.data.data["createAuction"]);
+      // print(result.data.data["createAuction"]);
     } else {
-      print(result.exception);
+      // print(result.exception);
       // print(result);
     }
     getAuctions();
@@ -211,7 +211,7 @@ mutation createAuction1 {
     );
 
     var data = result.data.data["getAllAuctions"];
-    print(data[0]["subscription"]);
+    // print(data[0]["subscription"]);
     if (!result.hasException) {
       if (!GetUtils.isNullOrBlank(data)) {
         auctionsList.clear();
@@ -395,6 +395,7 @@ query getJoin {
       length
       joinedBy{id}
       createdBy{id}
+      startsAt
       product {
         id
         countryID
@@ -430,6 +431,7 @@ query getJoin {
               joiners: data[i]["joinedBy"].length,
               entryPrice: data[i]["entryPrice"],
               createdBy: data[i]["createdBy"],
+              startsAt: data[i]["startsAt"],
               product: Product(
                 id: data[i]["product"]["id"],
                 serviceProvider: data[i]["product"]["carrierID"],
@@ -460,9 +462,9 @@ query getJoin {
       """),
     ));
     if (!result.hasException) {
-      print(result.data.data);
+      // print(result.data.data);
     } else {
-      print(result.exception);
+      // print(result.exception);
       // print(result);
     }
   }
@@ -477,9 +479,9 @@ query getJoin {
       """),
     ));
     if (!result.hasException) {
-      print(result.data.data);
+      // print(result.data.data);
     } else {
-      print(result.exception);
+      // print(result.exception);
       // print(result);
     }
   }

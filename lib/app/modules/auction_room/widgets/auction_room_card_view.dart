@@ -55,7 +55,7 @@ class AuctionRoomCardView extends GetView {
                     Container(
                       width: screenWidth * 0.3,
                       child: FittedBox(
-                        fit: BoxFit.fill,
+                        fit: BoxFit.scaleDown,
                         child: Text(
                           "$name",
                           textAlign: TextAlign.right,
