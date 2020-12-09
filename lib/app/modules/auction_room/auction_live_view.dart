@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/controllers/auction_controller.dart';
 import 'package:qima/app/models/auction_model.dart';
+import 'package:qima/app/modules/auction_room/widgets/auction_room_card_view.dart';
 import '../../.././app/modules/auction_room/auction_live_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../.././app/modules/auction_room/widgets/auction_room_card_view.dart';
 import '../../.././app/widgets/customappbar.dart';
 import '../../tools/constants.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
@@ -37,14 +37,24 @@ class AuctionLiveView extends GetView<AuctionLiveController> {
     auctionLiveController.getRoomSnapshot(auction.getId);
     String start = auction.getStartsAt;
     DateTime isoDate = DateTime.parse(start);
+    int diff;
     // print("start ${isoDate.minute}");
+    // print("start $isoDate");
     DateTime end =
         isoDate.add(Duration(minutes: int.parse(auction.getAuctionPeriod)));
 
-    // print("end +${end.minute}");
+    print("end +${end.minute}");
+    print("end +$end");
+    if (end.minute.toInt() >= DateTime.now().minute.toInt()) {
+      diff = end.minute.toInt() - DateTime.now().minute.toInt();
+    } else {
+      diff = 60 - (end.minute.toInt() + isoDate.minute.toInt());
+      // if (diff < 0) diff = -diff;
+    }
+    // int diff =
     // String diff = end.difference(DateTime.now()).inMinutes.toString();
-    int diff = int.parse(end.minute.toString())-int.parse(DateTime.now().minute.toString());
-    print("diff +$diff");
+    // int diff = int.parse(end.minute.toString())-int.parse(DateTime.now().minute.toString());
+    print("diff $diff");
     var firstPrice = false.obs;
     var secondPrice = false.obs;
     var thirdPrice = false.obs;

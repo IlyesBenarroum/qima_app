@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:qima/app/controllers/auction_controller.dart';
 import 'package:qima/app/tools/tools.dart';
+
+import '../../../../gloabals.dart';
 
 class SignupformController extends GetxController {
   var nameTapped = false.obs;
@@ -10,13 +13,10 @@ class SignupformController extends GetxController {
 
   var accept = false.obs;
 
-GraphQLClient  _client  = clientToQuery();
-
-
+  GraphQLClient _client = clientToQuery();
 
   @override
-  void onInit() {
-  }
+  void onInit() {}
 
   @override
   void onReady() {}
@@ -24,7 +24,7 @@ GraphQLClient  _client  = clientToQuery();
   @override
   void onClose() {
     super.onClose();
-  }
- 
-}
 
+  
+  }
+}

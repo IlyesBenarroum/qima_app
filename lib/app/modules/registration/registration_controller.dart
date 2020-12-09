@@ -18,6 +18,7 @@ class RegistrationController extends GetxController {
     email = "".obs;
     signup = true.obs;
      googleSignIn = GoogleSignIn(
+       
       scopes: <String>[
         'email',
         'https://www.googleapis.com/auth/contacts.readonly',
@@ -27,8 +28,8 @@ class RegistrationController extends GetxController {
     googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       // setState(() {
       currentUser = account;
-      print(account);
-      print(currentUser);
+      // print(account);
+      // print(currentUser);
       // });
     });
   }

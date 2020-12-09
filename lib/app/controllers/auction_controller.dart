@@ -19,7 +19,7 @@ class AuctionController extends GetxController {
     auctionDate: "${DateTime.now().toIso8601String()}",
     auctionTiming: "${DateTime.now().toIso8601String()}",
     auctionPeriod: "30",
-    entryPrice: "0",
+    entryPrice: "100",
     product: Product(
       type: "PHONE_NUMBER",
       specialNumber: "",
@@ -111,6 +111,16 @@ class AuctionController extends GetxController {
   GraphQLClient _client = clientToQuery();
   @override
   void onInit() {
+    // print(Globals.userJoin);
+    // print(Globals.userFollow);
+    // if (Globals.userFollow) {
+    //   print("foloww");
+    //   AuctionController().intrestAuction(Globals.auctionID);
+    // }
+    // if (Globals.userJoin) {
+    //   print("join");
+    //   AuctionController().joinAuction(Globals.auctionID);
+    // }
     getAuctions();
     getJoinedAuctions();
     getIntressetedAuctions();
@@ -153,7 +163,7 @@ mutation createAuction1 {
     createAuction(
         auctionParams: {
                 userID: "${userS.id}"
-                startsAt: "${DateTime.now().toIso8601String()}"
+                startsAt: "${Globals.auctionDate}"
                 length: ${int.parse(auction.auctionPeriod)}
                 entryPrice:"${auction.entryPrice}"
                 }
@@ -173,7 +183,7 @@ mutation createAuction1 {
  """),
     ));
     if (!result.hasException) {
-      // print(result.data.data["createAuction"]);
+      print(result.data.data["createAuction"]);
     } else {
       // print(result.exception);
       // print(result);
@@ -242,8 +252,12 @@ mutation createAuction1 {
       } else {
         return;
       }
+    } else {
+      print(result.exception);
     }
     sortAuctions();
+    // auctionsList.value = auctionsList.value.reversed.toList();
+    print(auctionsList.length);
     auctionsList.refresh();
   }
 
@@ -462,9 +476,9 @@ query getJoin {
       """),
     ));
     if (!result.hasException) {
-      // print(result.data.data);
+      print(result.data.data);
     } else {
-      // print(result.exception);
+      print(result.exception);
       // print(result);
     }
   }
@@ -479,9 +493,9 @@ query getJoin {
       """),
     ));
     if (!result.hasException) {
-      // print(result.data.data);
+      print(result.data.data);
     } else {
-      // print(result.exception);
+      print(result.exception);
       // print(result);
     }
   }

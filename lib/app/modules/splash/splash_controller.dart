@@ -2,7 +2,9 @@ import 'package:get/get.dart';
 import 'package:qima/app/controllers/auction_controller.dart';
 import 'package:qima/app/controllers/user_controller.dart';
 import 'package:qima/app/models/user_model.dart';
+import 'package:qima/app/modules/add_auction/widgets/country_cutumDropDown.dart';
 import 'package:qima/app/modules/registration/registration_view.dart';
+import 'package:qima/gloabals.dart';
 import '../../../app/modules/home/home_view.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -11,29 +13,28 @@ import 'package:get_storage/get_storage.dart';
 final box = GetStorage();
 bool boxbll;
 User userS = User();
+
 final UserController userController = Get.put(UserController());
-
-
 
 class SplashController extends GetxController {
   AuctionController controller = Get.put(AuctionController());
   @override
   void onInit() async {
     bool _seen = (box.read('seen') ?? false);
-
     if (box.read('SignUp') != null) {
-
       userS.id = box.read('id');
       userS.name = box.read('fullName');
       userS.email = box.read('email');
 
-      print(userS.id);
-
-
-
-      boxbll = true;
+      if (Globals.followBox.read("follow") != null) {
+        AuctionController()
+            .intrestAuction(Globals.auctionIdBox.read("auctionId"));
+      } else if (Globals.joinBox.read("join") != null) {
+        AuctionController().joinAuction(Globals.auctionIdBox.read("auctionId"));
+      } else
+        boxbll = true;
     } else {
-      print('makhadmatch');
+      // print('makhadmatch');
       boxbll = false;
     }
     if (_seen) {
@@ -45,11 +46,11 @@ class SplashController extends GetxController {
     } else {
       await box.write('seen', true);
       if (box.read('SignUp') != null) {
-        print('khadmat');
+        // print('khadmat');
         boxbll = true;
       } else {
         boxbll = false;
-        print('makhadmatch');
+        // print('makhadmatch');
       }
       Future.delayed(Duration(seconds: 4)).then(
         (value) => Get.off(

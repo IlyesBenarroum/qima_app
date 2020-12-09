@@ -92,14 +92,15 @@ class NewAuction2BodyView extends StatelessWidget {
                               }, onConfirm: (date) {
                                 controller.pickedDate.value = date;
                                 auctionController
-                                    .setAuctionDate(date.toIso8601String());
-                                print(auctionController
-                                    .auction.value.auctionDate);
+                                    .setAuctionDate("${date.toUtc()}");
+                                // print
+                                // print(auctionController
+                                // .auction.value.auctionDate);
                                 // auctionController.setAuctionDate(
                                 // "${date.year.toString()}/" +
                                 // "${date.month.toString()}/" +
                                 // "${date.day.toString()}");
-                                // print(auctionController.auctionDate);
+                                print(auctionController.auctionDate);
                               },
                                   currentTime: minDate,
                                   locale: lang == "ar"
@@ -138,8 +139,14 @@ class NewAuction2BodyView extends StatelessWidget {
                                 onConfirm: (time) {
                                   controller.pickedTime.value = time;
                                   auctionController
-                                      .setAuctionTiming(time.toIso8601String());
-                                  // print(auctionController.auctionTiming);
+                                      .setAuctionTiming("${time.toUtc()}");
+                                  // print(auctionController
+                                  //     .auction.value.auctionTiming
+                                  //     .substring(10));
+                                  print(auctionController
+                                      .auction.value.auctionDate);
+                                  //     .substring(0, 10));
+                                  // print(Globals.auctionDate);
                                 },
                                 currentTime: DateTime.now(),
                                 locale: lang == "ar"
@@ -249,6 +256,7 @@ class NewAuction2BodyView extends StatelessWidget {
                                             }
                                           },
                                           // onSaved: (String val) {},
+                                          // initialValue: "",
                                           onFieldSubmitted: (String val) {
                                             auctionController
                                                 .setEntryPrice(val);
@@ -258,7 +266,8 @@ class NewAuction2BodyView extends StatelessWidget {
                                                 .setEntryPrice(val);
                                           },
                                           controller:
-                                              controller.auctionEntryPrice,
+                                              controller.auctionEntryPrice
+                                                ..text = "100",
                                           keyboardType: TextInputType.number,
                                           maxLines: 1,
                                           cursorColor: Get.theme.primaryColor,
@@ -283,7 +292,7 @@ class NewAuction2BodyView extends StatelessWidget {
                                                 width: 1.0,
                                               ),
                                             ),
-                                            hintText: "000" + "Pound".tr,
+                                            hintText: "100" + "Pound".tr,
                                             hintStyle: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.grey.withOpacity(1),
@@ -312,15 +321,9 @@ class NewAuction2BodyView extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // print(auctionController.auction.value.auctionDate);
-                        // print(auctionController.auction.value.auctionDate);
-                        // print(auctionController.auction.value.auctionPeriod);
-                        // print(auctionController.auction.value.auctionTiming);
-                        // print(
-                        //     auctionController.auction.value.product.condition);
-                        // print(auctionController
-                        //     .auction.value.product.serviceProvider);
-
+                        Globals.auctionDate =
+                            "${auctionController.auction.value.auctionDate.substring(0, 10)}${auctionController.auction.value.auctionTiming.substring(10)}";
+                     
                         if (_formKey.currentState.validate()) {
                           if (GetUtils.isNullOrBlank(
                               auctionController.entryPrice))
@@ -330,23 +333,11 @@ class NewAuction2BodyView extends StatelessWidget {
                               auctionController.auctionPeriod))
                             auctionController.setAuctionPeriod(
                                 "${controller.auctionPeriod.value}");
-                          // if (GetUtils.isNullOrBlank(
-                          //     auctionController.auctionTiming))
-                          //   auctionController.setAuctionTiming(
-                          //       DateTime.now().toIso8601String());
-                          // // if (GetUtils.isNullOrBlank(
-                          //     auctionController.auctionDate))
-                          //   auctionController.setAuctionDate(minDate);
-          
-                          // _formKey.currentState.save();
-                          // auctionsController
-                          // .addAuction(auctionController.auction.value);
-                          // print(auctionController.country);
-                          // .auctionsList.first.auctionTime);
 
                           print("tapped");
                           print("auctionController.auctionDate");
-                          print(auctionController.auctionDate);
+                          print(Globals.auctionDate);
+                          // print(auctionController.auctionDate);
                           print("auctionController.auctionTiming");
                           print(auctionController.auctionTiming);
                           print("auctionController.auctionPeriod");
@@ -365,15 +356,15 @@ class NewAuction2BodyView extends StatelessWidget {
                           print(auctionController.subscription);
                           print(auctionController.arrearsValue);
                           print("auctionController.arrearsValue");
-                          auctionController
-                              .addAuction(auctionController.auction.value);
 
                           if (GetUtils.isNullOrBlank(userS.id)) {
                             print("Login");
                             Get.to(NewAuction3View());
                           } else {
-                            print("Signup");
-                            print(userS.id);
+                            // print("Signup");
+                            // print(userS.id);
+                            auctionController
+                                .addAuction(auctionController.auction.value);
                             Get.to(HomeView());
                           }
                         }

@@ -7,6 +7,7 @@ import 'package:qima/app/modules/splash/splash_controller.dart';
 import '../../../app/modules/detail/detail_controller.dart';
 import '../../../app/tools/popUps.dart';
 import '../../../app/widgets/customappbar.dart';
+import '../../../gloabals.dart';
 import 'widgets/auction_card_detail_view.dart';
 import 'widgets/phone_card_detail_view.dart';
 import 'package:share/share.dart';
@@ -233,10 +234,14 @@ class DetailView extends GetView<DetailController> {
                             onPressed: () {
                               if (GetUtils.isNullOrBlank(userS.id)) {
                                 Get.to(RegistrationView());
+                               Globals.joinBox.write("join", "true");
+                                Globals.auctionIdBox.write("auctionId",
+                                    '${auctionController.auctionsList[index].getId}');
                               } else {
-                                auctionController.joinAuction(
-                                    auctionController.auctionsList[index].id);
-                                joinAuction();
+                                  auctionController.joinAuction(
+                                      auctionController.auctionsList[index].id);
+                                  joinAuction();
+                                // print();
                               }
                             },
                             child: Text('Join'.tr),
@@ -253,6 +258,9 @@ class DetailView extends GetView<DetailController> {
                             color: Color(0xffffe477),
                             onPressed: () {
                               if (GetUtils.isNullOrBlank(userS.id)) {
+                                Globals.followBox.write("follow", "true");
+                                Globals.auctionIdBox.write("auctionId",
+                                    '${auctionController.auctionsList[index].getId}');
                                 Get.to(RegistrationView());
                               } else {
                                 auctionController.intrestAuction(

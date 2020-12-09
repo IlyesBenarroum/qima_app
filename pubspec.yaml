@@ -41,6 +41,7 @@ dependencies:
   http: ^0.12.2
   image_picker: ^0.6.7+12
   intl: ^0.16.1
+  jiffy: ^3.0.1
   path: null
   path_provider: null
   share: ^0.6.5+3

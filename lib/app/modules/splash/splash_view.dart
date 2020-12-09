@@ -6,7 +6,7 @@ import '../../../app/modules/splash/splash_controller.dart';
 
 class SplashView extends GetView<SplashController> {
   final AuctionController auctionController = Get.put(AuctionController());
-
+  
   @override
   Widget build(BuildContext context) {
     SplashController().onInit();
