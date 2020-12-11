@@ -9,7 +9,10 @@ import '../../../app/modules/profile/profile_view.dart';
 import '../../tools/constants.dart';
 import 'home_controller.dart';
 
+AuctionController auctionController = Get.put(AuctionController());
+// auctionController
 class HomeView extends GetView<HomeController> {
+  // auctionController.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +26,7 @@ class HomeView extends GetView<HomeController> {
 }
 
 class HomePage extends StatefulWidget {
+
   @override
   _HomePageState createState() => _HomePageState();
 }

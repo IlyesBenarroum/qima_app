@@ -16,6 +16,7 @@ class InterestedauctionsView extends GetView {
   @override
   Widget build(BuildContext context) {
     _controller.getIntressetedAuctions();
+    print("follow length ${_controller.intressetList.length}");
     return Obx(
       () => _controller.intressetList.length == 0
           ? NotFoundWidget(
@@ -60,7 +61,7 @@ class _CustomRefreshWidgetState extends State<CustomRefreshWidget> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      auctionController.intressetList();
+      // auctionController.getIntressetedAuctions();
     });
     return RefreshIndicator(
       onRefresh: auctionController.getIntressetedAuctions,
@@ -68,9 +69,9 @@ class _CustomRefreshWidgetState extends State<CustomRefreshWidget> {
         itemCount: widget._controller.intressetList.length,
         itemBuilder: (context, index) => GestureDetector(
           onTap: () {
-            setState(() {
-              Get.to(Detail3View(index: index));
-            });
+            // setState(() {
+            Get.to(Detail3View(auction: widget._controller.intressetList[index]));
+            // });
           },
           child: AuctionCard(
             //type 0 for main and created auctions

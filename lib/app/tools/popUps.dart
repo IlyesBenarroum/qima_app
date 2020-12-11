@@ -289,7 +289,7 @@ void addedToIntersted() {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Get.off(HomeView());
+                                  Get.off(AuctionView());
                                 },
                                 child: AnimatedContainer(
                                   duration: Duration(milliseconds: 0),

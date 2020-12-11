@@ -32,6 +32,7 @@ class AuctionLiveController extends GetxController {
   // Stream<BroadcastChannel> logStream;
   @override
   void onInit() {
+    print(userS.id);
     operation = Operation(
       documentNode: gql("""   
       subscription sub{
@@ -81,15 +82,16 @@ class AuctionLiveController extends GetxController {
       ),
     );
 
-    var data = result.data.data["getAuctionRoomSnapshot"];
     // print(data[0]["subscription"]);
     if (!result.hasException) {
+      var data = result.data.data["getAuctionRoomSnapshot"];
+      print(data["currentPrice"]);
+
       if (!GetUtils.isNullOrBlank(data)) {
         // auctionsList.clear();
         currentPrice.value = "${data["currentPrice"]}";
 
         for (var i = 0; i < data["bids"].length; i++) {
-        
           bidsList.add(
             Bid(
               name: "${data["bids"][i]["createdBy"]["fullName"]}",

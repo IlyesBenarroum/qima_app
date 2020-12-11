@@ -323,7 +323,7 @@ class NewAuction2BodyView extends StatelessWidget {
                       onTap: () {
                         Globals.auctionDate =
                             "${auctionController.auction.value.auctionDate.substring(0, 10)}${auctionController.auction.value.auctionTiming.substring(10)}";
-                     
+
                         if (_formKey.currentState.validate()) {
                           if (GetUtils.isNullOrBlank(
                               auctionController.entryPrice))

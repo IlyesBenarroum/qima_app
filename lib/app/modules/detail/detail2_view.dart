@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/controllers/auction_controller.dart';
+import 'package:qima/app/models/auction_model.dart';
 import '../../../app/modules/detail/detail_controller.dart';
 import '../../../app/widgets/customappbar.dart';
 import 'widgets/auction_card_detail_view.dart';
@@ -13,9 +14,9 @@ String text = 'Qima';
 String subject = 'Win Auction with friends';
 
 class Detail2View extends GetView<DetailController> {
-  final int index;
+  final Auction auction;
 
-  Detail2View({this.index});
+  Detail2View({this.auction});
   final AuctionController auctionController = Get.put(AuctionController());
 
   @override
@@ -121,16 +122,16 @@ class Detail2View extends GetView<DetailController> {
                 child: AuctionCardDetailView(
                   date:
                       //  "0",
-                      "${auctionController.joinedList[index].getAuctionDate.substring(0, 10)}",
+                      "${auction.getAuctionDate.substring(0, 10)}",
                   timing:
                       //  "0",
-                      "${auctionController.joinedList[index].getAuctionTiming.substring(11, 16)}",
+                      "${auction.getAuctionTiming.substring(11, 16)}",
                   duration:
                       //  "0",
-                      "${auctionController.joinedList[index].auctionPeriod.substring(0, 2)} " +
+                      "${auction.auctionPeriod.substring(0, 2)} " +
                           "Minutes".tr,
                   enteryprice:
-                      "${auctionController.joinedList[index].getEntryPrice} " +
+                      "${auction.getEntryPrice} " +
                           "Pound".tr,
                   screenWidth: screenWidth,
                   screenHeight: screenHeight,
@@ -176,90 +177,90 @@ class Detail2View extends GetView<DetailController> {
                 ),
               ),
             ),
-            Obx(
-              () => Visibility(
-                visible: phoneDetails.value,
-                child: PhoneCardDetailView(
-                  provider:
-                      // "0",
-                      "${auctionController.joinedList[index].getProduct.getServiceProvider}"
-                          .tr,
-                  number:
-                      // "0",
-                      "${auctionController.joinedList[index].getProduct.getSpecialNumber}",
-                  type:
-                      "${auctionController.joinedList[index].getProduct.getCondition}" ==
-                              "NEW"
-                          ? "New".tr
-                          : "Used".tr,
-                  condition:
-                      "${auctionController.joinedList[index].getProduct.getType}" ==
-                              "PRE_PAID"
-                          ? "PrePaid".tr
-                          : "${auctionController.joinedList[index].getProduct.getType}" ==
-                                  "POST_PAID"
-                              ? "PostPaid"
-                              : "No Subscription",
-                  arrears:
-                      "${auctionController.joinedList[index].getProduct.arrearsValue}" !=
-                              "0"
-                          ? "Exist".tr
-                          : "Don't Exist".tr,
-                  arrearsvalue: GetUtils.isNullOrBlank(auctionController
-                          .auctionsList[index].getProduct.getArrearsValue)
-                      ? "0 " + "Pound".tr
-                      : "${auctionController.joinedList[index].getProduct.getArrearsValue}" +
-                          "Pound".tr,
-                  screenWidth: screenWidth,
-                  screenHeight: screenHeight,
-                ),
+            // Obx(
+            // () =>
+            Visibility(
+              visible: phoneDetails.value,
+              child: PhoneCardDetailView(
+                provider:
+                    // "0",
+                    "${auction.getProduct.getServiceProvider}"
+                        .tr,
+                number:
+                    // "0",
+                    "${auction.getProduct.getSpecialNumber}",
+                type:
+                    "${auction.getProduct.getCondition}" ==
+                            "NEW"
+                        ? "New".tr
+                        : "Used".tr,
+                condition:
+                    "${auction.getProduct.getType}" ==
+                            "PRE_PAID"
+                        ? "PrePaid".tr
+                        : "${auction.getProduct.getType}" ==
+                                "POST_PAID"
+                            ? "PostPaid"
+                            : "No Subscription",
+                arrears:
+                    "${auction.getProduct.arrearsValue}" !=
+                            "0"
+                        ? "Exist".tr
+                        : "Don't Exist".tr,
+                arrearsvalue: GetUtils.isNullOrBlank(auction.getProduct.getArrearsValue)
+                    ? "0 " + "Pound".tr
+                    : "${auction.getProduct.getArrearsValue}" +
+                        "Pound".tr,
+                screenWidth: screenWidth,
+                screenHeight: screenHeight,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(screenWidth * 0.05),
-              // child: Container(
-              //   width: screenWidth * 0.9,
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Container(
-              //         height: screenHeight * 0.0875,
-              //         width: screenWidth * 0.425,
-              //         child: RaisedButton(
-              //           textColor: Colors.white,
-              //           shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(10.0),
-              //           ),
-              //           color: Color(0xff3686bd),
-              //           onPressed: () {
-              //             auctionController.joinAuction(
-              //                 auctionController.auctionsList[index].id);
-              //             joinAuction();
-              //           },
-              //           child: Text('Join'.tr),
-              //         ),
-              //       ),
-              //       Container(
-              //         height: screenHeight * 0.0875,
-              //         width: screenWidth * 0.425,
-              //         child: RaisedButton(
-              //           textColor: Colors.black,
-              //           shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(10.0),
-              //           ),
-              //           color: Color(0xffffe477),
-              //           onPressed: () {
-              //             auctionController.intrestAuction(
-              //                 auctionController.auctionsList[index].id);
-              //             addedToIntersted();
-              //           },
-              //           child: Text('Interest'.tr),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-            ),
+            // ),
+            // Padding(
+            // padding: EdgeInsets.all(screenWidth * 0.05),
+            // child: Container(
+            //   width: screenWidth * 0.9,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Container(
+            //         height: screenHeight * 0.0875,
+            //         width: screenWidth * 0.425,
+            //         child: RaisedButton(
+            //           textColor: Colors.white,
+            //           shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(10.0),
+            //           ),
+            //           color: Color(0xff3686bd),
+            //           onPressed: () {
+            //             auctionController.joinAuction(
+            //                 auctionController.auctionsList[index].id);
+            //             joinAuction();
+            //           },
+            //           child: Text('Join'.tr),
+            //         ),
+            //       ),
+            //       Container(
+            //         height: screenHeight * 0.0875,
+            //         width: screenWidth * 0.425,
+            //         child: RaisedButton(
+            //           textColor: Colors.black,
+            //           shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(10.0),
+            //           ),
+            //           color: Color(0xffffe477),
+            //           onPressed: () {
+            //             auctionController.intrestAuction(
+            //                 auctionController.auctionsList[index].id);
+            //             addedToIntersted();
+            //           },
+            //           child: Text('Interest'.tr),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // ),
           ],
         ),
       ),

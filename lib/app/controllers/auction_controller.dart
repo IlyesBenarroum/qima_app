@@ -111,19 +111,9 @@ class AuctionController extends GetxController {
   GraphQLClient _client = clientToQuery();
   @override
   void onInit() {
-    // print(Globals.userJoin);
-    // print(Globals.userFollow);
-    // if (Globals.userFollow) {
-    //   print("foloww");
-    //   AuctionController().intrestAuction(Globals.auctionID);
-    // }
-    // if (Globals.userJoin) {
-    //   print("join");
-    //   AuctionController().joinAuction(Globals.auctionID);
-    // }
     getAuctions();
-    getJoinedAuctions();
     getIntressetedAuctions();
+    getJoinedAuctions();
     getOwnedAuctions();
   }
 
@@ -149,7 +139,7 @@ auctionID: "$auctionID"
     if (!result.hasException) {
       // print(result.data.data);
     } else {
-      // print(result.exception);
+      print(result.exception);
       // print(result);
     }
   }
@@ -189,6 +179,7 @@ mutation createAuction1 {
       // print(result);
     }
     getAuctions();
+    getOwnedAuctions();
   }
 
   Future<void> getAuctions() async {
@@ -220,12 +211,13 @@ mutation createAuction1 {
       ),
     );
 
-    var data = result.data.data["getAllAuctions"];
     // print(data[0]["subscription"]);
     if (!result.hasException) {
+      // if (!GetUtils.isNullOrBlank(result.data)) {
+      var data = result.data.data["getAllAuctions"];
       if (!GetUtils.isNullOrBlank(data)) {
-        auctionsList.clear();
-
+        // if (auctionsList.length != 0) auctionsList.clear();
+        auctionsList = List<Auction>().obs;
         for (var i = 0; i < data.length; i++) {
           auctionsList.add(
             Auction(
@@ -252,6 +244,7 @@ mutation createAuction1 {
       } else {
         return;
       }
+      // }
     } else {
       print(result.exception);
     }
@@ -267,37 +260,33 @@ mutation createAuction1 {
       QueryOptions(
         documentNode: gql("""
 
-query getOwned {
+query getowned {
   getCreatedAuctionsByUserID(userID: "${userS.id}") {
-    
+    id
+    entryPrice
+    startsAt
+    length
+    product {
       id
-      entryPrice
-      startsAt
-      length
-      joinedBy{id}
-      createdBy{id}
-      product {
-        id
-        countryID
-        carrierID
-        condition
-        number
-        subscription
-        arrearsValue
-      }
-    
+      countryID
+      carrierID
+      condition
+      number
+      subscription
+      arrearsValue
+    }
   }
 }
-
 """),
       ),
     );
 
-    var data = result.data.data["getCreatedAuctionsByUserID"];
-
     if (!result.hasException) {
+      // if (!GetUtils.isNullOrBlank(result.data)) {
+      var data = result.data.data["getCreatedAuctionsByUserID"];
       if (!GetUtils.isNullOrBlank(data)) {
-        ownerList.clear();
+        // ownerList = List<Auction>().obs;
+        if (ownerList.length != 0) ownerList.clear();
 
         for (var i = 0; i < data.length; i++) {
           ownerList.add(
@@ -322,6 +311,7 @@ query getOwned {
         }
       } else {
         return;
+        // }
       }
     }
     ownerList.refresh();
@@ -332,65 +322,66 @@ query getOwned {
     QueryResult result = await getIntresseted.query(
       QueryOptions(
         documentNode: gql("""
+
 query getFollow {
   getFollowedAuctionsByUserID(userID: "${userS.id}") {
-    
+    id
+    entryPrice
+    startsAt
+    length
+    product {
       id
-      entryPrice
-      startsAt
-      length
-      joinedBy{id}
-      createdBy{id}
-      product {
-        id
-        countryID
-        carrierID
-        condition
-        number
-        subscription
-        arrearsValue
-      }
-    
+      countryID
+      carrierID
+      condition
+      number
+      subscription
+      arrearsValue
+    }
   }
-}
-"""),
+}"""),
       ),
     );
-
-    var data = result.data.data["getFollowedAuctionsByUserID"];
-
+    print("getIntressetedAuctions1");
     if (!result.hasException) {
-      // print();
-      // print(data[0]["id"]);
-      if (!GetUtils.isNullOrBlank(data)) {
-        intressetList.clear();
+      print("getIntressetedAuctions2");
+      if (!GetUtils.isNullOrBlank(result.data)) {
+        // print(data[0]["id"]);
+        var data = result.data.data["getFollowedAuctionsByUserID"];
+        if (!GetUtils.isNullOrBlank(data)) {
+          if (intressetList.length != 0) intressetList.clear();
+          // intressetList = List<Auction>().obs;
 
-        // print("get auctions");
-        for (var i = 0; i < data.length; i++) {
-          intressetList.add(
-            Auction(
-              id: data[i]["id"],
-              auctionDate: data[i]["startsAt"],
-              auctionTiming: data[i]["startsAt"],
-              auctionPeriod: data[i]["length"].toString(),
-              entryPrice: data[i]["entryPrice"],
-              product: Product(
-                id: data[i]["product"]["id"],
-                serviceProvider: data[i]["product"]["carrierID"],
-                specialNumber: data[i]["product"]["number"],
-                arrearsValue: data[i]["product"]["arrearsValue"],
-                subscription: data[i]["product"]["subscription"],
-                condition: data[i]["product"]["condition"],
-                country: data[i]["product"]["countryID"],
+          // print("get auctions");
+          for (var i = 0; i < data.length; i++) {
+            intressetList.add(
+              Auction(
+                id: data[i]["id"],
+                auctionDate: data[i]["startsAt"],
+                auctionTiming: data[i]["startsAt"],
+                auctionPeriod: data[i]["length"].toString(),
+                entryPrice: data[i]["entryPrice"],
+                product: Product(
+                  id: data[i]["product"]["id"],
+                  serviceProvider: data[i]["product"]["carrierID"],
+                  specialNumber: data[i]["product"]["number"],
+                  arrearsValue: data[i]["product"]["arrearsValue"],
+                  subscription: data[i]["product"]["subscription"],
+                  condition: data[i]["product"]["condition"],
+                  country: data[i]["product"]["countryID"],
+                ),
               ),
-            ),
-          );
-          intressetList.refresh();
+            );
+            intressetList.refresh();
+            print(intressetList.length);
+          }
+        } else {
+          return;
         }
-      } else {
-        return;
       }
     }
+    print(result.exception);
+
     intressetList.refresh();
   }
 
@@ -400,39 +391,36 @@ query getFollow {
     QueryResult result = await getJoin.query(
       QueryOptions(
         documentNode: gql("""
-query getJoin {
+
+query getJoined {
   getJoinedAuctionsByUserID(userID: "${userS.id}") {
-    
+    id
+    entryPrice
+    startsAt
+    length
+    joinedBy{id}
+    product {
       id
-      entryPrice
-      startsAt
-      length
-      joinedBy{id}
-      createdBy{id}
-      startsAt
-      product {
-        id
-        countryID
-        carrierID
-        condition
-        number
-        subscription
-        arrearsValue
-      }
-    
+      countryID
+      carrierID
+      condition
+      number
+      subscription
+      arrearsValue
+    }
   }
 }
 """),
       ),
     );
 
-    var data = result.data.data["getJoinedAuctionsByUserID"];
-
     if (!result.hasException) {
       // print();
-
+      // if (!GetUtils.isNullOrBlank(result.data)) {
+      var data = result.data.data["getJoinedAuctionsByUserID"];
       if (!GetUtils.isNullOrBlank(data)) {
-        joinedList.clear();
+        if (joinedList.length != 0) joinedList.clear();
+        // joinedList = List<Auction>().obs;
 
         // print("get auctions");
         for (var i = 0; i < data.length; i++) {
@@ -461,6 +449,7 @@ query getJoin {
         }
       } else {
         return;
+        // }
       }
     }
     joinedList.refresh();

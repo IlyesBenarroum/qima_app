@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../.././app/modules/auctions/auction_controller.dart';
+import 'auctions_controller.dart';
 import '../../.././app/widgets/auctioncustomappbar.dart';
 
 import 'views/createdauctions_view.dart';
 import 'views/interestedauctions_view.dart';
 import 'views/joinedauctions_view.dart';
 
-class AuctionView extends GetView<AuctionController> {
+class AuctionView extends GetView<Auction_Controller> {
   @override
   Widget build(BuildContext context) {
     final List<Tab> myTabs = <Tab>[

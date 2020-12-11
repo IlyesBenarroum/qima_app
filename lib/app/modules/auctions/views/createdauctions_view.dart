@@ -70,7 +70,7 @@ class _CustomRefreshWidgetState extends State<CustomRefreshWidget> {
         itemBuilder: (context, index) => GestureDetector(
           onTap: () {
             setState(() {
-              Get.to(Detail2View(index: index));
+              Get.to(Detail2View(auction: widget._controller.ownerList[index]));
             });
           },
           child: AuctionCard(

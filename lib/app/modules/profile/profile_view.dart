@@ -186,26 +186,27 @@ class ProfileView extends GetView<ProfileController> {
             ),
           ),
           Positioned(
-            top: Get.height * 0.39,
-            child: pastAuctionList.length == 0
-                ? Container(
-                    height: screenHeight / 2,
-                    width: screenWidth,
-                    child: NotFoundWidget(
-                        title: "Looks_like_you_have_not_created_an_auction_yet"
-                            .tr),
-                  )
-                : GestureDetector(
-                    onTap: () => Get.to(Detail2View()),
-                    child: Container(
-                      height: Get.height * 0.6,
-                      width: Get.width,
-                      child: PastauctionsView(
-                        pastAuctionList: pastAuctionList,
-                      ),
-                    ),
-                  ),
-          ),
+              top: Get.height * 0.39,
+              child:
+                  // pastAuctionList.length == 0
+                  // ?
+                  Container(
+                height: screenHeight / 2,
+                width: screenWidth,
+                child: NotFoundWidget(
+                    title: "Looks_like_you_have_not_created_an_auction_yet".tr),
+              )
+              // : GestureDetector(
+              // onTap: () => Get.to(Detail2View()),
+              // child: Container(
+              //   height: Get.height * 0.6,
+              //   width: Get.width,
+              //   child: PastauctionsView(
+              //     pastAuctionList: pastAuctionList,
+              //   ),
+              // ),
+              // ),
+              ),
         ],
       ),
     );

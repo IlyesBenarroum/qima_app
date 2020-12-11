@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qima/app/controllers/auction_controller.dart';
+import 'package:qima/app/models/auction_model.dart';
 import 'package:qima/app/modules/registration/registration_view.dart';
 import 'package:qima/app/modules/splash/splash_controller.dart';
 import '../../../app/modules/detail/detail_controller.dart';
@@ -16,9 +17,9 @@ String text = 'Qima';
 String subject = 'Win Auction with friends';
 
 class DetailView extends GetView<DetailController> {
-  final int index;
+  final Auction auction;
 
-  DetailView({this.index});
+  DetailView({this.auction});
   final AuctionController auctionController = Get.put(AuctionController());
 
   @override
@@ -123,17 +124,15 @@ class DetailView extends GetView<DetailController> {
                 child: AuctionCardDetailView(
                   date:
                       //  "0",
-                      "${auctionController.auctionsList[index].getAuctionDate.substring(0, 10)}",
+                      "${auction.getAuctionDate.substring(0, 10)}",
                   timing:
                       //  "0",
-                      "${auctionController.auctionsList[index].getAuctionTiming.substring(11, 16)}",
+                      "${auction.getAuctionTiming.substring(11, 16)}",
                   duration:
                       //  "0",
-                      "${auctionController.auctionsList[index].auctionPeriod.substring(0, 2)} " +
+                      "${auction.auctionPeriod.substring(0, 2)} " +
                           "Minutes".tr,
-                  enteryprice:
-                      "${auctionController.auctionsList[index].getEntryPrice} " +
-                          "Pound".tr,
+                  enteryprice: "${auction.getEntryPrice} " + "Pound".tr,
                   screenWidth: screenWidth,
                   screenHeight: screenHeight,
                 ),
@@ -184,99 +183,92 @@ class DetailView extends GetView<DetailController> {
                 child: PhoneCardDetailView(
                   provider:
                       // "0",
-                      "${auctionController.auctionsList[index].getProduct.getServiceProvider}"
-                          .tr,
+                      "${auction.getProduct.getServiceProvider}".tr,
                   number:
                       // "0",
-                      "${auctionController.auctionsList[index].getProduct.getSpecialNumber}",
-                  type:
-                      "${auctionController.auctionsList[index].getProduct.getCondition}" ==
-                              "NEW"
-                          ? "New".tr
-                          : "Used".tr,
-                  condition:
-                      "${auctionController.auctionsList[index].getProduct.getSubscription}",
-                  arrears:
-                      "${auctionController.auctionsList[index].getProduct.arrearsValue}" !=
-                              "0"
-                          ? "Exist".tr
-                          : "Don't Exist".tr,
-                  arrearsvalue: GetUtils.isNullOrBlank(auctionController
-                          .auctionsList[index].getProduct.getArrearsValue)
-                      ? "0 " + "Pound".tr
-                      : "${auctionController.auctionsList[index].getProduct.getArrearsValue}" +
-                          "Pound".tr,
+                      "${auction.getProduct.getSpecialNumber}",
+                  type: "${auction.getProduct.getCondition}" == "NEW"
+                      ? "New".tr
+                      : "Used".tr,
+                  condition: "${auction.getProduct.getSubscription}",
+                  arrears: "${auction.getProduct.arrearsValue}" != "0"
+                      ? "Exist".tr
+                      : "Don't Exist".tr,
+                  arrearsvalue:
+                      GetUtils.isNullOrBlank(auction.getProduct.getArrearsValue)
+                          ? "0 " + "Pound".tr
+                          : "${auction.getProduct.getArrearsValue}" +
+                              "Pound".tr,
                   screenWidth: screenWidth,
                   screenHeight: screenHeight,
                 ),
               ),
             ),
-            Obx(() {
-              return Visibility(
-                visible: auctionController.auctionsList[index].getCreatedBy !=
-                    userS.id,
-                child: Padding(
-                  padding: EdgeInsets.all(screenWidth * 0.05),
-                  child: Container(
-                    width: screenWidth * 0.9,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: screenHeight * 0.0875,
-                          width: screenWidth * 0.425,
-                          child: RaisedButton(
-                            textColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            color: Color(0xff3686bd),
-                            onPressed: () {
-                              if (GetUtils.isNullOrBlank(userS.id)) {
-                                Get.to(RegistrationView());
-                               Globals.joinBox.write("join", "true");
-                                Globals.auctionIdBox.write("auctionId",
-                                    '${auctionController.auctionsList[index].getId}');
-                              } else {
-                                  auctionController.joinAuction(
-                                      auctionController.auctionsList[index].id);
-                                  joinAuction();
-                                // print();
-                              }
-                            },
-                            child: Text('Join'.tr),
+            // Obx(() {
+            // return
+            Visibility(
+              visible: auction.getCreatedBy != userS.id,
+              child: Padding(
+                padding: EdgeInsets.all(screenWidth * 0.05),
+                child: Container(
+                  width: screenWidth * 0.9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: screenHeight * 0.0875,
+                        width: screenWidth * 0.425,
+                        child: RaisedButton(
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
+                          color: Color(0xff3686bd),
+                          onPressed: () {
+                            if (GetUtils.isNullOrBlank(userS.id)) {
+                              Get.to(RegistrationView());
+                              Globals.joinBox.write("join", "true");
+                              Globals.auctionIdBox
+                                  .write("auctionId", '${auction.getId}');
+                            } else {
+                              auctionController.joinAuction(auction.id);
+                              joinAuction();
+                              // print();
+                            }
+                          },
+                          child: Text('Join'.tr),
                         ),
-                        Container(
-                          height: screenHeight * 0.0875,
-                          width: screenWidth * 0.425,
-                          child: RaisedButton(
-                            textColor: Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            color: Color(0xffffe477),
-                            onPressed: () {
-                              if (GetUtils.isNullOrBlank(userS.id)) {
-                                Globals.followBox.write("follow", "true");
-                                Globals.auctionIdBox.write("auctionId",
-                                    '${auctionController.auctionsList[index].getId}');
-                                Get.to(RegistrationView());
-                              } else {
-                                auctionController.intrestAuction(
-                                    auctionController.auctionsList[index].id);
-                                addedToIntersted();
-                              }
-                            },
-                            child: Text('Interest'.tr),
+                      ),
+                      Container(
+                        height: screenHeight * 0.0875,
+                        width: screenWidth * 0.425,
+                        child: RaisedButton(
+                          textColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
+                          color: Color(0xffffe477),
+                          onPressed: () {
+                            if (GetUtils.isNullOrBlank(userS.id)) {
+                              Globals.followBox.write("follow", "true");
+                              Globals.auctionIdBox
+                                  .write("auctionId", '${auction.getId}');
+                              Get.to(RegistrationView());
+                            } else {
+                              auctionController.intrestAuction(auction.id);
+                              addedToIntersted();
+                            }
+                          },
+                          child: Text('Interest'.tr),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              );
-            }),
+              ),
+              // );
+              // }
+            ),
           ],
         ),
       ),

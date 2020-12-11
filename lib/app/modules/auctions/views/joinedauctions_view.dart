@@ -16,7 +16,6 @@ class JoinedauctionsView extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    
     _controller.getJoinedAuctions();
     return Obx(
       () {
@@ -74,7 +73,8 @@ class _CustomRefreshWidgetState extends State<CustomRefreshWidget> {
         itemBuilder: (context, index) => GestureDetector(
           onTap: () {
             setState(() {
-              Get.to(Detail2View(index: index));
+              Get.to(
+                  Detail2View(auction: widget._controller.joinedList[index]));
             });
           },
           child: AuctionCard(

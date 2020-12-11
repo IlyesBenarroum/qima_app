@@ -29,9 +29,8 @@ class ProviderController extends GetxController {
       ),
     );
 
-    var data = result.data.data["getCarriers"];
-
     if (!result.hasException) {
+      var data = result.data.data["getCarriers"];
       if (!GetUtils.isNullOrBlank(data)) {
         for (var i = 0; i < data.length; i++) {
           for (var j = 0; j < data[i]["carriers"].length; j++) {

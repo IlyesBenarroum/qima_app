@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
+import 'package:qima/app/controllers/auction_controller.dart';
 
-class AuctionController extends GetxController {
+class Auction_Controller extends GetxController {
   
   final count = 0.obs;
 
   @override
-  void onInit() {}
+  void onInit() {
+    // AuctionController().g.
+  }
 
   @override
   void onReady() {}
